@@ -8,7 +8,7 @@ use App\Models\SessionMentorat;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Ressource>
  */
-class RessourcesFactory extends Factory
+class RessourceFactory extends Factory
 {
     protected $model = \App\Models\Ressource::class;
 

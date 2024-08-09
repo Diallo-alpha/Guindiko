@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Ressource;
+use App\Models\Ressources;
 
 class RessourceSeeder extends Seeder
 {

@@ -9,12 +9,12 @@ class SessionMentorat extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['mentor_id', 'mentee_id', 'date', 'statut'];
+    protected $fillable = ['mentort_id', 'mentee_id', 'date', 'statut'];
 
     // Une session de mentorat est animée par un mentor
     public function mentor()
     {
-        return $this->belongsTo(Mentort::class, 'mentor_id');
+        return $this->belongsTo(Mentort::class, 'mentort_id');
     }
 
     // Une session de mentorat a un  ou plusieurs mentee

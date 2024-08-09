@@ -9,7 +9,7 @@ class Mentort extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id'];
+    protected $guarded = [];
 
     // Un mentor est associé à un utilisateur
     public function user()
@@ -20,6 +20,6 @@ class Mentort extends Model
     // Un mentor peut animer plusieurs sessions de mentorat
     public function sessionsMentorat()
     {
-        return $this->hasMany(SessionMentorat::class, 'mentor_id');
+        return $this->hasMany(SessionMentorat::class, 'mentort_id');
     }
 }

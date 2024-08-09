@@ -17,6 +17,15 @@ class DatabaseSeeder extends Seeder
             DomaineSeeder::class,
             FormationSeeder::class,
             RessourceSeeder::class,
+            MentortSeeder::class,
+            MenteeSeeder::class,
+
+        ]);
+        // User::factory(10)->create();
+
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
         ]);
 
 
