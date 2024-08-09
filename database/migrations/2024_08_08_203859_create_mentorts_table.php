@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('mentorts', function (Blueprint $table) {
             $table->id();
+            $table->string('cv');
+            $table->string('experience');
+            $table->string('parcours_academique');
+            $table->string('diplome');
+            $table->string('langue');
+            $table->string('domaine');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });

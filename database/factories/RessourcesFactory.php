@@ -3,12 +3,15 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\SessionMentorat;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Ressources>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Ressource>
  */
 class RessourcesFactory extends Factory
 {
+    protected $model = \App\Models\Ressource::class;
+
     /**
      * Define the model's default state.
      *
@@ -17,7 +20,9 @@ class RessourcesFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'session_mentorat_id' => SessionMentorat::factory(), // Crée une session de mentorat associée factice
+            'titre' => $this->faker->sentence(),
+            'lien' => $this->faker->url(),
         ];
     }
 }

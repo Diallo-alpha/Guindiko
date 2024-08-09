@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class DomaineFactory extends Factory
 {
+    protected $model = \App\Models\Domaine::class;
+
     /**
      * Define the model's default state.
      *
@@ -17,7 +19,8 @@ class DomaineFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nom' => $this->faker->word(),
+            'description' => $this->faker->sentence(),
         ];
     }
 }

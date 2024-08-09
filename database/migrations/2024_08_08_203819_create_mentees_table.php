@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('mentees', function (Blueprint $table) {
             $table->id();
+            $table->string('parcours_academique');
+            $table->string('diplome');
+            $table->string('langue');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
