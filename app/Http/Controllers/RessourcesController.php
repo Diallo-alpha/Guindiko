@@ -13,8 +13,7 @@ class RessourcesController extends Controller
     */
     public function index()
     {
-        $ressources = Ressources::all();
-        return response()->json($ressources);
+        //
     }
 
 
