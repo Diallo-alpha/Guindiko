@@ -16,6 +16,6 @@ Route::get('/user', function (Request $request) {
 // Route::middleware('auth:sanctum')->group(function () {
     // Route pour lister les réservations
     Route::apiResource('reservations', ReservationController::class);
-    Route::apiResource('/ressources', RessourcesController::class);
+    Route::apiResource('ressources', RessourcesController::class);
 
     // });
