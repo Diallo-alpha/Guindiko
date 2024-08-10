@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreReservationRequest;
+use App\Http\Requests\UpdateReservationRequest;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 
@@ -20,29 +22,16 @@ class ReservationController extends Controller
     }
 
     // Créer une nouvelle réservation
-    public function store(Request $request)
+    public function store(StoreReservationRequest $request)
     {
-        $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'session_mentorat_id' => 'required|exists:session_mentorats,id',
-            'statut' => 'required|in:en attente,confirmée,annulée',
-        ]);
-
-        return Reservation::create($validated);
+        return Reservation::create($request->validated());
     }
 
     // Mettre à jour une réservation spécifique
-    public function update(Request $request, $id)
+    public function update(UpdateReservationRequest $request, $id)
     {
         $reservation = Reservation::findOrFail($id);
-
-        $validated = $request->validate([
-            'user_id' => 'exists:users,id',
-            'session_mentorat_id' => 'exists:session_mentorats,id',
-            'statut' => 'in:en attente,confirmée,annulée',
-        ]);
-
-        $reservation->update($validated);
+        $reservation->update($request->validated());
 
         return $reservation;
     }
