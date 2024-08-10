@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('session_mentorats', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mentort_id')->default(1)->constrained()->onDelete('cascade');
+            $table->foreignId('mentor_id')->default(1)->constrained()->onDelete('cascade');
             $table->foreignId('mentee_id')->default(1)->constrained()->onDelete('cascade');
             $table->dateTime('date');
             $table->enum('statut', ['en attente', 'confirmée', 'terminée'])->default('en attente');

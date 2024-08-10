@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreMentortRequest;
-use App\Http\Requests\UpdateMentortRequest;
-use App\Models\Mentort;
+use App\Http\Requests\StoreMentorRequest;
+use App\Http\Requests\UpdateMentorRequest;
+use App\Models\Mentor;
 
-class MentortController extends Controller
+class MentorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class MentortController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMentortRequest $request)
+    public function store(StoreMentorRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class MentortController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Mentort $mentort)
+    public function show(Mentor $mentor)
     {
         //
     }
@@ -43,7 +43,7 @@ class MentortController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Mentort $mentort)
+    public function edit(Mentor $mentor)
     {
         //
     }
@@ -51,7 +51,7 @@ class MentortController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMentortRequest $request, Mentort $mentort)
+    public function update(UpdateMentorRequest $request, Mentor $mentor)
     {
         //
     }
@@ -59,7 +59,7 @@ class MentortController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Mentort $mentort)
+    public function destroy(Mentor $mentor)
     {
         //
     }

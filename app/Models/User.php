@@ -17,7 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    // protected $fillable = [ 
+    // protected $fillable = [
     //     'name',
     //     'email',
     //     'password',
@@ -50,7 +50,7 @@ class User extends Authenticatable
       // Relations avec mentor et mentee
       public function mentor()
       {
-          return $this->hasOne(Mentort::class);
+          return $this->hasOne(Mentor::class);
       }
 
       public function mentee()
