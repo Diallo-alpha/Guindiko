@@ -14,8 +14,11 @@ class FormationController extends Controller
      */
     public function index()
     {
-        // Retourne toutes les formations avec les informations de domaine associées
-        return response()->json(Formation::with('domaine')->get(), Response::HTTP_OK);
+        $formations = Formation::with('domaine')->get();
+        return response()->json([
+            'message' => 'Liste des formations chargée avec succès.',
+            'data' => $formations
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -23,11 +26,12 @@ class FormationController extends Controller
      */
     public function store(StoreFormationRequest $request)
     {
-        // Valide et crée une nouvelle formation
         $formation = Formation::create($request->validated());
 
-        // Retourne la formation créée avec le statut HTTP 201 (Created)
-        return response()->json($formation, Response::HTTP_CREATED);
+        return response()->json([
+            'message' => 'Formation créée avec succès.',
+            'data' => $formation
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -35,8 +39,10 @@ class FormationController extends Controller
      */
     public function show(Formation $formation)
     {
-        // Retourne les détails de la formation spécifiée
-        return response()->json($formation, Response::HTTP_OK);
+        return response()->json([
+            'message' => 'Formation récupérée avec succès.',
+            'data' => $formation
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -44,11 +50,12 @@ class FormationController extends Controller
      */
     public function update(UpdateFormationRequest $request, Formation $formation)
     {
-        // Valide et met à jour la formation spécifiée
         $formation->update($request->validated());
 
-        // Retourne la formation mise à jour avec le statut HTTP 200 (OK)
-        return response()->json($formation, Response::HTTP_OK);
+        return response()->json([
+            'message' => 'Formation mise à jour avec succès.',
+            'data' => $formation
+        ], Response::HTTP_OK);
     }
 
     /**
@@ -56,10 +63,10 @@ class FormationController extends Controller
      */
     public function destroy(Formation $formation)
     {
-        // Supprime la formation spécifiée
         $formation->delete();
 
-        // Retourne une réponse vide avec le statut HTTP 204 (No Content)
-        return response()->json(null, Response::HTTP_NO_CONTENT);
+        return response()->json([
+            'message' => 'Formation supprimée avec succès.'
+        ], Response::HTTP_NO_CONTENT);
     }
 }
