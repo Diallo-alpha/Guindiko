@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ressource extends Model
+class Ressources extends Model
 {
     use HasFactory;
 
@@ -16,5 +16,5 @@ class Ressource extends Model
     {
         return $this->belongsTo(SessionMentorat::class, 'session_mentorat_id');
     }
-    
+
 }
