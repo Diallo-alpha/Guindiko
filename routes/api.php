@@ -2,8 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\DomaineController;
-use App\Http\Controllers\Api\FormationController;
+use App\Http\Controllers\DomaineController;
+use App\Http\Controllers\FormationController;
 
 // Route protégée pour récupérer l'utilisateur authentifié
 Route::get('/user', function (Request $request) {
