@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Domaine;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
 
@@ -27,6 +28,7 @@ class MentortFactory extends Factory
             'langue' => $this->faker->languageCode(),
             'domaine' => $this->faker->word(),
             'user_id' => User::factory(), // Crée un utilisateur fictif associé
+            'domaine_id' => Domaine::factory(), // Crée un utilisateur fictif associé
             'created_at' => now(),
             'updated_at' => now(),
         ];
