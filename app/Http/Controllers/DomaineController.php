@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Http\Requests\StoreDomaineRequest;
-use App\Http\Requests\UpdateDomaineRequest;
 use App\Models\Domaine;
 use Illuminate\Http\Response;
+use App\Http\Requests\StoreDomaineRequest;
+use App\Http\Requests\UpdateDomaineRequest;
+
 
 class DomaineController extends Controller
 {
