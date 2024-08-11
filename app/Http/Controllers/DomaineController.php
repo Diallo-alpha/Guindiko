@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Domaine;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StoreDomaineRequest;
+use App\Http\Requests\UpdateDomaineRequest;
 use Illuminate\Http\Response;
 
 class DomaineController extends Controller
@@ -24,28 +24,10 @@ class DomaineController extends Controller
     /**
      * Stocker une nouvelle ressource dans le stockage.
      */
-    public function store(Request $request)
+    public function store(StoreDomaineRequest $request)
     {
-        // Validation des données
-        $validator = Validator::make($request->all(), [
-            'nom' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ], [
-            'nom.required' => 'Le nom du domaine est requis.',
-            'nom.string' => 'Le nom doit être une chaîne de caractères.',
-            'nom.max' => 'Le nom ne peut pas dépasser 255 caractères.',
-            'description.string' => 'La description doit être une chaîne de caractères.',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Erreur de validation',
-                'errors' => $validator->errors()
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        // Création du domaine
-        $domaine = Domaine::create($validator->validated());
+        // Validation des données déjà effectuée dans StoreDomaineRequest
+        $domaine = Domaine::create($request->validated());
 
         return response()->json([
             'message' => 'Domaine créé avec succès.',
@@ -67,28 +49,10 @@ class DomaineController extends Controller
     /**
      * Mettre à jour la ressource spécifiée dans le stockage.
      */
-    public function update(Request $request, Domaine $domaine)
+    public function update(UpdateDomaineRequest $request, Domaine $domaine)
     {
-        // Validation des données
-        $validator = Validator::make($request->all(), [
-            'nom' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ], [
-            'nom.required' => 'Le nom du domaine est requis.',
-            'nom.string' => 'Le nom doit être une chaîne de caractères.',
-            'nom.max' => 'Le nom ne peut pas dépasser 255 caractères.',
-            'description.string' => 'La description doit être une chaîne de caractères.',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => 'Erreur de validation',
-                'errors' => $validator->errors()
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        // Mise à jour du domaine
-        $domaine->update($validator->validated());
+        // Validation des données déjà effectuée dans UpdateDomaineRequest
+        $domaine->update($request->validated());
 
         return response()->json([
             'message' => 'Domaine mis à jour avec succès.',
