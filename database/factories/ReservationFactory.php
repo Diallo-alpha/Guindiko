@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\SessionMentorat;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,11 @@ class ReservationFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => $this->faker->numberBetween(1, 10), // Crée ou utilise un utilisateur
+            'session_mentorat_id' => SessionMentorat::factory(), // Crée ou utilise une session de mentorat
+            'statut' => $this->faker->randomElement(['en attente', 'confirmée', 'annulée']), // Choisit un statut au hasard
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

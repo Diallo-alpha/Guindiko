@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Mentort>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Mentor>
  */
-class MentortFactory extends Factory
+class MentorFactory extends Factory
 {
-    protected $model = \App\Models\Mentort::class;
+    protected $model = \App\Models\Mentor::class;
 
     /**
      * Define the model's default state.

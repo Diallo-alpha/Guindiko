@@ -20,12 +20,12 @@ class Formation extends Model
     // Une formation peut être liée à plusieurs mentors
     public function mentors()
     {
-        return $this->belongsToMany(Mentort::class, 'formation_mentor');
+        return $this->belongsToMany(Mentor::class, 'formation_mentor');
     }
 
     // Une formation peut avoir plusieurs séances de mentorat
-    public function sessionsMentorats(){
+    public function sessionsMentorats()
+    {
         return $this->hasMany(SessionMentorat::class);
     }
-    
 }

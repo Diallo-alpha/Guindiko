@@ -2,65 +2,57 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreReservationRequest;
-use App\Http\Requests\UpdateReservationRequest;
 use App\Models\Reservation;
+use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Lister toutes les réservations
     public function index()
     {
-        //
+        return Reservation::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    // Afficher les détails d'une réservation spécifique
+    public function show($id)
     {
-        //
+        return Reservation::findOrFail($id);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreReservationRequest $request)
+    // Créer une nouvelle réservation
+    public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'session_mentorat_id' => 'required|exists:session_mentorats,id',
+            'statut' => 'required|in:en attente,confirmée,annulée',
+        ]);
+
+        return Reservation::create($validated);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Reservation $reservation)
+    // Mettre à jour une réservation spécifique
+    public function update(Request $request, $id)
     {
-        //
+        $reservation = Reservation::findOrFail($id);
+
+        $validated = $request->validate([
+            'user_id' => 'exists:users,id',
+            'session_mentorat_id' => 'exists:session_mentorats,id',
+            'statut' => 'in:en attente,confirmée,annulée',
+        ]);
+
+        $reservation->update($validated);
+
+        return $reservation;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Reservation $reservation)
+    // Supprimer une réservation spécifique
+    public function destroy($id)
     {
-        //
-    }
+        $reservation = Reservation::findOrFail($id);
+        $reservation->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateReservationRequest $request, Reservation $reservation)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Reservation $reservation)
-    {
-        //
+        return response()->json(['message' => 'Réservation supprimée avec succès']);
     }
 }

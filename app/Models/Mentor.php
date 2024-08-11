@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Mentort extends Model
+class Mentor extends Model
 {
     use HasFactory;
 
@@ -20,6 +20,6 @@ class Mentort extends Model
     // Un mentor peut animer plusieurs sessions de mentorat
     public function sessionsMentorat()
     {
-        return $this->hasMany(SessionMentorat::class, 'mentort_id');
+        return $this->hasMany(SessionMentorat::class, 'mentor_id');
     }
 }

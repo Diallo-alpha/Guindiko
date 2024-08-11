@@ -33,7 +33,7 @@ class RessourceController extends Controller
     {
         $ressource = Ressources::findOrFail($id);
         $ressource->update($request->validated());
-        return response()->json($ressource)->with(['message' => 'Ressource mise à jour avec succès']);
+        return response()->json($ressource);
     }
 
     // Supprimer une ressource spécifique
