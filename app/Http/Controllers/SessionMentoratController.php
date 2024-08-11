@@ -1,66 +1,54 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\SessionMentorat;
 use App\Http\Requests\StoreSessionMentoratRequest;
 use App\Http\Requests\UpdateSessionMentoratRequest;
-use App\Models\SessionMentorat;
+use Illuminate\Http\JsonResponse;
 
 class SessionMentoratController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Afficher une liste des sessions de mentorat.
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        $sessions = SessionMentorat::with(['mentor', 'mentees', 'reservations', 'ressources'])->get();
+        return response()->json($sessions);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Stocker une nouvelle session de mentorat.
      */
-    public function create()
+    public function store(StoreSessionMentoratRequest $request): JsonResponse
     {
-        //
+        $session = SessionMentorat::create($request->validated());
+        return response()->json($session, 201);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Afficher une session de mentorat spécifique.
      */
-    public function store(StoreSessionMentoratRequest $request)
+    public function show(SessionMentorat $sessionMentorat): JsonResponse
     {
-        //
+        return response()->json($sessionMentorat->load(['mentor', 'mentees', 'reservations', 'ressources']));
     }
 
     /**
-     * Display the specified resource.
+     * Mettre à jour une session de mentorat spécifique.
      */
-    public function show(SessionMentorat $sessionMentorat)
+    public function update(UpdateSessionMentoratRequest $request, SessionMentorat $sessionMentorat): JsonResponse
     {
-        //
+        $sessionMentorat->update($request->validated());
+        return response()->json($sessionMentorat);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Supprimer une session de mentorat spécifique.
      */
-    public function edit(SessionMentorat $sessionMentorat)
+    public function destroy(SessionMentorat $sessionMentorat): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateSessionMentoratRequest $request, SessionMentorat $sessionMentorat)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(SessionMentorat $sessionMentorat)
-    {
-        //
+        $sessionMentorat->delete();
+        return response()->json(null, 204);
     }
 }
