@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreFormationRequest;
-use App\Http\Requests\UpdateFormationRequest;
 use App\Models\Formation;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
 
 class FormationController extends Controller
@@ -24,9 +24,31 @@ class FormationController extends Controller
     /**
      * Stocker une nouvelle ressource dans le stockage.
      */
-    public function store(StoreFormationRequest $request)
+    public function store(Request $request)
     {
-        $formation = Formation::create($request->validated());
+        // Validation des données
+        $validator = Validator::make($request->all(), [
+            'nom' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'domaine_id' => 'required|exists:domaines,id',
+        ], [
+            'nom.required' => 'Le nom de la formation est requis.',
+            'nom.string' => 'Le nom doit être une chaîne de caractères.',
+            'nom.max' => 'Le nom ne peut pas dépasser 255 caractères.',
+            'description.string' => 'La description doit être une chaîne de caractères.',
+            'domaine_id.required' => 'L\'ID du domaine est requis.',
+            'domaine_id.exists' => 'Le domaine sélectionné n\'existe pas.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Erreur de validation',
+                'errors' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        // Création de la formation
+        $formation = Formation::create($validator->validated());
 
         return response()->json([
             'message' => 'Formation créée avec succès.',
@@ -48,9 +70,31 @@ class FormationController extends Controller
     /**
      * Mettre à jour la ressource spécifiée dans le stockage.
      */
-    public function update(UpdateFormationRequest $request, Formation $formation)
+    public function update(Request $request, Formation $formation)
     {
-        $formation->update($request->validated());
+        // Validation des données
+        $validator = Validator::make($request->all(), [
+            'nom' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'domaine_id' => 'required|exists:domaines,id',
+        ], [
+            'nom.required' => 'Le nom de la formation est requis.',
+            'nom.string' => 'Le nom doit être une chaîne de caractères.',
+            'nom.max' => 'Le nom ne peut pas dépasser 255 caractères.',
+            'description.string' => 'La description doit être une chaîne de caractères.',
+            'domaine_id.required' => 'L\'ID du domaine est requis.',
+            'domaine_id.exists' => 'Le domaine sélectionné n\'existe pas.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Erreur de validation',
+                'errors' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        // Mise à jour de la formation
+        $formation->update($validator->validated());
 
         return response()->json([
             'message' => 'Formation mise à jour avec succès.',
