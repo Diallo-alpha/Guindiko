@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RessourceController;
+use App\Http\Controllers\SessionMentoratMenteeController;
 
 
 
@@ -22,6 +23,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
 });
-    Route::apiResource('reservations', ReservationController::class);
-    Route::apiResource('ressources', RessourceController::class);
+Route::apiResource('reservations', ReservationController::class);
+Route::apiResource('ressources', RessourceController::class);
+Route::apiResource('session_mentorat_mentees', SessionMentoratMenteeController::class);
 

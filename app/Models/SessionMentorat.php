@@ -32,6 +32,6 @@ class SessionMentorat extends Model
     // Une session de mentorat peut avoir plusieurs ressources
     public function ressources()
     {
-        return $this->hasMany(Ressource::class);
+        return $this->hasMany(Ressources::class);
     }
 }

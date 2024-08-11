@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SessionMentoratMentee extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
     /**
      * Définition de la relation "belongsToMany" entre les sessions de mentorat et les mentees.
