@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class formation_mentor extends Model
+class FormationMentor extends Model
 {
     use HasFactory;
     protected $fillable = ['formation_id', 'mentor_id'];
@@ -17,5 +17,9 @@ class formation_mentor extends Model
     public function formation()
     {
         return $this->belongsTo(Formation::class);
+    }
+    public function sessionsMentorat()
+    {
+        return $this->hasMany(SessionMentorat::class, 'formation_mentor_id');
     }
 }

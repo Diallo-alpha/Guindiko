@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\FormationMentor;
 use App\Models\Formation;
 use App\Models\Mentor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\formation_mentor>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FormationMentor>
  */
 class FormationMentorFactory extends Factory
 {
@@ -19,8 +20,8 @@ class FormationMentorFactory extends Factory
     public function definition(): array
     {
         return [
-            'mentor_id' => Mentor::factory(),
-            'formation_id' => Formation::factory(),
+            'mentor_id' => Mentor::inRandomOrder()->first()->id ?? Mentor::factory(),
+            'formation_id' => Formation::inRandomOrder()->first()->id ?? Formation::factory(),
         ];
     }
 }

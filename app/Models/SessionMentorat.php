@@ -17,12 +17,10 @@ class SessionMentorat extends Model
         return $this->belongsTo(Mentor::class, 'mentor_id');
     }
 
-    // Une session de mentorat a un  ou plusieurs mentee
-    // public function mentees()
-    // {
-    //     return $this->belongsToMany(Mentee::class, 'session_mentorat_mentee', 'session_mentorat_id', 'mentee_id');
-    // }
-
+    public function formationMentor()
+    {
+        return $this->belongsTo(FormationMentor::class, 'formation_mentor_id');
+    }
     // Une session de mentorat peut avoir plusieurs réservations
     public function reservations()
     {
