@@ -19,9 +19,10 @@ class SessionMentoratFactory extends Factory
     public function definition(): array
     {
         return [
-            'mentor_id' => Mentor::factory(), // Associe un mentor fictif
-            'mentee_id' => Mentee::factory(), // Associe un mentee fictif
+            'mentort_id' => Mentor::factory(), // Associe un mentor fictif
+            // 'mentee_id' => Mentee::factory(), // Associe un mentee fictif
             'date' => $this->faker->dateTimeBetween('now', '+1 year'), // Génère une date aléatoire
+            'duree' => $this->faker->numberBetween(30, 120), // Durée aléatoire entre 30 et 120 minutes
             'statut' => 'en attente', // Statut par défaut
             'created_at' => now(),
             'updated_at' => now(),

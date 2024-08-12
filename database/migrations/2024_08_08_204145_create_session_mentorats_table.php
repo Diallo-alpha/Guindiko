@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('session_mentorats', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mentor_id')->default(1)->constrained()->onDelete('cascade');
-            $table->foreignId('mentee_id')->default(1)->constrained()->onDelete('cascade');
+            $table->foreignId('mentort_id')->default(1)->constrained()->onDelete('cascade');
             $table->dateTime('date');
-            $table->enum('statut', ['en attente', 'confirmée', 'terminée'])->default('en attente');
+            $table->enum('statut', ['en attente', 'confirmée', 'terminée', 'annulée'])->default('en attente');
+            $table->string('duree');
             $table->timestamps();
         });
     }
@@ -26,6 +26,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::dropIfExists('session_mentorats');
+
+        Schema::enableForeignKeyConstraints();
     }
 };
