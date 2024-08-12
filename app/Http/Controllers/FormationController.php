@@ -2,65 +2,73 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Formation;
 use App\Http\Requests\StoreFormationRequest;
 use App\Http\Requests\UpdateFormationRequest;
-use App\Models\Formation;
+use Illuminate\Http\Response;
 
 class FormationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Afficher la liste des ressources.
      */
     public function index()
     {
-        //
+        $formations = Formation::with('domaine')->get();
+        return response()->json([
+            'message' => 'Liste des formations chargée avec succès.',
+            'data' => $formations
+        ], Response::HTTP_OK);
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Stocker une nouvelle ressource dans le stockage.
      */
     public function store(StoreFormationRequest $request)
     {
-        //
+        // Validation des données déjà effectuée dans StoreFormationRequest
+        $formation = Formation::create($request->validated());
+
+        return response()->json([
+            'message' => 'Formation créée avec succès.',
+            'data' => $formation
+        ], Response::HTTP_CREATED);
     }
 
     /**
-     * Display the specified resource.
+     * Afficher la ressource spécifiée.
      */
     public function show(Formation $formation)
     {
-        //
+        return response()->json([
+            'message' => 'Formation récupérée avec succès.',
+            'data' => $formation
+        ], Response::HTTP_OK);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Formation $formation)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Mettre à jour la ressource spécifiée dans le stockage.
      */
     public function update(UpdateFormationRequest $request, Formation $formation)
     {
-        //
+        // Validation des données déjà effectuée dans UpdateFormationRequest
+        $formation->update($request->validated());
+
+        return response()->json([
+            'message' => 'Formation mise à jour avec succès.',
+            'data' => $formation
+        ], Response::HTTP_OK);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Supprimer la ressource spécifiée du stockage.
      */
     public function destroy(Formation $formation)
     {
-        //
+        $formation->delete();
+
+        return response()->json([
+            'message' => 'Formation supprimée avec succès.'
+        ], Response::HTTP_NO_CONTENT);
     }
 }

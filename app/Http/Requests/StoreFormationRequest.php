@@ -7,22 +7,43 @@ use Illuminate\Foundation\Http\FormRequest;
 class StoreFormationRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
+     * Détermine si l'utilisateur est autorisé à faire cette requête.
+     *
+     * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
-        return false;
+        return true; // Autorise toutes les requêtes
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Obtenez les règles de validation qui s'appliquent à la requête.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            //
+            'nom' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'domaine_id' => 'required|exists:domaines,id',
+        ];
+    }
+
+    /**
+     * Obtenez les messages de validation personnalisés.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'nom.required' => 'Le nom de la formation est requis.',
+            'nom.string' => 'Le nom doit être une chaîne de caractères.',
+            'nom.max' => 'Le nom ne peut pas dépasser 255 caractères.',
+            'description.string' => 'La description doit être une chaîne de caractères.',
+            'domaine_id.required' => 'L\'ID du domaine est requis.',
+            'domaine_id.exists' => 'Le domaine sélectionné n\'existe pas.',
         ];
     }
 }

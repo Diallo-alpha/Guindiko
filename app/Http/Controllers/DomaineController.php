@@ -2,65 +2,73 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Domaine;
 use App\Http\Requests\StoreDomaineRequest;
 use App\Http\Requests\UpdateDomaineRequest;
-use App\Models\Domaine;
+use Illuminate\Http\Response;
 
 class DomaineController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Afficher la liste des ressources.
      */
     public function index()
     {
-        //
+        $domaines = Domaine::all();
+        return response()->json([
+            'message' => 'Liste des domaines chargée avec succès.',
+            'data' => $domaines
+        ], Response::HTTP_OK);
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Stocker une nouvelle ressource dans le stockage.
      */
     public function store(StoreDomaineRequest $request)
     {
-        //
+        // Validation des données déjà effectuée dans StoreDomaineRequest
+        $domaine = Domaine::create($request->validated());
+
+        return response()->json([
+            'message' => 'Domaine créé avec succès.',
+            'data' => $domaine
+        ], Response::HTTP_CREATED);
     }
 
     /**
-     * Display the specified resource.
+     * Afficher la ressource spécifiée.
      */
     public function show(Domaine $domaine)
     {
-        //
+        return response()->json([
+            'message' => 'Domaine récupéré avec succès.',
+            'data' => $domaine
+        ], Response::HTTP_OK);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Domaine $domaine)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Mettre à jour la ressource spécifiée dans le stockage.
      */
     public function update(UpdateDomaineRequest $request, Domaine $domaine)
     {
-        //
+        // Validation des données déjà effectuée dans UpdateDomaineRequest
+        $domaine->update($request->validated());
+
+        return response()->json([
+            'message' => 'Domaine mis à jour avec succès.',
+            'data' => $domaine
+        ], Response::HTTP_OK);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Supprimer la ressource spécifiée du stockage.
      */
     public function destroy(Domaine $domaine)
     {
-        //
+        $domaine->delete();
+
+        return response()->json([
+            'message' => 'Domaine supprimé avec succès.'
+        ], Response::HTTP_NO_CONTENT);
     }
 }
