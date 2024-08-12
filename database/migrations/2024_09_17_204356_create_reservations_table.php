@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('session_mentorat_id')->constrained('session_mentorats')->onDelete('cascade');
-            $table->enum('statut', ['en attente', 'confirmée', 'annulée']);
+            $table->enum('statut', ['en attente', 'confirmée', 'annulée'])->default('en attente');
             $table->timestamps();
         });
     }
@@ -25,11 +25,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-
-       Schema::disableForeignKeyConstraints();
-
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('reservations');
-
-           Schema::enableForeignKeyConstraints();
+        Schema::enableForeignKeyConstraints();
     }
 };

@@ -28,3 +28,8 @@ Route::apiResource('ressources', RessourceController::class);
 Route::apiResource('session-mentorats', SessionMentoratController::class);
 
 Route::get('/mentees/{id}/notifications', [NotificationController::class, 'getNotifications']);
+
+
+
+Route::put('/reservations/{id}/accept', [ReservationController::class, 'accept']);
+Route::put('/reservations/{id}/reject', [ReservationController::class, 'reject']);
