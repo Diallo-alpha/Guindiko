@@ -18,6 +18,12 @@ class Reservation extends Model
     }
 
     // Une réservation est pour une session de mentorat spécifique
+    public function mentee()
+    {
+        return $this->belongsTo(Mentee::class, 'mentee_id');
+    }
+
+    // Une réservation est pour une session de mentorat spécifique
     public function sessionMentorat()
     {
         return $this->belongsTo(SessionMentorat::class, 'session_mentorat_id');
