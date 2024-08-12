@@ -1,90 +1,54 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\SessionMentorat;
 use App\Http\Requests\StoreSessionMentoratRequest;
 use App\Http\Requests\UpdateSessionMentoratRequest;
-use App\Models\SessionMentorat;
-use App\Models\Notification;
-use App\Models\Mentee;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class SessionMentoratController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Afficher une liste des sessions de mentorat.
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        $sessions = SessionMentorat::with(['mentor', 'mentees', 'reservations', 'ressources'])->get();
+        return response()->json($sessions);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Stocker une nouvelle session de mentorat.
      */
-    public function create()
+    public function store(StoreSessionMentoratRequest $request): JsonResponse
     {
-        //
+        $session = SessionMentorat::create($request->validated());
+        return response()->json($session, 201);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Afficher une session de mentorat spécifique.
      */
-    public function store(StoreSessionMentoratRequest $request)
+    public function show(SessionMentorat $sessionMentorat): JsonResponse
     {
-        // Créer la session
-        $session = SessionMentorat::create([
-            'mentor_id' => $request->mentor_id,
-            'title' => $request->title,
-            'description' => $request->description,
-            'scheduled_at' => $request->scheduled_at,
-        ]);
-
-        // Récupérer tous les mentees du mentor
-        $mentees = Mentee::where('mentor_id', $request->mentor_id)->get();
-
-        // Envoyer une notification à chaque mentee
-        foreach ($mentees as $mentee) {
-            Notification::create([
-                'mentee_id' => $mentee->id,
-                'mentor_id' => $request->mentor_id,
-                'session_id' => $session->id,
-                'message' => "Une nouvelle session '{$session->title}' a été ajoutée.",
-            ]);
-        }
-
-        return response()->json(['message' => 'Session créée et notifications envoyées.']);
+        return response()->json($sessionMentorat->load(['mentor', 'mentees', 'reservations', 'ressources']));
     }
 
     /**
-     * Display the specified resource.
+     * Mettre à jour une session de mentorat spécifique.
      */
-    public function show(SessionMentorat $sessionMentorat)
+    public function update(UpdateSessionMentoratRequest $request, SessionMentorat $sessionMentorat): JsonResponse
     {
-        //
+        $sessionMentorat->update($request->validated());
+        return response()->json($sessionMentorat);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Supprimer une session de mentorat spécifique.
      */
-    public function edit(SessionMentorat $sessionMentorat)
+    public function destroy(SessionMentorat $sessionMentorat): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateSessionMentoratRequest $request, SessionMentorat $sessionMentorat)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(SessionMentorat $sessionMentorat)
-    {
-        //
+        $sessionMentorat->delete();
+        return response()->json(null, 204);
     }
 }

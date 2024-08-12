@@ -16,5 +16,5 @@ class Ressource extends Model
     {
         return $this->belongsTo(SessionMentorat::class, 'session_mentorat_id');
     }
-    
+
 }

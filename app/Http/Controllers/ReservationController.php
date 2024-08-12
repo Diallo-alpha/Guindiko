@@ -5,62 +5,43 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
 use App\Models\Reservation;
+use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Lister toutes les réservations
     public function index()
     {
-        //
+        return Reservation::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    // Afficher les détails d'une réservation spécifique
+    public function show($id)
     {
-        //
+        return Reservation::findOrFail($id);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Créer une nouvelle réservation
     public function store(StoreReservationRequest $request)
     {
-        //
+        return Reservation::create($request->validated());
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Reservation $reservation)
+    // Mettre à jour une réservation spécifique
+    public function update(UpdateReservationRequest $request, $id)
     {
-        //
+        $reservation = Reservation::findOrFail($id);
+        $reservation->update($request->validated());
+
+        return $reservation;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Reservation $reservation)
+    // Supprimer une réservation spécifique
+    public function destroy($id)
     {
-        //
-    }
+        $reservation = Reservation::findOrFail($id);
+        $reservation->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateReservationRequest $request, Reservation $reservation)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Reservation $reservation)
-    {
-        //
+        return response()->json(['message' => 'Réservation supprimée avec succès']);
     }
 }

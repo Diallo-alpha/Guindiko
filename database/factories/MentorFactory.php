@@ -3,15 +3,16 @@
 namespace Database\Factories;
 
 use App\Models\Domaine;
+use App\Models\Formation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Mentort>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Mentor>
  */
-class MentortFactory extends Factory
+class MentorFactory extends Factory
 {
-    protected $model = \App\Models\Mentort::class;
+    protected $model = \App\Models\Mentor::class;
 
     /**
      * Define the model's default state.
@@ -28,7 +29,7 @@ class MentortFactory extends Factory
             'langue' => $this->faker->languageCode(),
             'domaine' => $this->faker->word(),
             'user_id' => User::factory(), // Crée un utilisateur fictif associé
-            'domaine_id' => Domaine::factory(), // Crée un utilisateur fictif associé
+            'formation_id' => Formation::factory(), // Crée un utilisateur fictif associé
             'created_at' => now(),
             'updated_at' => now(),
         ];

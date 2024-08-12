@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             DomaineSeeder::class,
             FormationSeeder::class,
             RessourceSeeder::class,
-            MentortSeeder::class,
+            MentorSeeder::class,
             MenteeSeeder::class,
 
         ]);
