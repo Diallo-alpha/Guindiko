@@ -20,11 +20,14 @@ class SessionMentoratController extends Controller
     /**
      * Stocker une nouvelle session de mentorat.
      */
-    public function store(StoreSessionMentoratRequest $request): JsonResponse
-    {
-        $session = SessionMentorat::create($request->validated());
-        return response()->json($session, 201);
-    }
+
+     public function store(StoreSessionMentoratRequest $request): JsonResponse
+     {
+         $validatedData = $request->validated();
+         $session = SessionMentorat::create($validatedData);
+         return response()->json($session, 201);
+     }
+
 
     /**
      * Afficher une session de mentorat spécifique.
