@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('diplome');
             $table->string('langue');
             $table->string('domaine');
-            $table->foreignId('domaine_id')->constrained('domaines')->onDelete('cascade');
+            $table->foreignId('formation_id')->constrained('formations')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });

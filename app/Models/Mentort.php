@@ -22,4 +22,8 @@ class Mentort extends Model
     {
         return $this->hasMany(SessionMentorat::class, 'mentort_id');
     }
+    public function formation()
+    {
+        return $this->belongsTo(SessionMentorat::class, 'formation_id');
+    }
 }

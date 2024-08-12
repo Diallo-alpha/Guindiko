@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Models\Permission;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -59,6 +60,8 @@ Route::middleware('auth:api')->group(function () {
 //     foreach ($permissions as $permission) {
 //         Permission::create(['name' => $permission]);
 //     }
+        // Permission::create(['name' => 'modifier un statut']);
+
 
 //     // Attribution des permissions aux rôles
 //     // Le rôle admin obtient toutes les permissions
