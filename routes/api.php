@@ -26,6 +26,5 @@ Route::middleware('auth:api')->group(function () {
 Route::apiResource('reservations', ReservationController::class);
 Route::apiResource('ressources', RessourceController::class);
 Route::apiResource('session-mentorats', SessionMentoratController::class);
-use App\Http\Controllers\NotificationController;
 
 Route::get('/mentees/{id}/notifications', [NotificationController::class, 'getNotifications']);

@@ -23,7 +23,9 @@ return new class extends Migration
         // Foreign keys
         $table->foreign('mentee_id')->references('id')->on('mentees')->onDelete('cascade');
         $table->foreign('mentor_id')->references('id')->on('mentors')->onDelete('cascade');
-        $table->foreign('session_id')->references('id')->on('sessions')->onDelete('cascade');
+        // $table->foreign('session_id')->references('id')->on('sessions')->onDelete('cascade');
+        $table->foreignId('session_mentorat_id')->constrained('session_mentorats')->onDelete('cascade');
+
     });
 }
 
@@ -33,6 +35,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+
+       Schema::disableForeignKeyConstraints();
+
         Schema::dropIfExists('notifications');
+
+              Schema::enableForeignKeyConstraints();
     }
 };
