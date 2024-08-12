@@ -9,7 +9,7 @@ class SessionMentorat extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['mentor_id', 'mentee_id', 'date', 'statut'];
+    protected $fillable = ['mentort_id', 'mentee_id', 'date', 'statut'];
 
     // Une session de mentorat est animée par un mentor
     public function mentor()
@@ -32,6 +32,6 @@ class SessionMentorat extends Model
     // Une session de mentorat peut avoir plusieurs ressources
     public function ressources()
     {
-        return $this->hasMany(Ressources::class);
+        return $this->hasMany(Ressource::class);
     }
 }
