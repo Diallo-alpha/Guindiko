@@ -24,5 +24,4 @@ Route::middleware('auth:api')->group(function () {
 });
 Route::apiResource('reservations', ReservationController::class);
 Route::apiResource('ressources', RessourceController::class);
-Route::apiResource('session_mentorat_mentees', SessionMentoratMenteeController::class);
 Route::apiResource('session-mentorats', SessionMentoratController::class);
