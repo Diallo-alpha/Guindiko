@@ -38,12 +38,12 @@ class StoreFormationRequest extends FormRequest
     public function messages()
     {
         return [
-            'nom.required' => 'Le nom de la formation est requis.',
-            'nom.string' => 'Le nom doit être une chaîne de caractères.',
-            'nom.max' => 'Le nom ne peut pas dépasser 255 caractères.',
-            'description.string' => 'La description doit être une chaîne de caractères.',
-            'domaine_id.required' => 'L\'ID du domaine est requis.',
-            'domaine_id.exists' => 'Le domaine sélectionné n\'existe pas.',
+            'nom.required' => 'Le nom de la formation est requis.🫡🫡🫡',
+            'nom.string' => 'Le nom doit être une chaîne de caractères.🫡🫡🫡',
+            'nom.max' => 'Le nom ne peut pas dépasser 255 caractères.🫡🫡🫡',
+            'description.string' => 'La description doit être une chaîne de caractères.🫡🫡🫡',
+            'domaine_id.required' => 'L\'ID du domaine est requis.🫡🫡🫡',
+            'domaine_id.exists' => 'Le domaine sélectionné n\'existe pas.🫡🫡🫡',
         ];
     }
 }

@@ -33,7 +33,7 @@ class RessourceController extends Controller
     {
         $ressource = Ressources::findOrFail($id);
         $ressource->update($request->validated());
-        return response()->json($ressource)->with(['message' => 'Ressource mise à jour avec succès']);
+        return response()->json($ressource)->with(['message' => 'Ressource mise à jour avec succès 👍👍👍']);
     }
 
     // Supprimer une ressource spécifique
@@ -41,6 +41,6 @@ class RessourceController extends Controller
     {
         $ressource = Ressources::findOrFail($id);
         $ressource->delete();
-        return response()->json(['message' => 'Ressource supprimée avec succès'], 204);
+        return response()->json(['message' => 'Ressource supprimée avec succès 👍👍👍'], 204);
     }
 }

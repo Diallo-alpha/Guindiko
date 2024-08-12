@@ -41,6 +41,6 @@ class RessourceController extends Controller
     {
         $ressource = Ressources::findOrFail($id);
         $ressource->delete();
-        return response()->json(['message' => 'Ressource supprimée avec succès'], 204);
+        return response()->json(['message' => 'Ressource supprimée avec succès 👍👍👍'], 204);
     }
 }

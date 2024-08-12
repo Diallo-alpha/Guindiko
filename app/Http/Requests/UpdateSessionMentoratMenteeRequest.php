@@ -30,8 +30,8 @@ class UpdateSessionMentoratMenteeRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'session_mentorat_id.exists' => 'La session de mentorat sélectionnée est invalide.',
-            'mentee_id.exists' => 'Le mentee sélectionné est invalide.',
+            'session_mentorat_id.exists' => 'La session de mentorat sélectionnée est invalide.🫡🫡🫡',
+            'mentee_id.exists' => 'Le mentee sélectionné est invalide.🫡🫡🫡',
         ];
     }
 }

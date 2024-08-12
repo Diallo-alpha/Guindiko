@@ -33,7 +33,7 @@ class SessionMentoratMenteeController extends Controller
 
         // Renvoie une réponse JSON avec les détails de la nouvelle ressource et un statut HTTP 201 Created
         return response()->json([
-            'message' => 'Session de mentorat avec le mentee créée avec succès',
+            'message' => 'Session de mentorat avec le mentee créée avec succès 👍👍👍',
             'data' => $sessionMentoratMentee
         ], 201);
     }
@@ -70,7 +70,7 @@ class SessionMentoratMenteeController extends Controller
 
         // Renvoie une réponse JSON avec les détails mis à jour de la ressource
         return response()->json([
-            'message' => 'Session de mentorat avec le mentee mise à jour avec succès',
+            'message' => 'Session de mentorat avec le mentee mise à jour avec succès 👍👍👍',
             'data' => $sessionMentoratMentee
         ], 200);
     }
@@ -91,7 +91,7 @@ class SessionMentoratMenteeController extends Controller
 
         // Renvoie une réponse JSON avec un message de succès et un statut HTTP 204 No Content
         return response()->json([
-            'message' => 'Session de mentorat avec le mentee supprimée avec succès'
+            'message' => 'Session de mentorat avec le mentee supprimée avec succès 👍👍👍'
         ], 204);
     }
 }

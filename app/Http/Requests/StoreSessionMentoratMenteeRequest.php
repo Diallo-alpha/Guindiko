@@ -30,10 +30,10 @@ class StoreSessionMentoratMenteeRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'session_mentorat_id.required' => 'Le champ session_mentorat_id est obligatoire.',
-            'session_mentorat_id.exists' => 'La session de mentorat sélectionnée est invalide.',
-            'mentee_id.required' => 'Le champ mentee_id est obligatoire.',
-            'mentee_id.exists' => 'Le mentee sélectionné est invalide.',
+            'session_mentorat_id.required' => 'Le champ session_mentorat_id est obligatoire.🫡🫡🫡',
+            'session_mentorat_id.exists' => 'La session de mentorat sélectionnée est invalide.🫡🫡🫡',
+            'mentee_id.required' => 'Le champ mentee_id est obligatoire.🫡🫡🫡',
+            'mentee_id.exists' => 'Le mentee sélectionné est invalide.🫡🫡🫡',
         ];
     }
 }

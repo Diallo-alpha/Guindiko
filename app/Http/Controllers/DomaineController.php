@@ -16,7 +16,7 @@ class DomaineController extends Controller
     {
         $domaines = Domaine::all();
         return response()->json([
-            'message' => 'Liste des domaines chargée avec succès.',
+            'message' => 'Liste des domaines chargée avec succès.👍👍👍',
             'data' => $domaines
         ], Response::HTTP_OK);
     }
@@ -30,7 +30,7 @@ class DomaineController extends Controller
         $domaine = Domaine::create($request->validated());
 
         return response()->json([
-            'message' => 'Domaine créé avec succès.',
+            'message' => 'Domaine créé avec succès.👍👍👍',
             'data' => $domaine
         ], Response::HTTP_CREATED);
     }
@@ -41,7 +41,7 @@ class DomaineController extends Controller
     public function show(Domaine $domaine)
     {
         return response()->json([
-            'message' => 'Domaine récupéré avec succès.',
+            'message' => 'Domaine récupéré avec succès. 👍👍👍',
             'data' => $domaine
         ], Response::HTTP_OK);
     }
@@ -55,7 +55,7 @@ class DomaineController extends Controller
         $domaine->update($request->validated());
 
         return response()->json([
-            'message' => 'Domaine mis à jour avec succès.',
+            'message' => 'Domaine mis à jour avec succès.👍👍👍',
             'data' => $domaine
         ], Response::HTTP_OK);
     }
@@ -68,7 +68,7 @@ class DomaineController extends Controller
         $domaine->delete();
 
         return response()->json([
-            'message' => 'Domaine supprimé avec succès.'
+            'message' => 'Domaine supprimé avec succès. 👍👍👍'
         ], Response::HTTP_NO_CONTENT);
     }
 }

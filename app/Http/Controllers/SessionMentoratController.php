@@ -47,7 +47,7 @@ class SessionMentoratController extends Controller
             ]);
         }
 
-        return response()->json(['message' => 'Session créée et notifications envoyées.'], 201);
+        return response()->json(['message' => 'Session créée et notifications envoyées.👍👍👍'], 201);
     }
 
     /**

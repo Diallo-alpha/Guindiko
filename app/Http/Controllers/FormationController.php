@@ -16,7 +16,7 @@ class FormationController extends Controller
     {
         $formations = Formation::with('domaine')->get();
         return response()->json([
-            'message' => 'Liste des formations chargée avec succès.',
+            'message' => 'Liste des formations chargée avec succès. 👍👍👍',
             'data' => $formations
         ], Response::HTTP_OK);
     }
@@ -30,7 +30,7 @@ class FormationController extends Controller
         $formation = Formation::create($request->validated());
 
         return response()->json([
-            'message' => 'Formation créée avec succès.',
+            'message' => 'Formation créée avec succès. 👍👍👍',
             'data' => $formation
         ], Response::HTTP_CREATED);
     }
@@ -41,7 +41,7 @@ class FormationController extends Controller
     public function show(Formation $formation)
     {
         return response()->json([
-            'message' => 'Formation récupérée avec succès.',
+            'message' => 'Formation récupérée avec succès. 👍👍👍',
             'data' => $formation
         ], Response::HTTP_OK);
     }
@@ -55,7 +55,7 @@ class FormationController extends Controller
         $formation->update($request->validated());
 
         return response()->json([
-            'message' => 'Formation mise à jour avec succès.',
+            'message' => 'Formation mise à jour avec succès. 👍👍👍',
             'data' => $formation
         ], Response::HTTP_OK);
     }
@@ -68,7 +68,7 @@ class FormationController extends Controller
         $formation->delete();
 
         return response()->json([
-            'message' => 'Formation supprimée avec succès.'
+            'message' => 'Formation supprimée avec succès.👍👍👍'
         ], Response::HTTP_NO_CONTENT);
     }
 }

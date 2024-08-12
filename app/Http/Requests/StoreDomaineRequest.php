@@ -37,10 +37,10 @@ class StoreDomaineRequest extends FormRequest
     public function messages()
     {
         return [
-            'nom.required' => 'Le nom du domaine est requis.',
-            'nom.string' => 'Le nom doit être une chaîne de caractères.',
-            'nom.max' => 'Le nom ne peut pas dépasser 255 caractères.',
-            'description.string' => 'La description doit être une chaîne de caractères.',
+            'nom.required' => 'Le nom du domaine est requis.🫡🫡🫡',
+            'nom.string' => 'Le nom doit être une chaîne de caractères.🫡🫡🫡',
+            'nom.max' => 'Le nom ne peut pas dépasser 255 caractères.🫡🫡🫡',
+            'description.string' => 'La description doit être une chaîne de caractères.🫡🫡🫡',
         ];
     }
 }
