@@ -17,11 +17,11 @@ class Formation extends Model
         return $this->belongsTo(Domaine::class, 'domaine_id');
     }
 
-    // Une formation peut être liée à plusieurs mentors
-    public function mentors()
-    {
-        return $this->hasMany(Mentor::class);
-    }
+// Définir la relation many-to-many avec le modèle Mentor
+public function mentors()
+{
+    return $this->belongsToMany(Mentor::class, 'formation_mentors');
+}
 
     // Une formation peut avoir plusieurs séances de mentorat
     public function sessionsMentorats()

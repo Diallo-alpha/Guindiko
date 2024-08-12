@@ -22,8 +22,9 @@ class Mentor extends Model
     {
         return $this->hasMany(SessionMentorat::class, 'mentor_id');
     }
-    public function formation()
-    {
-        return $this->belongsTo(SessionMentorat::class, 'formation_id');
-    }
+  // Définir la relation many-to-many avec le modèle Formation
+  public function formations()
+  {
+      return $this->belongsToMany(Formation::class, 'formation_mentors');
+  }
 }
