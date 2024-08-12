@@ -7,6 +7,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\SessionMentoratMenteeController;
 use App\Http\Controllers\SessionMentoratController;
+use App\Http\Controllers\NotificationController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -25,3 +26,6 @@ Route::middleware('auth:api')->group(function () {
 Route::apiResource('reservations', ReservationController::class);
 Route::apiResource('ressources', RessourceController::class);
 Route::apiResource('session-mentorats', SessionMentoratController::class);
+use App\Http\Controllers\NotificationController;
+
+Route::get('/mentees/{id}/notifications', [NotificationController::class, 'getNotifications']);

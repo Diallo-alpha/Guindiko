@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreMenteeRequest;
 use App\Http\Requests\UpdateMenteeRequest;
 use App\Models\Mentee;
+use App\Models\Notification;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class MenteeController extends Controller
 {
@@ -13,7 +16,7 @@ class MenteeController extends Controller
      */
     public function index()
     {
-        //
+        // Votre code ici
     }
 
     /**
@@ -21,7 +24,7 @@ class MenteeController extends Controller
      */
     public function create()
     {
-        //
+        // Votre code ici
     }
 
     /**
@@ -29,7 +32,7 @@ class MenteeController extends Controller
      */
     public function store(StoreMenteeRequest $request)
     {
-        //
+        // Votre code ici
     }
 
     /**
@@ -37,7 +40,7 @@ class MenteeController extends Controller
      */
     public function show(Mentee $mentee)
     {
-        //
+        // Votre code ici
     }
 
     /**
@@ -45,7 +48,7 @@ class MenteeController extends Controller
      */
     public function edit(Mentee $mentee)
     {
-        //
+        // Votre code ici
     }
 
     /**
@@ -53,7 +56,7 @@ class MenteeController extends Controller
      */
     public function update(UpdateMenteeRequest $request, Mentee $mentee)
     {
-        //
+        // Votre code ici
     }
 
     /**
@@ -61,6 +64,18 @@ class MenteeController extends Controller
      */
     public function destroy(Mentee $mentee)
     {
-        //
+        // Votre code ici
+    }
+
+    /**
+     * Récupérer les notifications pour un mentee spécifique.
+     */
+    public function getNotifications($mentee_id): JsonResponse
+    {
+        $notifications = Notification::where('mentee_id', $mentee_id)
+                                      ->orderBy('created_at', 'desc')
+                                      ->get();
+
+        return response()->json($notifications);
     }
 }

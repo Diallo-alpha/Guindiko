@@ -1,10 +1,14 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\SessionMentorat;
+use App\Models\Notification;
+use App\Models\Mentee;
 use App\Http\Requests\StoreSessionMentoratRequest;
 use App\Http\Requests\UpdateSessionMentoratRequest;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class SessionMentoratController extends Controller
 {
@@ -22,8 +26,28 @@ class SessionMentoratController extends Controller
      */
     public function store(StoreSessionMentoratRequest $request): JsonResponse
     {
-        $session = SessionMentorat::create($request->validated());
-        return response()->json($session, 201);
+        // Créer la session
+        $session = SessionMentorat::create([
+            'mentor_id' => $request->mentor_id,
+            'title' => $request->title,
+            'description' => $request->description,
+            'scheduled_at' => $request->scheduled_at,
+        ]);
+
+        // Récupérer tous les mentees du mentor
+        $mentees = Mentee::where('mentor_id', $request->mentor_id)->get();
+
+        // Envoyer une notification à chaque mentee
+        foreach ($mentees as $mentee) {
+            Notification::create([
+                'mentee_id' => $mentee->id,
+                'mentor_id' => $request->mentor_id,
+                'session_id' => $session->id,
+                'message' => "Une nouvelle session '{$session->title}' a été ajoutée.",
+            ]);
+        }
+
+        return response()->json(['message' => 'Session créée et notifications envoyées.'], 201);
     }
 
     /**
