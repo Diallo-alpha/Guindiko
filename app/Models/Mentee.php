@@ -30,5 +30,10 @@ class Mentee extends Model
                   ->withPivot('statut')
                   ->withTimestamps();
   }
+  // Un mentee peut écrire plusieurs commentaires
+  public function commentaires()
+  {
+      return $this->hasMany(Commentaire::class);
+  }
 
 }

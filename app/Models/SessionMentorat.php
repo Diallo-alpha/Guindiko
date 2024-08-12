@@ -39,5 +39,10 @@ class SessionMentorat extends Model
                     ->withPivot('statut')
                     ->withTimestamps();
     }
- 
+    //une session de mentorat peut avoir plusieurs commmentaire
+    public function commentaires()
+    {
+        return $this->hasMany(Commentaire::class);
+    }
+
 }

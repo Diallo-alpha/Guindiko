@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Mentee;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,7 +14,11 @@ class MenteeSeeder extends Seeder
      */
     public function run(): void
     {
-        Mentee::factory()->count(10)->create(); // Crée 10 mentees fictifs
-
+        // Crée 10 utilisateurs fictifs et pour chacun, crée un mentee associé
+        User::factory(10)->create()->each(function ($user) {
+            Mentee::factory()->create([
+                'user_id' => $user->id,
+            ]);
+        });
     }
 }
