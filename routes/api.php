@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\MenteeController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\SessionMentoratController;
@@ -39,3 +40,6 @@ Route::apiResource('domaines', DomaineController::class);
 Route::apiResource('formations', FormationController::class);
 Route::apiResource('forums', ForumController::class);
 Route::apiResource('commentaires', CommentaireController::class);
+
+Route::post('/mentees/request-mentorship', [MenteeController::class, 'requestMentorship'])->name('mentees.requestMentorship');
+

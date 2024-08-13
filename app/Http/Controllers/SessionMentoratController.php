@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 use App\Models\SessionMentorat;
 use App\Http\Requests\StoreSessionMentoratRequest;
 use App\Http\Requests\UpdateSessionMentoratRequest;
+use App\Mail\DemandeMentoratMail;
+use Illuminate\Http\Request; // Correct import
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Mail;
 
 class SessionMentoratController extends Controller
 {
@@ -54,4 +57,27 @@ class SessionMentoratController extends Controller
         $sessionMentorat->delete();
         return response()->json(null, 204);
     }
+    // public function sendMentoratRequest(Request $request)
+    // {
+    //     // Fetch the session along with the mentor relationship
+    //     $session = SessionMentorat::with('mentor')->find($request->session_mentorat_id);
+    
+    //     // Check if the session was found
+    //     if (!$session) {
+    //         return response()->json(['error' => 'Session de mentorat introuvable.'], 404);
+    //     }
+    
+    //     // Prepare the session details for the email
+    //     $sessionDetails = [
+    //         'mentor' => $session->mentor->toArray(),
+    //         'date' => $request->date,
+    //     ];
+    
+    //     // Send the email
+    //     Mail::to('mentorat@example.com')->send(new DemandeMentoratMail($sessionDetails));
+    
+    //     // Return a success response
+    //     return response()->json(['message' => 'Demande de mentorat envoyée avec succès.']);
+    // }
+    
 }

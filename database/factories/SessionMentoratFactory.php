@@ -22,7 +22,7 @@ class SessionMentoratFactory extends Factory
             'formation_mentor_id' => FormationMentor::inRandomOrder()->first()->id ?? FormationMentor::factory(),
             'date' => $this->faker->dateTime(),
             'duree' => $this->faker->numberBetween(1, 100),
-            'statut' => $this->faker->randomElement(['en attente', 'confirmée', 'terminée', 'annulée']), 
+            'statut' => $this->faker->randomElement(['en attente', 'confirmée', 'terminée', 'annulée']),
         ];
     }
 }
