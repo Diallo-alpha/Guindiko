@@ -18,9 +18,9 @@ class Formation extends Model
     }
 
 // Définir la relation many-to-many avec le modèle Mentor
-public function mentors()
+public function users()
 {
-    return $this->belongsToMany(Mentor::class, 'formation_mentors');
+    return $this->belongsToMany(User::class, 'formation_users');
 }
 
     // Une formation peut avoir plusieurs séances de mentorat

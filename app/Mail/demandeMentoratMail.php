@@ -24,11 +24,10 @@ class DemandeMentoratMail extends Mailable
 
     public function build()
     {
-        if ($this->mentee && $this->mentor) {
+        if ($this->mentee) {
             return $this->view('demande_mentorat')
                         ->with([
                             'mentee' => $this->mentee,
-                            'mentor' => $this->mentor,
                         ]);
         } else {
             // Vous pouvez gérer le cas où l'un des objets est nul ici

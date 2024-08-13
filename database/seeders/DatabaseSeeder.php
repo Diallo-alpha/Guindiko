@@ -17,12 +17,10 @@ class DatabaseSeeder extends Seeder
             DomaineSeeder::class,
             FormationSeeder::class,
             RessourceSeeder::class,
-            MentorSeeder::class,
-            MenteeSeeder::class,
-            FormationMentorSeeder::class,
-            CommentaireSeeder::class,
-            ForumSeeder::class,
             RolesAndPermissionsSeeder::class,
+            FormationUserSeeder::class,
+            UserSeeder::class,
+
 
         ]);
         // User::factory(10)->create();

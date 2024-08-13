@@ -16,7 +16,7 @@ class SessionMentoratController extends Controller
      */
     public function index(): JsonResponse
     {
-        $sessions = SessionMentorat::with(['mentor', 'mentees', 'reservations', 'ressources'])->get();
+        $sessions = SessionMentorat::with(['users' , 'reservations', 'ressources'])->get();
         return response()->json($sessions);
     }
 
@@ -37,7 +37,7 @@ class SessionMentoratController extends Controller
      */
     public function show(SessionMentorat $sessionMentorat): JsonResponse
     {
-        return response()->json($sessionMentorat->load(['mentor', 'mentees', 'reservations', 'ressources']));
+        return response()->json($sessionMentorat->load(['users', 'reservations', 'ressources']));
     }
 
     /**

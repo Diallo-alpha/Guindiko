@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FormationMentor extends Model
+class FormationUser extends Model
 {
     use HasFactory;
-    protected $fillable = ['formation_id', 'mentor_id'];
-    public function mentor()
+    protected $fillable = ['formation_id', 'user_id'];
+    public function user()
     {
-        return $this->belongsTo(Mentor::class);
+        return $this->belongsTo(User::class);
     }
 
     public function formation()
@@ -20,6 +20,6 @@ class FormationMentor extends Model
     }
     public function sessionsMentorat()
     {
-        return $this->hasMany(SessionMentorat::class, 'formation_mentor_id');
+        return $this->hasMany(SessionMentorat::class, 'formation_user_id');
     }
 }

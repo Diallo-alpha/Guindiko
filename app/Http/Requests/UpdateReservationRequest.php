@@ -16,7 +16,7 @@ class UpdateReservationRequest extends FormRequest
     public function rules()
     {
         return [
-            'mentee_id' => 'exists:mentees,id',
+            'user_id' => 'exists:users,id',
             'session_mentorat_id' => 'exists:session_mentorats,id',
             'statut' => 'in:en attente,confirmée,annulée',
         ];

@@ -32,9 +32,9 @@ class UpdateSessionMentoratRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'mentor_id.sometimes' => 'Le mentor est requis.',
-            'mentor_id.exists' => 'Le mentor sélectionné n\'existe pas.',
-            'date.sometimes' => 'La date de la session est requise.',
+            'user_id.required' => 'Le user est requis.',
+            'user_id.exists' => 'Le user sélectionné n\'existe pas.',
+            'date.required' => 'La date de la session est requise.',
             'date.date' => 'La date de la session doit être une date valide.',
             'statut.sometimes' => 'Le statut de la session est requis.',
             'statut.in' => 'Le statut doit être l\'une des valeurs suivantes : en attente, confirmée, terminée.',

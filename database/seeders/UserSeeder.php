@@ -13,11 +13,17 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Création de l'utilisateur
         $user = User::create([
             'name' => 'Admin User',
             'email' => 'admintest@example.com',
-            'password' => bcrypt('password'), 
+            'password' => bcrypt('password'),
+            'parcours_academique' => 'Parcours académique par défaut',  // Ajouté ici
+            'diplome' => 'Diplôme par défaut',
+            'langue' => 'Langue par défaut',
+            'cv' => null,
+            'experience' => 'Expérience par défaut',
+            'domaine' => 'Domaine par défaut',
+            'formation_id' => 1, 
         ]);
 
         // Récupérer le rôle 'admin'
@@ -31,5 +37,5 @@ class UserSeeder extends Seeder
             $adminRole = Role::create(['name' => 'admin']);
             $user->assignRole($adminRole);
         }
-    }
+}
 }

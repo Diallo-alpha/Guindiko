@@ -23,8 +23,8 @@ class StoreSessionMentoratRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'formation_mentor_id' => ['required', 'exists:mentors,id'],
-            'date' => ['required', 'date'],
+            'user_id' => ['required', 'exists:users,id'],
+           'date' => ['required', 'date'],
             'statut' => ['required', 'in:en attente,confirmée,terminée'],
             'duree' => ['required', 'integer'],
         ];
@@ -33,8 +33,8 @@ class StoreSessionMentoratRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'mentort_id.required' => 'Le mentor est requis.',
-            'mentort_id.exists' => 'Le mentor sélectionné n\'existe pas.',
+            'user_id.required' => 'Le user est requis.',
+            'user_id.exists' => 'Le user sélectionné n\'existe pas.',
             'date.required' => 'La date de la session est requise.',
             'date.date' => 'La date de la session doit être une date valide.',
             'statut.required' => 'Le statut de la session est requis.',

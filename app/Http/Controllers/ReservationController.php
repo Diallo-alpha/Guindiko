@@ -35,25 +35,25 @@ class ReservationController extends Controller
     {
         // Créer la réservation avec les données validées
         $reservation = Reservation::create($request->validated());
-
+    
         // Récupérer les détails du mentee et de la session
-        $mentee = $reservation->mentee; // Relation mentee() dans le modèle Reservation
+        $user = $reservation->user; // Relation mentee() dans le modèle Reservation
         $sessionMentorat = $reservation->sessionMentorat; // Relation sessionMentorat() dans le modèle Reservation
-
-        if (!$mentee || !$sessionMentorat) {
+    
+        if (!$user || !$sessionMentorat) {
             return response()->json(['error' => 'Mentee ou session de mentorat introuvable'], 404);
         }
-
+    
         // Convertir et formater la date de la session
         $date = Carbon::parse($sessionMentorat->date)->format('Y-m-d H:i:s');
-
+    
         $details = [
-            'email' => $mentee->email,
-            'name' => $mentee->name,
+            'email' => $user->email,
+            'name' => $user->name,
             'date' => $date,
-            'mentor' => $sessionMentorat->mentor->name, // Relation mentor() dans le modèle SessionMentorat
+            'user' => $sessionMentorat->user->name, // Relation mentor() dans le modèle SessionMentorat
         ];
-
+    
         // Envoi de l'e-mail de réservation
         try {
             Mail::send(new ReservationMail($details));
@@ -61,11 +61,11 @@ class ReservationController extends Controller
             Log::error('Erreur lors de l\'envoi de l\'e-mail : ' . $e->getMessage());
             return response()->json(['error' => 'Erreur lors de l\'envoi de l\'e-mail'], 500);
         }
-
+    
         // Réponse JSON après création réussie
         return response()->json(['message' => 'Réservation créée avec succès et e-mail envoyé au mentee.'], 201);
     }
-
+    
     // Mettre à jour une réservation spécifique
     public function update(UpdateReservationRequest $request, $id)
     {
