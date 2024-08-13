@@ -2,65 +2,64 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Forum;
 use App\Http\Requests\StoreForumRequest;
 use App\Http\Requests\UpdateForumRequest;
-use App\Models\Forum;
+use Illuminate\Http\Request;
 
 class ForumController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Afficher tous les forums.
      */
     public function index()
     {
-        //
+        return Forum::all();
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Créer un nouveau forum.
      */
     public function store(StoreForumRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $forum = Forum::create($validatedData);
+
+        return response()->json($forum, 201);
     }
 
     /**
-     * Display the specified resource.
+     * Afficher un forum spécifique.
      */
-    public function show(Forum $forum)
+    public function show($id)
     {
-        //
+        $forum = Forum::findOrFail($id);
+
+        return response()->json($forum);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Mettre à jour un forum existant.
      */
-    public function edit(Forum $forum)
+    public function update(UpdateForumRequest $request, $id)
     {
-        //
+        $validatedData = $request->validated();
+
+        $forum = Forum::findOrFail($id);
+        $forum->update($validatedData);
+
+        return response()->json($forum, 200);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Supprimer un forum.
      */
-    public function update(UpdateForumRequest $request, Forum $forum)
+    public function destroy($id)
     {
-        //
-    }
+        $forum = Forum::findOrFail($id);
+        $forum->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Forum $forum)
-    {
-        //
+        return response()->json(null, 204);
     }
 }

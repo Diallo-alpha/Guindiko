@@ -19,9 +19,9 @@ class ForumFactory extends Factory
     public function definition(): array
     {
         return [
-            'formation_id' => Formation::factory(), // Crée une formation si elle n'existe pas
-            'titre' => $this->faker->sentence, // Génère une phrase pour le titre
-            'description' => $this->faker->paragraph, // Génère un paragraphe pour la description
+            'titre' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
+            'formation_id' => \App\Models\Formation::factory(),
         ];
     }
 }
