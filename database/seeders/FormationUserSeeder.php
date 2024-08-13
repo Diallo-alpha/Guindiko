@@ -5,9 +5,10 @@ namespace Database\Seeders;
 use App\Models\Formation;
 use App\Models\User;
 use App\Models\FormationMentor;
+use App\Models\FormationUser;
 use Illuminate\Database\Seeder;
 
-class FormationMentorSeeder extends Seeder
+class FormationUserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
