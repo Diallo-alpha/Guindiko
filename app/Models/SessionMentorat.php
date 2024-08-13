@@ -9,21 +9,7 @@ class SessionMentorat extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['mentor_id', 'mentee_id', 'date', 'statut'];
-
-    // Une session de mentorat est animée par un mentor
-    public function mentor()
-    {
-        return $this->belongsTo(Mentor::class, 'mentor_id');
-    }
-
-    // Une session de mentorat a un  ou plusieurs mentee
-    public function mentees()
-    {
-        return $this->belongsToMany(Mentee::class, 'reservations')
-                    ->withPivot('statut')
-                    ->withTimestamps();
-    }
+    protected $guarded = [];
 
     // Une session de mentorat peut avoir plusieurs réservations
     public function reservations()
@@ -36,4 +22,19 @@ class SessionMentorat extends Model
     {
         return $this->hasMany(Ressource::class);
     }
+
+
+    // Une session de mentorat peut être réservée par plusieurs mentees
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'reservations')
+                    ->withPivot('statut')
+                    ->withTimestamps();
+    }
+
+    public function formationUser()
+    {
+        return $this->belongsTo(FormationUser::class, 'formation_user_id');
+    }
+ 
 }

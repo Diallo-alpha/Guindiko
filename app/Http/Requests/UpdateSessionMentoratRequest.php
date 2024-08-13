@@ -23,7 +23,6 @@ class UpdateSessionMentoratRequest extends FormRequest
     {
         return [
             'mentor_id' => 'sometimes|required|exists:mentors,id',
-            'mentee_id' => 'sometimes|required|exists:mentees,id',
             'date' => 'sometimes|required|date',
             'statut' => 'sometimes|required|in:en attente,confirmée,terminée',
         ];
@@ -32,10 +31,8 @@ class UpdateSessionMentoratRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'mentor_id.required' => 'Le mentor est requis.',
-            'mentor_id.exists' => 'Le mentor sélectionné n\'existe pas.',
-            'mentee_id.required' => 'Le mentee est requis.',
-            'mentee_id.exists' => 'Le mentee sélectionné n\'existe pas.',
+            'user_id.required' => 'Le user est requis.',
+            'user_id.exists' => 'Le user sélectionné n\'existe pas.',
             'date.required' => 'La date de la session est requise.',
             'date.date' => 'La date de la session doit être une date valide.',
             'statut.required' => 'Le statut de la session est requis.',

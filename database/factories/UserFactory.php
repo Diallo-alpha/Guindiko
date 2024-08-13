@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Formation;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -39,6 +41,13 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+            'cv' => $this->faker->text(100), // Génère un texte factice pour le champ 'cv'
+            'experience' => $this->faker->sentence(),
+            'parcours_academique' => $this->faker->sentence(),
+            'diplome' => $this->faker->word(),
+            'langue' => $this->faker->languageCode(),
+            'domaine' => $this->faker->word(),
+            'formation_id' => Formation::factory(), // Crée un utilisateur fictif associé
         ]);
     }
 }

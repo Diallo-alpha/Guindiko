@@ -19,7 +19,7 @@ class ReservationFactory extends Factory
     public function definition(): array
     {
         return [
-            'mentee_id' => $this->faker->numberBetween(1, 10), // Crée ou utilise un utilisateur
+            'user_id' => $this->faker->numberBetween(1, 10), // Crée ou utilise un utilisateur
             'session_mentorat_id' => SessionMentorat::factory(), // Crée ou utilise une session de mentorat
             'statut' => $this->faker->randomElement(['en attente', 'confirmée', 'annulée']), // Choisit un statut au hasard
             'created_at' => now(),

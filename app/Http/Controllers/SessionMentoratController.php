@@ -16,25 +16,28 @@ class SessionMentoratController extends Controller
      */
     public function index(): JsonResponse
     {
-        $sessions = SessionMentorat::with(['mentor', 'mentees', 'reservations', 'ressources'])->get();
+        $sessions = SessionMentorat::with(['users' , 'reservations', 'ressources'])->get();
         return response()->json($sessions);
     }
 
     /**
      * Stocker une nouvelle session de mentorat.
      */
-    public function store(StoreSessionMentoratRequest $request): JsonResponse
-    {
-        $session = SessionMentorat::create($request->validated());
-        return response()->json($session, 201);
-    }
+
+     public function store(StoreSessionMentoratRequest $request): JsonResponse
+     {
+         $validatedData = $request->validated();
+         $session = SessionMentorat::create($validatedData);
+         return response()->json($session, 201);
+     }
+
 
     /**
      * Afficher une session de mentorat spécifique.
      */
     public function show(SessionMentorat $sessionMentorat): JsonResponse
     {
-        return response()->json($sessionMentorat->load(['mentor', 'mentees', 'reservations', 'ressources']));
+        return response()->json($sessionMentorat->load(['users', 'reservations', 'ressources']));
     }
 
     /**

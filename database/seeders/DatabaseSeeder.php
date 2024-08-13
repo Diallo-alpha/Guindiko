@@ -17,9 +17,8 @@ class DatabaseSeeder extends Seeder
             DomaineSeeder::class,
             FormationSeeder::class,
             RessourceSeeder::class,
-            MentorSeeder::class,
-            MenteeSeeder::class,
             RolesAndPermissionsSeeder::class,
+            FormationUserSeeder::class,
 
         ]);
         // User::factory(10)->create();

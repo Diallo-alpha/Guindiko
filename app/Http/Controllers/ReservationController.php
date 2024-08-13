@@ -37,10 +37,10 @@ class ReservationController extends Controller
         $reservation = Reservation::create($request->validated());
     
         // Récupérer les détails du mentee et de la session
-        $mentee = $reservation->mentee; // Relation mentee() dans le modèle Reservation
+        $user = $reservation->user; // Relation mentee() dans le modèle Reservation
         $sessionMentorat = $reservation->sessionMentorat; // Relation sessionMentorat() dans le modèle Reservation
     
-        if (!$mentee || !$sessionMentorat) {
+        if (!$user || !$sessionMentorat) {
             return response()->json(['error' => 'Mentee ou session de mentorat introuvable'], 404);
         }
     
@@ -48,10 +48,10 @@ class ReservationController extends Controller
         $date = Carbon::parse($sessionMentorat->date)->format('Y-m-d H:i:s');
     
         $details = [
-            'email' => $mentee->email,
-            'name' => $mentee->name,
+            'email' => $user->email,
+            'name' => $user->name,
             'date' => $date,
-            'mentor' => $sessionMentorat->mentor->name, // Relation mentor() dans le modèle SessionMentorat
+            'user' => $sessionMentorat->user->name, // Relation mentor() dans le modèle SessionMentorat
         ];
     
         // Envoi de l'e-mail de réservation

@@ -23,7 +23,7 @@ class UpdateSessionMentoratMenteeRequest extends FormRequest
     {
         return [
             'session_mentorat_id' => 'sometimes|exists:session_mentorats,id',
-            'mentee_id' => 'sometimes|exists:mentees,id',
+            'user_id' => 'sometimes|exists:users,id',
         ];
     }
 

@@ -48,16 +48,7 @@ class User extends Authenticatable implements JWTSubject
             'password' => 'hashed',
         ];
     }
-      // Relations avec mentor et mentee
-      public function mentor()
-      {
-          return $this->hasOne(Mentor::class);
-      }
-
-      public function mentee()
-      {
-          return $this->hasOne(Mentee::class);
-      }
+   
 
     //    Get the identifier that will be stored in the subject claim of the JWT.
       
@@ -74,10 +65,29 @@ class User extends Authenticatable implements JWTSubject
          return [];
      }
 
-     // Dans le modèle User
 public function reservations()
 {
-    return $this->hasMany(Reservation::class, 'mentee_id');
+    return $this->hasMany(Reservation::class);
 }
+
+// Un mentee peut réserver plusieurs sessions de mentorat
+public function sessions()
+{
+    return $this->belongsToMany(SessionMentorat::class, 'reservations')
+                ->withPivot('statut')
+                ->withTimestamps();
+}
+
+
+    // Un mentor peut animer plusieurs sessions de mentorat
+    public function formation()
+    {
+        return $this->belongsTo(Formation::class, 'formation_id');
+    }
+  // Définir la relation many-to-many avec le modèle Formation
+  public function formations()
+  {
+      return $this->belongsToMany(Formation::class, 'formation_users');
+  }
 
 }

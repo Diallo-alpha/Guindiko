@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('session_mentorats', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->default(1)->constrained()->onDelete('cascade');
+            $table->foreignId('formation_user_id')->constrained('formation_users')->onDelete('cascade');
             $table->dateTime('date');
             $table->enum('statut', ['en attente', 'confirmée', 'terminée', 'annulée'])->default('en attente');
-            $table->string('duree');
+            $table->integer('duree');
             $table->timestamps();
         });
     }
