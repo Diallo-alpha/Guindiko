@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 class UpdateSessionMentoratRequest extends FormRequest
 {
     /**
@@ -22,9 +23,9 @@ class UpdateSessionMentoratRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'mentor_id' => 'sometimes|required|exists:mentors,id',
-            'date' => 'sometimes|required|date',
-            'statut' => 'sometimes|required|in:en attente,confirmée,terminée',
+            'formation_mentor_id' => 'sometimes|exists:mentors,id',
+            'date' => 'sometimes|date',
+            'statut' => 'sometimes|in:en attente,confirmée,terminée',
         ];
     }
 
@@ -38,5 +39,12 @@ class UpdateSessionMentoratRequest extends FormRequest
             'statut.sometimes' => 'Le statut de la session est requis.',
             'statut.in' => 'Le statut doit être l\'une des valeurs suivantes : en attente, confirmée, terminée.',
         ];
+    }
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'success'   => false,
+            'errors'      => $validator->errors()
+        ], 422));
     }
 }
