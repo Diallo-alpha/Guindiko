@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             MenteeSeeder::class,
             FormationMentorSeeder::class,
             CommentaireSeeder::class,
+            ForumSeeder::class,
 
         ]);
         // User::factory(10)->create();

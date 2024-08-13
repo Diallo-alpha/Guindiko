@@ -28,4 +28,9 @@ public function mentors()
     {
         return $this->hasMany(SessionMentorat::class);
     }
+    // Une formation peut avoir une forums
+    public function forum()
+    {
+        return $this->hasOne(Forum::class);
+    }
 }
