@@ -9,7 +9,7 @@ class Reservation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'session_mentorat_id', 'statut'];
+    protected $fillable = ['mentee_id', 'session_mentorat_id', 'statut'];
 
     // Une réservation est faite par un  mentee
     public function user()

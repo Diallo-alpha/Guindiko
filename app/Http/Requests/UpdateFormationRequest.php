@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateFormationRequest extends FormRequest
 {
@@ -45,5 +47,12 @@ class UpdateFormationRequest extends FormRequest
             'domaine_id.sometimes' => 'L\'ID du domaine est requis.',
             'domaine_id.exists' => 'Le domaine sélectionné n\'existe pas.',
         ];
+    }
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'success'   => false,
+            'errors'      => $validator->errors()
+        ], 422));
     }
 }

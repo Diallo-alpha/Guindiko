@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateForumRequest extends FormRequest
 {
@@ -43,5 +45,12 @@ class UpdateForumRequest extends FormRequest
             'titre.max' => 'Le titre ne peut pas dépasser 255 caractères.',
             'description.string' => 'La description doit être une chaîne de caractères.',
         ];
+    }
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'success'   => false,
+            'errors'      => $validator->errors()
+        ], 422));
     }
 }

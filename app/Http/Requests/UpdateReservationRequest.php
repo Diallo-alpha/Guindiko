@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateReservationRequest extends FormRequest
 {
@@ -18,5 +20,12 @@ class UpdateReservationRequest extends FormRequest
             'session_mentorat_id' => 'exists:session_mentorats,id',
             'statut' => 'in:en attente,confirmée,annulée',
         ];
+    }
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'success'   => false,
+            'errors'      => $validator->errors()
+        ], 422));
     }
 }
