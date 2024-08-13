@@ -22,7 +22,7 @@ class StoreSessionMentoratRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'mentor_id' => ['required', 'exists:mentorts,id'],
+            'mentor_id' => ['required', 'exists:mentors,id'],
             'mentee_id' => ['required', 'exists:mentees,id'],
             'date' => ['required', 'date'],
             'statut' => ['required', 'in:en attente,confirmée,terminée'],
