@@ -1,27 +1,20 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-<<<<<<< HEAD
 use App\Http\Controllers\CommentaireController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\ForumController;
-use App\Http\Controllers\MenteeController;
-=======
-use App\Http\Controllers\DomaineController;
-use App\Http\Controllers\FormationController;
->>>>>>> 944ff9bb1bf54d6d77fa79c061817a85167379af
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\SessionMentoratController;
-use App\Http\Controllers\SessionMentoratMenteeController;
+// use App\Http\Controllers\SessionMentoratMenteeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-<<<<<<< HEAD
-=======
 
 
->>>>>>> 944ff9bb1bf54d6d77fa79c061817a85167379af
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -44,9 +37,6 @@ Route::apiResource('domaines', DomaineController::class);
 
 // Définir les routes pour le contrôleur Formation
 Route::apiResource('formations', FormationController::class);
-<<<<<<< HEAD
 
-Route::post('/mentees/request-mentorship', [MenteeController::class, 'requestMentorship'])->name('mentees.requestMentorship');
+Route::post('/mentees/request-mentorship', [Controller::class, 'requestMentorship'])->name('mentees.requestMentorship');
 
-=======
->>>>>>> 944ff9bb1bf54d6d77fa79c061817a85167379af
