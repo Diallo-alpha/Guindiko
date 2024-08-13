@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             RessourceSeeder::class,
             MentorSeeder::class,
             MenteeSeeder::class,
+            RolesAndPermissionsSeeder::class,
 
         ]);
         // User::factory(10)->create();
