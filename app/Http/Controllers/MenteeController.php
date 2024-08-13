@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Controllers\Request;
 use App\Models\User;
 use App\Models\Mentee;
 use App\Http\Controllers\Controller;
@@ -64,7 +64,7 @@ class MenteeController extends Controller
         //
     }
 
-    public function requestMentorship(Request $request)
+    public function requestMentorships(Request $request)
     {
         // Valider la demande pour s'assurer qu'un mentor est sélectionné
         $validated = $request->validate([

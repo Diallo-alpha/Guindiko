@@ -15,7 +15,7 @@ class MentorController extends Controller
     /**
      * Accepter ou refuser une demande de mentorat.
      */
-    public function respondToRequest(Request $request, Mentee $mentee)
+    public function respondsToRequest(Request $request, Mentee $mentee)
     {
         $validated = $request->validate([
             'response' => 'required|in:accepted,refused',
@@ -28,10 +28,9 @@ class MentorController extends Controller
             return response()->json(['error' => 'Unauthorized.'], 403);
         }
 
-        // Mettre à jour le statut du mentorat
         if ($validated['response'] === 'accepted') {
             // Ajouter le mentee à la liste des mentees du mentor
-            $mentor->mentees()->save($mentee);
+            $mentor->mentees()->attach($mentee->id);
             $status = 'accepted';
         } else {
             $status = 'refused';

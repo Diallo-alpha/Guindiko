@@ -9,7 +9,6 @@ class Mentor extends Model
 {
     use HasFactory;
 
-    // Si vous utilisez $guarded ou $fillable, assurez-vous de définir correctement les champs pouvant être remplis
     protected $guarded = [];
 
     /**
@@ -37,10 +36,10 @@ class Mentor extends Model
     }
 
     /**
-     * Un mentor a plusieurs mentees.
+     * Un mentor a plusieurs mentees via une table pivot.
      */
     public function mentees()
     {
-        return $this->hasMany(Mentee::class);
+        return $this->belongsToMany(Mentee::class, 'mentor_mentee');
     }
 }

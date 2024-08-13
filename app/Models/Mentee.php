@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +10,7 @@ class Mentee extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',  // Ajoutez d'autres attributs si nécessaire
+        'user_id',  'parcours_academique', 'diplome' ,'langue','id'
     ];
 
     /**
@@ -33,10 +32,10 @@ class Mentee extends Model
     }
 
     /**
-     * Un mentee est associé à un mentor.
+     * Les mentors associés à ce mentee via une table pivot.
      */
-    public function mentor()
+    public function mentors()
     {
-        return $this->belongsTo(Mentor::class);
+        return $this->belongsToMany(Mentor::class, 'mentor_mentee');
     }
 }

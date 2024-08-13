@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\Request;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\DomaineController;
@@ -10,7 +10,6 @@ use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\SessionMentoratController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SessionMentoratMenteeController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MentorController;
 use App\Http\Controllers\MenteeController;
@@ -48,8 +47,7 @@ Route::apiResource('formations', FormationController::class);
 
 
 // acceptation ou refus d'une demande de mentoring
-
-
-Route::post('/mentee/request', [MenteeController::class, 'requestMentorship']);
-Route::post('/mentor/respond/{mentee}', [MentorController::class, 'respondToRequest']);
+Route::post('/mentee/request', [MenteeController::class, 'requestMentorships']);
+// Route::post('/mentor/respond/{mentee_id}', [MentorController::class, 'respondsToRequest']);
 Route::get('/notifications/{mentee_id}', [NotificationController::class, 'getNotifications']);
+Route::post('/mentor/respond/{mentee_id}', [MentorController::class, 'respondsToRequest']);
