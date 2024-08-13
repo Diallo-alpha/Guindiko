@@ -9,7 +9,7 @@ class Commentaire extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['session_mentorat_id', 'mentee_id', 'contenu'];
+    protected $fillable = ['session_mentorat_id', 'user_id', 'contenu'];
 
     // Un commentaire appartient à une session de mentorat
     public function sessionMentorat()
@@ -21,5 +21,9 @@ class Commentaire extends Model
     public function mentee()
     {
         return $this->belongsTo(Mentee::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

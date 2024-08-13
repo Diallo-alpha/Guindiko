@@ -11,7 +11,7 @@ class StoreForumRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; 
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class StoreForumRequest extends FormRequest
         return [
             'formation_id' => 'required|exists:formations,id',
             'titre' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'required|string',
         ];
     }
 

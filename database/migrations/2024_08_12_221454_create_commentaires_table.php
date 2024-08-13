@@ -16,7 +16,7 @@ return new class extends Migration
                   $table->foreignId('session_mentorat_id')->constrained('session_mentorats')->onDelete('cascade');
                   $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
                   $table->text('contenu');
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 

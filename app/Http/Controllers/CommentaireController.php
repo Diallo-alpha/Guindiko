@@ -22,9 +22,13 @@ class CommentaireController extends Controller
      */
     public function store(StoreCommentaireRequest $request)
     {
-        $validatedData = $request->validated();
+        $commentaire = new Commentaire([
+            'session_mentorat_id' => $request->input('session_mentorat_id'),
+            'user_id' => $request->input('user_id'), 
+            'contenu' => $request->input('contenu'),
+        ]);
 
-        $commentaire = Commentaire::create($validatedData);
+        $commentaire->save();
 
         return response()->json($commentaire, 201);
     }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('session_mentorat_id')->constrained('session_mentorats')->onDelete('cascade');
             $table->enum('statut', ['en attente', 'confirmée', 'annulée']);
             $table->timestamps();
-        });
+        }); 
     }
 
     /**

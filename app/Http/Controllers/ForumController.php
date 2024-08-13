@@ -26,7 +26,7 @@ class ForumController extends Controller
 
         $forum = Forum::create($validatedData);
 
-        return response()->json($forum, 201);
+        return response()->json($forum, 201); 
     }
 
     /**

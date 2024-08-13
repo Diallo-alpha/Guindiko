@@ -23,7 +23,7 @@ class StoreCommentaireRequest extends FormRequest
     {
         return [
             'session_mentorat_id' => 'required|exists:session_mentorats,id',
-            'mentee_id' => 'required|exists:mentees,id',
+            'user_id' => 'required|exists:users,id', 
             'contenu' => 'required|string',
         ];
     }
@@ -36,12 +36,12 @@ class StoreCommentaireRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'session_mentorat_id.required' => 'Le champ ID de la session de mentorat est obligatoire.',
-            'session_mentorat_id.exists' => 'L\'ID de la session de mentorat spécifiée n\'existe pas.',
-            'mentee_id.required' => 'Le champ ID du mentee est obligatoire.',
-            'mentee_id.exists' => 'L\'ID du mentee spécifié n\'existe pas.',
-            'contenu.required' => 'Le champ contenu est obligatoire.',
-            'contenu.string' => 'Le contenu doit être une chaîne de caractères.',
+            'session_mentorat_id.required' => 'La session de mentorat est requise.',
+            'session_mentorat_id.exists' => 'La session de mentorat n\'existe pas.',
+            'user_id.required' => 'L\'utilisateur est requis.',
+            'user_id.exists' => 'L\'utilisateur n\'existe pas.',
+            'contenu.required' => 'Le contenu du commentaire est requis.',
+            'contenu.string' => 'Le contenu du commentaire doit être une chaîne de caractères.',
         ];
     }
 }

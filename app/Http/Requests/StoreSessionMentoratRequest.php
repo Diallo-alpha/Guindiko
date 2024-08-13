@@ -24,7 +24,8 @@ class StoreSessionMentoratRequest extends FormRequest
     {
         return [
             'user_id' => ['required', 'exists:users,id'],
-           'date' => ['required', 'date'],
+            'date' => ['required', 'date'],
+            'formation_user_id' => ['required', 'exists:formation_users,id'],
             'statut' => ['required', 'in:en attente,confirmée,terminée'],
             'duree' => ['required', 'integer'],
         ];
@@ -40,6 +41,10 @@ class StoreSessionMentoratRequest extends FormRequest
             'statut.required' => 'Le statut de la session est requis.',
             'statut.in' => 'Le statut doit être l\'une des valeurs suivantes : en attente, confirmée, terminée.',
             'duree.required' => "la durrée de la session est requit",
+            'duree.integer' => "la durée de la session doit être un entier",
+            'formation_user_id.required' => 'L\'ID de la formation est requis.',
+            'formation_user_id.exists' => 'Le formation sélectionnée n\'existe pas.',
+            
         ];
     }
 

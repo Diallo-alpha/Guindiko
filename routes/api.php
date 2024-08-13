@@ -9,7 +9,6 @@ use App\Http\Controllers\ForumController;
 use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\RessourceController;
-// use App\Http\Controllers\SessionMentoratMenteeController;
 use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SessionMentoratController;
@@ -31,7 +30,7 @@ Route::post('refresh', [AuthController::class, 'refresh']);
 Route::middleware('auth:api')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
-
+});
     // Routes protégées
     Route::apiResource('reservations', ReservationController::class);
     Route::apiResource('ressources', RessourceController::class);
@@ -45,7 +44,6 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/admin/mentor/{id}/valider', [AdminController::class, 'validerMentor'])->name('admin.validerMentor');
         Route::delete('/admin/mentor/{id}/supprimer', [AdminController::class, 'supprimerMentor'])->name('admin.supprimerMentor');
     });
-});
 Route::apiResource('reservations', ReservationController::class);
 Route::apiResource('ressources', RessourceController::class);
 Route::apiResource('session-mentorats', SessionMentoratController::class);

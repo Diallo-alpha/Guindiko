@@ -30,7 +30,7 @@ class SessionMentorat extends Model
         return $this->belongsToMany(User::class, 'reservations')
                     ->withPivot('statut')
                     ->withTimestamps();
-    }
+    } 
 
     public function formationUser()
     {

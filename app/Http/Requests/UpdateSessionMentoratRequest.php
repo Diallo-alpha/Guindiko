@@ -23,21 +23,22 @@ class UpdateSessionMentoratRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'formation_mentor_id' => 'sometimes|exists:mentors,id',
-            'date' => 'sometimes|date',
-            'statut' => 'sometimes|in:en attente,confirmée,terminée',
+            'user_id' => ['sometimes', 'exists:users,id'],
+            'formation_mentor_id' => ['sometimes', 'exists:mentors,id'],
+            'date' => ['sometimes', 'date'],
+            'statut' => ['sometimes', 'in:en attente,confirmée,terminée'],
+            'duree' => ['sometimes', 'integer'],
         ];
     }
 
     public function messages(): array
     {
         return [
-            'user_id.required' => 'Le user est requis.',
-            'user_id.exists' => 'Le user sélectionné n\'existe pas.',
-            'date.required' => 'La date de la session est requise.',
+             'user_id.exists' => 'Le user sélectionné n\'existe pas.',
+            'formation_mentor_id.exists' => 'Le mentor sélectionné n\'existe pas.',
             'date.date' => 'La date de la session doit être une date valide.',
-            'statut.sometimes' => 'Le statut de la session est requis.',
             'statut.in' => 'Le statut doit être l\'une des valeurs suivantes : en attente, confirmée, terminée.',
+            'dure.in' => 'Leoit être en entier',
         ];
     }
     public function failedValidation(Validator $validator)
