@@ -9,12 +9,12 @@ class Reservation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'session_mentorat_id', 'statut'];
+    protected $fillable = ['mentee_id', 'session_mentorat_id', 'statut'];
 
-    // Une réservation est faite par un  mentee
+    // Une réservation est faite par un mentee
     public function mentee()
     {
-        return $this->belongsTo(Mentee::class, 'mentee_id');
+        return $this->belongsTo(User::class, 'mentee_id');
     }
 
     // Une réservation est pour une session de mentorat spécifique
@@ -22,5 +22,4 @@ class Reservation extends Model
     {
         return $this->belongsTo(SessionMentorat::class, 'session_mentorat_id');
     }
-
 }
