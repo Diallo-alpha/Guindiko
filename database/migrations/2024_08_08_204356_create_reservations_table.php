@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('mentee_id')->constrained('mentees')->onDelete('cascade');
             $table->foreignId('session_mentorat_id')->constrained('session_mentorats')->onDelete('cascade');
             $table->enum('statut', ['en attente', 'confirmée', 'annulée']);
             $table->timestamps();

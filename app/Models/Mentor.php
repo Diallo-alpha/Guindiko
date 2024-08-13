@@ -24,6 +24,6 @@ class Mentor extends Model
     }
     public function formation()
     {
-        return $this->belongsTo(SessionMentorat::class, 'formation_id');
+        return $this->belongsTo(Formation::class, 'formation_id');
     }
 }

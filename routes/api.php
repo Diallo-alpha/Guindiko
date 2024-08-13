@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MenteeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReservationController;
@@ -25,3 +26,5 @@ Route::middleware('auth:api')->group(function () {
 Route::apiResource('reservations', ReservationController::class);
 Route::apiResource('ressources', RessourceController::class);
 Route::apiResource('session-mentorats', SessionMentoratController::class);
+Route::post('/mentees/request-mentorship', [MenteeController::class, 'requestMentorship'])->name('mentees.requestMentorship');
+
