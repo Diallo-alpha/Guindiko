@@ -12,6 +12,8 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SessionMentoratMenteeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MentorController;
+use App\Http\Controllers\MenteeController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -34,6 +36,7 @@ Route::apiResource('session-mentorats', SessionMentoratController::class);
 Route::get('/mentees/{id}/notifications', [NotificationController::class, 'getNotifications']);
 
 
+// acceptation ou refus d'une reservations de mentoring
 
 Route::put('/reservations/{id}/accept', [ReservationController::class, 'accept']);
 Route::put('/reservations/{id}/reject', [ReservationController::class, 'reject']);
@@ -43,3 +46,10 @@ Route::apiResource('domaines', DomaineController::class);
 // Définir les routes pour le contrôleur Formation
 Route::apiResource('formations', FormationController::class);
 
+
+// acceptation ou refus d'une demande de mentoring
+
+
+Route::post('/mentee/request', [MenteeController::class, 'requestMentorship']);
+Route::post('/mentor/respond/{mentee}', [MentorController::class, 'respondToRequest']);
+Route::get('/notifications/{mentee_id}', [NotificationController::class, 'getNotifications']);
