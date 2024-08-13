@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mentee;
-use App\Models\User;
 use App\Models\Mentor;
 use App\Models\Notification;
 use Illuminate\Http\Request;
@@ -11,62 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class MentorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        // Logique pour afficher une liste des mentors
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        // Logique pour afficher le formulaire de création d'un mentor
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreMentorRequest $request)
-    {
-        // Logique pour enregistrer un nouveau mentor dans la base de données
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Mentor $mentor)
-    {
-        // Logique pour afficher un mentor spécifique
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Mentor $mentor)
-    {
-        // Logique pour afficher le formulaire d'édition d'un mentor
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateMentorRequest $request, Mentor $mentor)
-    {
-        // Logique pour mettre à jour un mentor dans la base de données
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Mentor $mentor)
-    {
-        // Logique pour supprimer un mentor de la base de données
-    }
-
+    // Autres méthodes existantes...
 
     /**
      * Accepter ou refuser une demande de mentorat.
@@ -85,7 +29,13 @@ class MentorController extends Controller
         }
 
         // Mettre à jour le statut du mentorat
-        $status = $validated['response'] === 'accepted' ? 'accepted' : 'refused';
+        if ($validated['response'] === 'accepted') {
+            // Ajouter le mentee à la liste des mentees du mentor
+            $mentor->mentees()->save($mentee);
+            $status = 'accepted';
+        } else {
+            $status = 'refused';
+        }
 
         // Enregistrer la notification
         Notification::create([
