@@ -20,9 +20,9 @@ class UpdateRessourceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'session_mentorat_id' => 'required|exists:session_mentorats,id',
-            'titre' => 'required|string|max:255',
-            'lien' => 'required|url',
+            'session_mentorat_id' => 'sometimes|exists:session_mentorats,id',
+            'titre' => 'sometimes|string|max:255',
+            'lien' => 'sometimes|url',
         ];
     }
 }

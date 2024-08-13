@@ -2,65 +2,68 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Commentaire;
 use App\Http\Requests\StoreCommentaireRequest;
 use App\Http\Requests\UpdateCommentaireRequest;
-use App\Models\Commentaire;
+use Illuminate\Http\Request;
 
 class CommentaireController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Afficher tous les commentaires.
      */
     public function index()
     {
-        //
+        return Commentaire::all();
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Créer un nouveau commentaire.
      */
     public function store(StoreCommentaireRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $commentaire = Commentaire::create($validatedData);
+
+        return response()->json($commentaire, 201);
     }
 
     /**
-     * Display the specified resource.
+     * Afficher un commentaire spécifique.
      */
-    public function show(Commentaire $commentaire)
+    public function show($id)
     {
-        //
+        $commentaire = Commentaire::findOrFail($id);
+
+        return response()->json($commentaire);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Mettre à jour un commentaire existant.
      */
-    public function edit(Commentaire $commentaire)
+    public function update(UpdateCommentaireRequest $request, $id)
     {
-        //
+        try {
+            $validatedData = $request->validated();
+            $commentaire = Commentaire::findOrFail($id);
+            $commentaire->update($validatedData);
+
+            return response()->json($commentaire, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCommentaireRequest $request, Commentaire $commentaire)
-    {
-        //
-    }
 
     /**
-     * Remove the specified resource from storage.
+     * Supprimer un commentaire.
      */
-    public function destroy(Commentaire $commentaire)
+    public function destroy($id)
     {
-        //
+        $commentaire = Commentaire::findOrFail($id);
+        $commentaire->delete();
+
+        return response()->json(null, 204);
     }
 }

@@ -24,9 +24,9 @@ class UpdateFormationRequest extends FormRequest
     public function rules()
     {
         return [
-            'nom' => 'required|string|max:255',
+            'nom' => 'sometimes|string|max:255',
             'description' => 'nullable|string',
-            'domaine_id' => 'required|exists:domaines,id',
+            'domaine_id' => 'sometimes|exists:domaines,id',
         ];
     }
 
@@ -38,11 +38,11 @@ class UpdateFormationRequest extends FormRequest
     public function messages()
     {
         return [
-            'nom.required' => 'Le nom de la formation est requis.',
+            'nom.sometimes' => 'Le nom de la formation est requis.',
             'nom.string' => 'Le nom doit être une chaîne de caractères.',
             'nom.max' => 'Le nom ne peut pas dépasser 255 caractères.',
             'description.string' => 'La description doit être une chaîne de caractères.',
-            'domaine_id.required' => 'L\'ID du domaine est requis.',
+            'domaine_id.sometimes' => 'L\'ID du domaine est requis.',
             'domaine_id.exists' => 'Le domaine sélectionné n\'existe pas.',
         ];
     }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\ForumController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\SessionMentoratController;
 use App\Http\Controllers\SessionMentoratMenteeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -36,3 +38,4 @@ Route::apiResource('domaines', DomaineController::class);
 // Définir les routes pour le contrôleur Formation
 Route::apiResource('formations', FormationController::class);
 Route::apiResource('forums', ForumController::class);
+Route::apiResource('commentaires', CommentaireController::class);

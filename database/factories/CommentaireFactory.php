@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 use App\Models\Commentaire;
+use App\Models\SessionMentorat;
+use App\Models\Mentee;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,8 +21,8 @@ class CommentaireFactory extends Factory
     public function definition(): array
     {
         return [
-            'session_mentorat_id' => \App\Models\SessionMentorat::factory(),
-            'mentee_id' => \App\Models\Mentee::factory(),
+            'session_mentorat_id' => SessionMentorat::factory(),
+            'mentee_id' => Mentee::factory(),
             'contenu' => $this->faker->paragraph(),
         ];
     }

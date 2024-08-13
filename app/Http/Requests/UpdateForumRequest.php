@@ -11,7 +11,7 @@ class UpdateForumRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true; 
+        return true;
     }
 
     /**
@@ -22,8 +22,8 @@ class UpdateForumRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'formation_id' => 'required|exists:formations,id',
-            'titre' => 'required|string|max:255',
+            'formation_id' => 'sometimes|exists:formations,id',
+            'titre' => 'sometimes|string|max:255',
             'description' => 'nullable|string',
         ];
     }
@@ -36,9 +36,9 @@ class UpdateForumRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'formation_id.required' => 'Le champ ID de la formation est obligatoire.',
+            'formation_id.sometimes' => 'Le champ ID de la formation est obligatoire.',
             'formation_id.exists' => 'L\'ID de la formation spécifiée n\'existe pas.',
-            'titre.required' => 'Le champ titre est obligatoire.',
+            'titre.sometimes' => 'Le champ titre est obligatoire.',
             'titre.string' => 'Le titre doit être une chaîne de caractères.',
             'titre.max' => 'Le titre ne peut pas dépasser 255 caractères.',
             'description.string' => 'La description doit être une chaîne de caractères.',
