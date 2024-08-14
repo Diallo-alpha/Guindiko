@@ -12,8 +12,7 @@ use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SessionMentoratController;
-
-
+use App\Http\Controllers\MentorController;
 
 
 Route::get('/user', function (Request $request) {
@@ -53,3 +52,8 @@ Route::apiResource('domaines', DomaineController::class);
 Route::apiResource('formations', FormationController::class);
 Route::post('/mentees/request-mentorship', [Controller::class, 'requestMentorship'])->name('mentees.requestMentorship');
 
+Route::middleware('auth:api')->group(function () {
+    Route::post('mentorats/{mentor}/demande', [MentorController::class, 'envoyerDemandeMentorat']);
+    Route::post('mentorats/{demandeMentorat}/accepter', [MentorController::class, 'accepterDemandeMentorat']);
+    Route::post('mentorats/session', [MentorController::class, 'creerSessionMentorat']);
+});

@@ -1,11 +1,9 @@
 <?php
-
 namespace Database\Seeders;
-use App\Models\Commentaire;
-use App\Models\SessionMentorat;
-use App\Models\Mentee;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
+use App\Models\Commentaire;
+use App\Models\User;
 
 class CommentaireSeeder extends Seeder
 {
@@ -14,13 +12,16 @@ class CommentaireSeeder extends Seeder
      */
     public function run(): void
     {
-        Mentee::all()->each(function ($mentee) {
-            SessionMentorat::inRandomOrder()->take(3)->get()->each(function ($sessionMentorat) use ($mentee) {
-                Commentaire::factory()->create([
-                    'session_mentorat_id' => $sessionMentorat->id,
-                    'mentee_id' => $mentee->id,
-                ]);
-            });
-        });
+        // Récupérer tous les utilisateurs qui ont le rôle de mentee
+        $mentees = User::role('mentee')->get();
+
+        // Créer des commentaires pour chaque mentee
+        foreach ($mentees as $mentee) {
+            Commentaire::create([
+                'user_id' => $mentee->id,
+                'session_mentorat_id' => 1,
+                'contenu' => 'Très bon mentorat, merci!',
+            ]);
+        }
     }
 }

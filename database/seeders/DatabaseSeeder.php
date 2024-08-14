@@ -20,16 +20,11 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             FormationUserSeeder::class,
             UserSeeder::class,
-
+            DemandeMentoratSeeder::class,
+            ForumSeeder::class,
+            CommentaireSeeder::class,
 
         ]);
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-
 
     }
 }

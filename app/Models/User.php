@@ -93,5 +93,20 @@ public function sessions()
   {
       return $this->hasMany(Commentaire::class);
   }
+   // Relation: les mentors ont plusieurs mentees
+   public function mentees()
+   {
+       return $this->hasMany(DemandeMentorat::class, 'mentor_id')->where('statut', 'acceptée');
+   }
+    // Relation: les mentees (mentorés) ont plusieurs mentors
+    public function mentors()
+    {
+        return $this->hasMany(DemandeMentorat::class, 'mentee_id')->where('statut', 'acceptée');
+    }
+    // Relation: un utilisateur peut créer plusieurs sessions de mentorat
+    public function sessionsMentorat()
+    {
+        return $this->hasMany(SessionMentorat::class, 'user_id');
+    }
 
 }
