@@ -6,13 +6,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\MenteeController;
+use App\Http\Controllers\MentorController;
 use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SessionMentoratController;
-use App\Http\Controllers\MentorController;
 
 
 Route::get('/user', function (Request $request) {
@@ -47,7 +48,7 @@ Route::middleware(['auth:api', 'role:mentor'])->group(function () {
 
 Route::middleware(['auth:api', 'role:mentee'])->group(function () {
     Route::post('/mentees/request-mentorship', [MentorController::class, 'envoyerDemandeMentorat'])->name('mentees.requestMentorship');
-    Route::post('mentorats/{mentor}/demande', [MentorController::class, 'envoyerDemandeMentorat']);
+    Route::post('mentorats/{mentor}/demande', [MenteeController::class, 'envoyerDemandeMentorat']);
     Route::apiResource('commentaires', CommentaireController::class);
     Route::apiResource('reservations', ReservationController::class);
 });
