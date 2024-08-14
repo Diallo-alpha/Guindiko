@@ -11,6 +11,7 @@ use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\CommentaireController;
+use App\Http\Controllers\NotificationReservationController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SessionMentoratController;
 
@@ -30,21 +31,18 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
 });
-<<<<<<< HEAD
 Route::middleware('auth:api')->group(function () {
     Route::apiResource('reservations', ReservationController::class);
 });
 Route::apiResource('ressources', RessourceController::class);
 Route::apiResource('session-mentorats', SessionMentoratController::class);
 Route::apiResource('domaines', DomaineController::class);
-=======
 Route::get('formations', [FormationController::class, 'index']);
 Route::get('formations/{id}', [FormationController::class, 'show']);
 //aficher domain public
 Route::get('/domaines', [DomaineController::class, 'index']);
 Route::get('domaines/{id}', [DomaineController::class, 'show']);
 Route::apiResource('forums', ForumController::class);
->>>>>>> dba3a79be31a1120f82a1db93d4f7ba04d1e09fe
 
 Route::middleware(['auth:api', 'role:admin'])->group(function () {
     //valider un mentor
@@ -74,3 +72,5 @@ Route::middleware(['auth:api', 'role:mentee'])->group(function () {
     Route::apiResource('reservations', ReservationController::class);
 });
 
+Route::get('/notifications', [NotificationReservationController::class, 'index'])->name('notifications.index');
+Route::post('/notifications/mark-as-read', [NotificationReservationController::class, 'markAsRead'])->name('notifications.markAsRead');

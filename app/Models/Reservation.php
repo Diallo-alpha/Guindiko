@@ -9,18 +9,16 @@ class Reservation extends Model
 {
     use HasFactory; 
 
+    // Les attributs qui peuvent être assignés en masse
     protected $fillable = ['user_id', 'session_mentorat_id', 'statut'];
 
-    // Une réservation est faite par un mentee
-
-
-    // Une réservation est pour une session de mentorat spécifique
+    // Relation : Une réservation est faite par un utilisateur (mentee)
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    // Une réservation est pour une session de mentorat spécifique
+    // Relation : Une réservation est pour une session de mentorat spécifique
     public function sessionMentorat()
     {
         return $this->belongsTo(SessionMentorat::class, 'session_mentorat_id');

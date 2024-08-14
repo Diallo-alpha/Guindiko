@@ -11,39 +11,45 @@ class SessionMentorat extends Model
 
     protected $guarded = [];
 
-    // Une session de mentorat peut avoir plusieurs réservations
+    /**
+     * Une session de mentorat peut avoir plusieurs réservations.
+     */
     public function reservations()
     {
-        return $this->hasMany(Reservation::class);
+        return $this->hasMany(Reservation::class, 'session_mentorat_id');
     }
 
-    // Une session de mentorat peut avoir plusieurs ressources
+    /**
+     * Une session de mentorat peut avoir plusieurs ressources.
+     */
     public function ressources()
     {
-        return $this->hasMany(Ressource::class);
+        return $this->hasMany(Ressource::class, 'session_mentorat_id');
     }
 
-
-    // Une session de mentorat peut être réservée par plusieurs mentees
+    /**
+     * Une session de mentorat peut être associée à plusieurs utilisateurs (mentee) via les réservations.
+     */
     public function users()
     {
-        return $this->belongsToMany(User::class, 'reservations')
+        return $this->belongsToMany(User::class, 'reservations', 'session_mentorat_id', 'user_id')
                     ->withPivot('statut')
                     ->withTimestamps();
     }
 
+    /**
+     * Une session de mentorat est associée à une formation utilisateur.
+     */
     public function formationUser()
     {
         return $this->belongsTo(FormationUser::class, 'formation_user_id');
     }
-    public function utilisateur()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
 
-    public function formationUtilisateur()
+    /**
+     * Relation vers l'utilisateur (mentor) qui anime la session de mentorat.
+     */
+    public function mentor()
     {
-        return $this->belongsTo(FormationUser::class, 'formation_user_id');
+        return $this->belongsTo(User::class, 'user_id'); // Assurez-vous que 'user_id' est le bon champ
     }
-
 }

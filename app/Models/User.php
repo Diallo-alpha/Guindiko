@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,34 +12,13 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable, HasRoles;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    // protected $fillable = [
-    //     'name',
-    //     'email',
-    //     'password',
-    // ];
-
     protected $guarded = [];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -49,63 +27,37 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
-
-    //    Get the identifier that will be stored in the subject claim of the JWT.
-
-     public function getJWTIdentifier()
-     {
-         return $this->getKey();
-     }
-
-     /**
-      * Return a key value array, containing any custom claims to be added to the JWT.
-      */
-     public function getJWTCustomClaims()
-     {
-         return [];
-     }
-
-     public function reservations()
-     {
-         return $this->hasMany(Reservation::class, 'user_id');
-     }
-// Un mentee peut réserver plusieurs sessions de mentorat
-public function sessions()
-{
-    return $this->belongsToMany(SessionMentorat::class, 'reservations')
-                ->withPivot('statut')
-                ->withTimestamps();
-}
-
-
-    // Un mentor peut animer plusieurs sessions de mentorat
-    public function formation()
+    public function getJWTIdentifier()
     {
-        return $this->belongsTo(Formation::class, 'formation_id');
+        return $this->getKey();
     }
-  // Définir la relation many-to-many avec le modèle Formation
-  public function formations()
-  {
-      return $this->belongsToMany(Formation::class, 'formation_users');
-  }
-  public function commentaires()
-  {
-      return $this->hasMany(Commentaire::class);
-  }
-   // Relation: les mentors ont plusieurs mentees
-   public function mentees()
-   {
-       return $this->hasMany(DemandeMentorat::class, 'mentor_id')->where('statut', 'acceptée');
-   }
-    // Relation: les mentees (mentorés) ont plusieurs mentors
-    public function mentors()
+
+    public function getJWTCustomClaims()
     {
-        return $this->hasMany(DemandeMentorat::class, 'mentee_id')->where('statut', 'acceptée');
+        return [];
     }
-    // Relation: un utilisateur peut créer plusieurs sessions de mentorat
+
+    // Relation pour les réservations faites par ce mentee
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class, 'user_id');
+    }
+
+    // Relation pour les sessions de mentorat où cet utilisateur est le mentor
     public function sessionsMentorat()
     {
-        return $this->hasMany(SessionMentorat::class, 'user_id');
+        return $this->hasMany(SessionMentorat::class, 'mentor_id');
     }
 
+    // Relation pour les formations associées à cet utilisateur
+    public function formations()
+    {
+        return $this->belongsToMany(Formation::class, 'formation_users');
+    }
+
+    // Relation pour les commentaires créés par cet utilisateur
+    public function commentaires()
+    {
+        return $this->hasMany(Commentaire::class);
+    }
 }

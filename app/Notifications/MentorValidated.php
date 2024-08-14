@@ -18,18 +18,18 @@ class MentorValidated extends Notification
      * @param  string  $password
      * @return void
      */
-    public function __construct($password)
+    public function __construct(string $password)
     {
         $this->password = $password;
     }
 
     /**
-     * Obtenez les canaux de diffusion de la notification.
+     * Détermine les canaux de diffusion de la notification.
      *
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable): array
     {
         return ['mail', 'database'];
     }
@@ -40,7 +40,7 @@ class MentorValidated extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
                     ->subject('Validation de votre statut de Mentor')
@@ -57,7 +57,7 @@ class MentorValidated extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable): array
     {
         return [
             'message' => 'Votre statut de mentor a été validé.',
@@ -65,4 +65,3 @@ class MentorValidated extends Notification
         ];
     }
 }
-
