@@ -30,7 +30,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
 });
-Route::apiResource('reservations', ReservationController::class);
+Route::middleware('auth:api')->group(function () {
+    Route::apiResource('reservations', ReservationController::class);
+});
 Route::apiResource('ressources', RessourceController::class);
 Route::apiResource('session-mentorats', SessionMentoratController::class);
 Route::apiResource('domaines', DomaineController::class);

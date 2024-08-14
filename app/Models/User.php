@@ -65,11 +65,10 @@ class User extends Authenticatable implements JWTSubject
          return [];
      }
 
-public function reservations()
-{
-    return $this->hasMany(Reservation::class);
-}
-
+     public function reservations()
+     {
+         return $this->hasMany(Reservation::class, 'user_id');
+     }
 // Un mentee peut réserver plusieurs sessions de mentorat
 public function sessions()
 {

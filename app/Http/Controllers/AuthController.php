@@ -9,29 +9,47 @@ use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
-{
-    public function register(Request $request)
+{public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
+            'parcours_academique' => 'required|string',
+            'diplome' => 'required|string',
+            'langue' => 'required|string',
+            'cv' => 'nullable|string',
+            'experience' => 'nullable|string',
+            'domaine' => 'required|string',
+            'formation_id' => 'required|exists:formations,id',
         ]);
-
+    
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-
+    
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'parcours_academique' => $request->parcours_academique,
+            'diplome' => $request->diplome,
+            'langue' => $request->langue,
+            'cv' => $request->cv,
+            'experience' => $request->experience,
+            'domaine' => $request->domaine,
+            'formation_id' => $request->formation_id,
         ]);
-
+    
+        // Assigner le rôle de mentee
+        $user->assignRole('mentee');
+    
+        // Générer un jeton JWT
         $token = JWTAuth::fromUser($user);
-
+    
         return response()->json(compact('user', 'token'));
     }
+    
 
     public function login(Request $request)
     {

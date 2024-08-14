@@ -14,7 +14,6 @@ class StoreReservationRequest extends FormRequest
     public function rules()
     {
         return [
-            'mentee_id' => 'required|exists:mentees,id',
             'session_mentorat_id' => 'required|exists:session_mentorats,id',
             'statut' => 'required|in:en attente,confirmée,annulée',
         ];

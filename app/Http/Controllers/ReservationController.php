@@ -6,19 +6,28 @@ use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
 use App\Mail\ReservationMail;
 use App\Models\Reservation;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Traits\HasRoles;
 
-class ReservationController extends Controller
-{
-    // Lister toutes les réservations
+
+use Illuminate\Routing\Controller as BaseController; // Ensure this line is present
+
+class ReservationController extends BaseController // Ensure the class extends the BaseController
+{ public function __construct()
+    {
+        $this->middleware('role:mentee')->only(['store']);
+        $this->middleware('role:mentor')->only(['update', 'destroy']);
+    }
+
     public function index()
     {
         return response()->json(Reservation::all(), 200);
     }
 
-    // Afficher les détails d'une réservation spécifique
     public function show($id)
     {
         $reservation = Reservation::find($id);
@@ -29,44 +38,47 @@ class ReservationController extends Controller
 
         return response()->json($reservation, 200);
     }
-
-    // Créer une nouvelle réservation
     public function store(StoreReservationRequest $request)
     {
-        // Créer la réservation avec les données validées
-        $reservation = Reservation::create($request->validated());
+        $reservation = Reservation::create([
+            'user_id' => Auth::id(),
+            'session_mentorat_id' => $request->session_mentorat_id,
+            'statut' => 'en attente',
+        ]);
     
-        // Récupérer les détails du mentee et de la session
-        $user = $reservation->user; // Relation mentee() dans le modèle Reservation
-        $sessionMentorat = $reservation->sessionMentorat; // Relation sessionMentorat() dans le modèle Reservation
+        $mentee = $reservation->user;
+        $sessionMentorat = $reservation->sessionMentorat;
     
-        if (!$user || !$sessionMentorat) {
+        if (!$mentee || !$sessionMentorat) {
             return response()->json(['error' => 'Mentee ou session de mentorat introuvable'], 404);
         }
     
-        // Convertir et formater la date de la session
+        // Retrieve the mentor's details by their role
+        $mentor = User::role('mentor')->find($sessionMentorat->mentor_id); // Ensure mentor_id is still used or adjust as necessary
+    
+        if (!$mentor) {
+            return response()->json(['error' => 'Mentor introuvable'], 404);
+        }
+    
         $date = Carbon::parse($sessionMentorat->date)->format('Y-m-d H:i:s');
     
         $details = [
-            'email' => $user->email,
-            'name' => $user->name,
+            'email' => $mentee->email,
+            'name' => $mentee->name,
             'date' => $date,
-            'user' => $sessionMentorat->user->name, // Relation mentor() dans le modèle SessionMentorat
+            'mentor' => $mentor->name, // Fetch mentor's name
         ];
     
-        // Envoi de l'e-mail de réservation
         try {
-            Mail::send(new ReservationMail($details));
+            Mail::to($mentee->email)->send(new ReservationMail($details));
+            return response()->json(['message' => 'Réservation créée avec succès et e-mail envoyé au mentee.'], 201);
         } catch (\Exception $e) {
             Log::error('Erreur lors de l\'envoi de l\'e-mail : ' . $e->getMessage());
             return response()->json(['error' => 'Erreur lors de l\'envoi de l\'e-mail'], 500);
         }
-    
-        // Réponse JSON après création réussie
-        return response()->json(['message' => 'Réservation créée avec succès et e-mail envoyé au mentee.'], 201);
     }
     
-    // Mettre à jour une réservation spécifique
+
     public function update(UpdateReservationRequest $request, $id)
     {
         $reservation = Reservation::find($id);
@@ -80,7 +92,6 @@ class ReservationController extends Controller
         return response()->json($reservation, 200);
     }
 
-    // Supprimer une réservation spécifique
     public function destroy($id)
     {
         $reservation = Reservation::find($id);
