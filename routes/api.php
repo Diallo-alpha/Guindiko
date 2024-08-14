@@ -47,8 +47,8 @@ Route::middleware(['auth:api', 'role:mentor'])->group(function () {
 
 Route::middleware(['auth:api', 'role:mentee'])->group(function () {
     Route::post('/mentees/request-mentorship', [MentorController::class, 'envoyerDemandeMentorat'])->name('mentees.requestMentorship');
+    Route::post('mentorats/{mentor}/demande', [MentorController::class, 'envoyerDemandeMentorat']);
     Route::apiResource('commentaires', CommentaireController::class);
     Route::apiResource('reservations', ReservationController::class);
-
 });
 

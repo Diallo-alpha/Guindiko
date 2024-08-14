@@ -31,7 +31,7 @@ class DemandeMentoratReçue extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database']; // This sends the notification via email and stores it in the database
+        return ['mail', 'database']; 
     }
 
     /**

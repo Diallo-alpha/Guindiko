@@ -10,7 +10,7 @@ use App\Notifications\MentoratAccepte;
 use App\Notifications\SessionMentoratCreee;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\MentoratRefuse;
-
+use App\Notifications\DemandeMentoratReçue;
 class MentorController extends Controller
 {
     // Envoyer une demande de mentorat
