@@ -9,6 +9,7 @@ use App\Models\SessionMentorat;
 use App\Notifications\MentoratAccepte;
 use App\Notifications\SessionMentoratCreee;
 use Illuminate\Support\Facades\Notification;
+use App\Notifications\MentoratRefuse;
 
 class MentorController extends Controller
 {
@@ -46,7 +47,22 @@ class MentorController extends Controller
 
         return response()->json(['message' => 'Action non autorisée.'], 403);
     }
+    //refuser une de demande de mentorat
 
+    public function refuserDemandeMentorat(DemandeMentorat $demandeMentorat)
+    {
+        if ($demandeMentorat->mentor->id === auth()->user()->id && auth()->user()->hasRole('mentor')) {
+            $demandeMentorat->update(['statut' => 'rejetée']);
+
+            // Envoyer une notification au mentee
+            $demandeMentorat->mentee->notify(new MentoratRefuse($demandeMentorat));
+            \Log::info('Notification envoyée au mentee avec l\'ID: ' . $demandeMentorat->mentee->id);
+
+            return response()->json(['message' => 'Demande de mentorat refusée.'], 200);
+        }
+
+        return response()->json(['message' => 'Action non autorisée.'], 403);
+    }
     // Créer une session de mentorat
     public function creerSessionMentorat(Request $request)
     {

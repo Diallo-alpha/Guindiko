@@ -30,30 +30,25 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
 });
-    // Routes protégées
-    Route::apiResource('reservations', ReservationController::class);
-    Route::apiResource('ressources', RessourceController::class);
-    Route::apiResource('session-mentorats', SessionMentoratController::class);
+Route::middleware(['auth:api', 'role:admin'])->group(function () {
+    Route::post('/admin/mentor/{id}/valider', [AdminController::class, 'validerMentor'])->name('admin.validerMentor');
+    Route::delete('/admin/mentor/{id}/supprimer', [AdminController::class, 'supprimerMentor'])->name('admin.supprimerMentor');
     Route::apiResource('domaines', DomaineController::class);
     Route::apiResource('formations', FormationController::class);
     Route::apiResource('forums', ForumController::class);
-    Route::apiResource('commentaires', CommentaireController::class);
-    // Routes pour l'administration des mentors
-    Route::middleware('role:admin')->group(function () {
-        Route::post('/admin/mentor/{id}/valider', [AdminController::class, 'validerMentor'])->name('admin.validerMentor');
-        Route::delete('/admin/mentor/{id}/supprimer', [AdminController::class, 'supprimerMentor'])->name('admin.supprimerMentor');
-    });
-Route::apiResource('reservations', ReservationController::class);
-Route::apiResource('ressources', RessourceController::class);
-Route::apiResource('session-mentorats', SessionMentoratController::class);
-Route::apiResource('domaines', DomaineController::class);
-
-// Définir les routes pour le contrôleur Formation
-Route::apiResource('formations', FormationController::class);
-Route::post('/mentees/request-mentorship', [Controller::class, 'requestMentorship'])->name('mentees.requestMentorship');
-
-Route::middleware('auth:api')->group(function () {
-    Route::post('mentorats/{mentor}/demande', [MentorController::class, 'envoyerDemandeMentorat']);
+});
+Route::middleware(['auth:api', 'role:mentor'])->group(function () {
     Route::post('mentorats/{demandeMentorat}/accepter', [MentorController::class, 'accepterDemandeMentorat']);
     Route::post('mentorats/session', [MentorController::class, 'creerSessionMentorat']);
+    Route::apiResource('ressources', RessourceController::class);
+    Route::apiResource('session-mentorats', SessionMentoratController::class);
+    Route::post('mentorats/{demandeMentorat}/refuser', [MentorController::class, 'refuserDemandeMentorat']);
 });
+
+Route::middleware(['auth:api', 'role:mentee'])->group(function () {
+    Route::post('/mentees/request-mentorship', [MentorController::class, 'envoyerDemandeMentorat'])->name('mentees.requestMentorship');
+    Route::apiResource('commentaires', CommentaireController::class);
+    Route::apiResource('reservations', ReservationController::class);
+
+});
+
