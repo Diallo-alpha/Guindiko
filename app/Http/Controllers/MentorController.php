@@ -17,13 +17,15 @@ class MentorController extends Controller
     public function envoyerDemandeMentorat(Request $request, User $mentor)
     {
         if ($mentor->hasRole('mentor') && auth()->user()->hasRole('mentee')) {
-            DemandeMentorat::create([
+            $demande = DemandeMentorat::create([
                 'mentor_id' => $mentor->id,
                 'mentee_id' => auth()->user()->id,
                 'statut' => 'en attente',
             ]);
 
-            // Log pour vérifier que la notification est envoyée
+            // Notifier le mentor de la nouvelle demande de mentorat
+            $mentor->notify(new DemandeMentoratReçue($demande));
+
             \Log::info('Demande de mentorat envoyée au mentor avec l\'ID: ' . $mentor->id);
 
             return response()->json(['message' => 'Demande de mentorat envoyée.'], 200);
@@ -31,6 +33,7 @@ class MentorController extends Controller
 
         return response()->json(['message' => 'Action non autorisée.'], 403);
     }
+
 
     // Accepter une demande de mentorat
     public function accepterDemandeMentorat(DemandeMentorat $demandeMentorat)
