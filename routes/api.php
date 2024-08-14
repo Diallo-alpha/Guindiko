@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
@@ -31,12 +30,25 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
 });
+Route::get('formations', [FormationController::class, 'index']);
+Route::get('formations/{id}', [FormationController::class, 'show']);
+//aficher domain public
+Route::get('/domaines', [DomaineController::class, 'index']);
+Route::get('domaines/{id}', [DomaineController::class, 'show']);
+Route::apiResource('forums', ForumController::class);
+
 Route::middleware(['auth:api', 'role:admin'])->group(function () {
+    //valider un mentor
     Route::post('/admin/mentor/{id}/valider', [AdminController::class, 'validerMentor'])->name('admin.validerMentor');
-    Route::delete('/admin/mentor/{id}/supprimer', [AdminController::class, 'supprimerMentor'])->name('admin.supprimerMentor');
-    Route::apiResource('domaines', DomaineController::class);
-    Route::apiResource('formations', FormationController::class);
-    Route::apiResource('forums', ForumController::class);
+    // Suspendre un utilisateur
+    Route::post('/admin/utilisateur/{id}/suspendre', [AdminController::class, 'suspendreUtilisateur'])->name('admin.suspendreUtilisateur');
+    // Créer une nouvelle formation
+    Route::post('/formations', [FormationController::class, 'store']);
+    Route::put('/formations/{id}', [FormationController::class, 'update']);
+    Route::delete('/formations/{id}', [FormationController::class, 'destroy']);
+    //ajouter des domaine
+    Route::post('/domaines', [DomaineController::class, 'store']);
+    Route::put('/domaines/{id}', [DomaineController::class, 'update']);
 });
 Route::middleware(['auth:api', 'role:mentor'])->group(function () {
     Route::post('mentorats/{demandeMentorat}/accepter', [MentorController::class, 'accepterDemandeMentorat']);

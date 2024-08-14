@@ -1,35 +1,44 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Mentor;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Notifications\UserSuspended;
+use App\Notifications\MentorValidated;
 use Illuminate\Http\Request;
+use Str;
 
 class AdminController extends Controller
 {
-    /**
-     * Valider un mentor.
-     */
-    public function validerMentor($id)
+    // Suspendre un utilisateur
+    public function suspendreUtilisateur(Request $request, $id)
     {
-        $mentor = Mentor::findOrFail($id);
-        $mentor->is_valid = true;
-        $mentor->save();
+        $user = User::findOrFail($id);
+        $user->is_suspended = true;  // Champ 'is_suspended' dans la table 'users'
+        $user->save();
 
-        return response()->json([
-            'message' => 'Le mentor a été validé avec succès.',
-        ]);
+        // Envoyer une notification de suspension
+        $reason = $request->input('reason', 'Vous ne respecter pas notre politique de discipline');
+        $user->notify(new UserSuspended($reason));
+
+        return response()->json(['message' => 'Utilisateur suspendu avec succès.'], 200);
     }
 
-    /**
-     * Supprimer un mentor.
-     */
-    public function supprimerMentor($id)
+    // Valider un mentor
+    public function validerMentor($id)
     {
-        $mentor = Mentor::findOrFail($id);
-        $mentor->delete();
+        $mentor = User::findOrFail($id);
+        $mentor->is_validated = true;  // Champ 'is_validated' dans la table 'users'
 
-        return response()->json([
-            'message' => 'Le mentor a été supprimé avec succès.',
-        ]);
+        // Générer un mot de passe aléatoire
+        $password = Str::random(8);
+        $mentor->password = Hash::make($password);
+        $mentor->save();
+
+        // Envoyer le mot de passe par email au mentor
+        $mentor->notify(new MentorValidated($password));
+
+        return response()->json(['message' => 'Mentor validé avec succès.'], 200);
     }
 }
