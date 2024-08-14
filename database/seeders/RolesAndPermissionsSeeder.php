@@ -51,6 +51,9 @@ class RolesAndPermissionsSeeder extends Seeder
             //permissions pour mentorat
             'accepter une demande de mentorat',
             'faire la demande de mentorat',
+            //valider un mentor et supprimer un metor
+            'valider un mentor',
+            'supprimer un mentor',
 
 
         ];
@@ -86,4 +89,5 @@ class RolesAndPermissionsSeeder extends Seeder
             'faire la demande de mentorat',
         ]);
     }
+
 }

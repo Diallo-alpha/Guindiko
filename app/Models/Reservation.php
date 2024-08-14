@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
 {
-    use HasFactory;
+    use HasFactory; 
 
     protected $fillable = ['user_id', 'session_mentorat_id', 'statut'];
 
     // Une réservation est faite par un mentee
- 
+
 
     // Une réservation est pour une session de mentorat spécifique
     public function user()

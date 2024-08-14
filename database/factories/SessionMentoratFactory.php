@@ -1,10 +1,7 @@
 <?php
 
 namespace Database\Factories;
-
-use App\Models\FormationMentor;
 use App\Models\FormationUser;
-use App\Models\SessionMentorat;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -30,7 +27,7 @@ class SessionMentoratFactory extends Factory
             'formation_user_id' => FormationUser::inRandomOrder()->first()->id ?? FormationUser::factory(),
             'date' => $this->faker->dateTime(),
             'duree' => $this->faker->numberBetween(1, 100),
-            'statut' => $this->faker->randomElement(['en attente', 'confirmée', 'terminée', 'annulée']), 
+            'statut' => $this->faker->randomElement(['en attente', 'confirmée', 'terminée', 'annulée']),
         ];
     }
 }

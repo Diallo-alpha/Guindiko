@@ -36,5 +36,14 @@ class SessionMentorat extends Model
     {
         return $this->belongsTo(FormationUser::class, 'formation_user_id');
     }
- 
+    public function utilisateur()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function formationUtilisateur()
+    {
+        return $this->belongsTo(FormationUser::class, 'formation_user_id');
+    }
+
 }

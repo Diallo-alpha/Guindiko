@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 class UpdateRessourceRequest extends FormRequest
 {
     /**
@@ -20,9 +21,16 @@ class UpdateRessourceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'session_mentorat_id' => 'required|exists:session_mentorats,id',
-            'titre' => 'required|string|max:255',
-            'lien' => 'required|url',
+            'session_mentorat_id' => 'sometimes|exists:session_mentorats,id',
+            'titre' => 'sometimes|string|max:255',
+            'lien' => 'sometimes|url',
         ];
+    }
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'success'   => false,
+            'errors'      => $validator->errors()
+        ], 422));
     }
 }

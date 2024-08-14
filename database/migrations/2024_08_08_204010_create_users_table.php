@@ -17,13 +17,13 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('parcours_academique');
-            $table->string('diplome');
-            $table->string('langue');
+            $table->string('parcours_academique')->default('N/A');
+            $table->string('diplome')->nullable();
+            $table->string('langue')->default("français"); //
             $table->string('cv')->nullable();
             $table->string('experience')->nullable();
-            $table->string('domaine');
-            $table->foreignId('formation_id')->constrained('formations')->onDelete('cascade');
+            $table->string('domaine')->default('NA');
+            $table->foreignId('formation_id')->default(1)->constrained('formations')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

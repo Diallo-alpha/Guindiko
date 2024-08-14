@@ -48,15 +48,15 @@ class User extends Authenticatable implements JWTSubject
             'password' => 'hashed',
         ];
     }
-   
+
 
     //    Get the identifier that will be stored in the subject claim of the JWT.
-      
+
      public function getJWTIdentifier()
      {
          return $this->getKey();
      }
- 
+
      /**
       * Return a key value array, containing any custom claims to be added to the JWT.
       */
@@ -88,5 +88,24 @@ public function sessions()
   {
       return $this->belongsToMany(Formation::class, 'formation_users');
   }
+  public function commentaires()
+  {
+      return $this->hasMany(Commentaire::class);
+  }
+   // Relation: les mentors ont plusieurs mentees
+   public function mentees()
+   {
+       return $this->hasMany(DemandeMentorat::class, 'mentor_id')->where('statut', 'acceptée');
+   }
+    // Relation: les mentees (mentorés) ont plusieurs mentors
+    public function mentors()
+    {
+        return $this->hasMany(DemandeMentorat::class, 'mentee_id')->where('statut', 'acceptée');
+    }
+    // Relation: un utilisateur peut créer plusieurs sessions de mentorat
+    public function sessionsMentorat()
+    {
+        return $this->hasMany(SessionMentorat::class, 'user_id');
+    }
 
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->dateTime('date');
             $table->enum('statut', ['en attente', 'confirmée', 'terminée', 'annulée'])->default('en attente');
             $table->integer('duree');
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 
