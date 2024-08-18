@@ -1,10 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\UserSuspended;
+use App\Models\User;
+use App\Models\DevnirMentor;
 use App\Notifications\MentorValidated;
 use Illuminate\Http\Request;
 use Str;
@@ -25,20 +26,51 @@ class AdminController extends Controller
         return response()->json(['message' => 'Utilisateur suspendu avec succès.'], 200);
     }
 
+    //aficher les demandes de mentorar
+    public function afficherDemandesMentorat()
+    {
+        $demandes = DevnirMentor::where('statut', 'en attente')->get();
+
+        return response()->json([
+            'success' => true,
+            'demandes' => $demandes
+        ], 200);
+    }
+
     // Valider un mentor
     public function validerMentor($id)
     {
-        $mentor = User::findOrFail($id);
-        $mentor->is_validated = true;  // Champ 'is_validated' dans la table 'users'
+        $demande =  DevnirMentor::findOrFail($id);
+        $mentor = User::findOrFail($demande->user_id);
+
+        // Valider la demande
+        $demande->statut = 'validée';
+        $demande->save();
+
+        // Valider le mentor dans la table user
+        $mentor->is_validated = true;  // Assurez-vous d'avoir ce champ dans la table 'users'
 
         // Générer un mot de passe aléatoire
         $password = Str::random(8);
         $mentor->password = Hash::make($password);
         $mentor->save();
 
-        // Envoyer le mot de passe par email au mentor
+        // Assigner le rôle 'mentor'
+        $mentor->assignRole('mentor');
+
+        // Envoyer une notification au mentor avec le mot de passe
         $mentor->notify(new MentorValidated($password));
 
         return response()->json(['message' => 'Mentor validé avec succès.'], 200);
+    }
+
+    // Refuser une demande de mentorat
+    public function refuserDemandeMentor($id)
+    {
+        $demande =  DevnirMentor::findOrFail($id);
+        $demande->statut = 'rejetée';
+        $demande->save();
+
+        return response()->json(['message' => 'Demande rejetée.'], 200);
     }
 }

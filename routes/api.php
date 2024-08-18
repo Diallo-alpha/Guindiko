@@ -45,7 +45,7 @@ Route::get('/domaines/{domaine_id}/formations', [FormationController::class, 'fo
 Route::get('/domaines', [DomaineController::class, 'index']);
 Route::get('domaines/{id}', [DomaineController::class, 'show']);
 Route::apiResource('forums', ForumController::class);
-
+//devenir un mentor
 Route::middleware(['auth:api', 'role:admin'])->group(function () {
     //valider un mentor
     Route::post('/admin/mentor/{id}/valider', [AdminController::class, 'validerMentor'])->name('admin.validerMentor');
@@ -58,6 +58,8 @@ Route::middleware(['auth:api', 'role:admin'])->group(function () {
     //ajouter des domaine
     Route::post('/domaines', [DomaineController::class, 'store']);
     Route::put('/domaines/{id}', [DomaineController::class, 'update']);
+    //afficher les demande
+    Route::get('admin/demandes-mentor', [AdminController::class, 'afficherDemandesMentorat'])->name('admin.demandes-mentorat');
 });
 Route::middleware(['auth:api', 'role:mentor'])->group(function () {
     Route::post('mentorats/{demandeMentorat}/accepter', [MentorController::class, 'accepterDemandeMentorat']);
@@ -68,6 +70,8 @@ Route::middleware(['auth:api', 'role:mentor'])->group(function () {
 });
 
 Route::middleware(['auth:api', 'role:mentee'])->group(function () {
+    Route::post('mentorats/devenir', [MentorController::class, 'DevenirMentor'])->name('mentorats.devenir');
+    // Route::get('admin/demandes-mentorat', [AdminController::class, 'afficherDemandesMentorat'])->name('admin.demandesMentorat');
     Route::post('/mentees/request-mentorship', [MentorController::class, 'envoyerDemandeMentorat'])->name('mentees.requestMentorship');
     Route::post('mentorats/{mentor}/demande', [MenteeController::class, 'envoyerDemandeMentorat']);
     Route::apiResource('commentaires', CommentaireController::class);

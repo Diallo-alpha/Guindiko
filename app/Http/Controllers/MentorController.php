@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\DevnirMentor;
 use App\Models\DemandeMentorat;
 use App\Models\SessionMentorat;
 use App\Notifications\MentoratAccepte;
 use App\Notifications\SessionMentoratCreee;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\MentoratRefuse;
+use App\Notifications\DevenirMentorRecue;
 class MentorController extends Controller
 {
 
@@ -63,6 +65,34 @@ class MentorController extends Controller
         \Log::info('Notification envoyée aux mentees avec les IDs: ' . $mentees->pluck('id')->implode(', '));
 
         return response()->json(['message' => 'Session de mentorat créée.'], 200);
+    }
+    //demande pour devenir mentor
+    public function DevenirMentor(Request $request)
+    {
+        // Créer une demande de mentorat
+        $request->validate([
+            'parcours_academique' => 'required|string',
+            'diplome' => 'required|string',
+            'langue' => 'required|string',
+            'cv' => 'required|string',
+            'experience' => 'required|string',
+            'domaine' => 'required|string',
+        ]);
+        $demande = DevnirMentor::create([
+            'user_id' => auth()->id(),
+            'parcours_academique' => $request->parcours_academique,
+            'diplome' => $request->diplome,
+            'langue' => $request->langue,
+            'cv' => $request->cv,
+            'experience' => $request->experience,
+            'domaine' => $request->domaine,
+        ]);
+
+        // Envoyer une notification à l'admin
+        $admins = User::role('admin')->get();  // Supposons que les admins ont le rôle "admin"
+        Notification::send($admins, new DevenirMentorRecue($demande));
+
+        return response()->json(['message' => 'Votre demande pour devenir un mentorat soumise avec succès.'], 200);
     }
 }
 
