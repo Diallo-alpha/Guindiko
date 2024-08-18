@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
@@ -10,6 +9,7 @@ use App\Models\DevnirMentor;
 class DevenirMentorRecue extends Notification
 {
     use Queueable;
+
     protected $demande;
 
     /**
@@ -46,10 +46,17 @@ class DevenirMentorRecue extends Notification
      *
      * @return array<string, mixed>
      */
-    public function toArray(object $notifiable): array
+    public function toArray($notifiable)
     {
         return [
-            //
+            'demande_id' => $this->demande->id,
+            'parcours_academique' => $this->demande->parcours_academique,
+            'diplome' => $this->demande->diplome,
+            'langue' => $this->demande->langue,
+            'cv' => $this->demande->cv,
+            'experience' => $this->demande->experience,
+            'domaine' => $this->demande->domaine,
+            'message' => 'Une nouvelle demande pour devenir mentor a été reçue.',
         ];
     }
 }
