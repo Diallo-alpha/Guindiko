@@ -71,4 +71,28 @@ class FormationController extends Controller
             'message' => 'Formation supprimée avec succès.'
         ], Response::HTTP_NO_CONTENT);
     }
+      /**
+     * Afficher les formations d'un domaine spécifique.
+     *
+     * @param int $domaine_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function formationsByDomaine($domaine_id)
+    {
+        // Récupérer toutes les formations qui appartiennent au domaine spécifié
+        $formations = Formation::where('domaine_id', $domaine_id)->get();
+
+        // Vérifier si des formations ont été trouvées
+        if ($formations->isEmpty()) {
+            return response()->json([
+                'message' => 'Aucune formation trouvée pour ce domaine.',
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        // Retourner les formations sous forme de JSON
+        return response()->json([
+            'message' => 'Formations récupérées avec succès.',
+            'data' => $formations
+        ], Response::HTTP_OK);
+    }
 }

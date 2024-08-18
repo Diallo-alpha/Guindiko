@@ -39,6 +39,8 @@ Route::apiResource('session-mentorats', SessionMentoratController::class);
 Route::apiResource('domaines', DomaineController::class);
 Route::get('formations', [FormationController::class, 'index']);
 Route::get('formations/{id}', [FormationController::class, 'show']);
+Route::get('/domaines/{domaine_id}/formations', [FormationController::class, 'formationsByDomaine']);
+
 //aficher domain public
 Route::get('/domaines', [DomaineController::class, 'index']);
 Route::get('domaines/{id}', [DomaineController::class, 'show']);
