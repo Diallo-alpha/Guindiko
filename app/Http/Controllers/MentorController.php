@@ -49,6 +49,20 @@ class MentorController extends Controller
     // Créer une session de mentorat
     public function creerSessionMentorat(Request $request)
     {
+        // Validation des données d'entrée
+        $request->validate([
+            'formation_user_id' => 'required|exists:formation_users,id',
+            'date' => 'required|date|after_or_equal:today',
+            'duree' => 'required|integer|min:1',
+            'mentees' => 'required|string',
+        ]);
+
+        // Vérification que l'utilisateur connecté est un mentor
+        if (!auth()->user()->hasRole('mentor')) {
+            return response()->json(['message' => 'Seuls les mentors peuvent créer des sessions de mentorat.'], 403);
+        }
+
+        // Créer la session de mentorat
         $session = SessionMentorat::create([
             'user_id' => auth()->user()->id,
             'formation_user_id' => $request->formation_user_id,
@@ -57,15 +71,22 @@ class MentorController extends Controller
             'duree' => $request->duree,
         ]);
 
+        // Récupérer les IDs des mentees à partir de la chaîne
         $menteesIds = explode(',', $request->mentees);
         $mentees = User::whereIn('id', $menteesIds)->get();
 
-        // Optionnel : Notifier les mentees participants
+        // Vérifier que des mentees valides ont été trouvés
+        if ($mentees->isEmpty()) {
+            return response()->json(['message' => 'Aucun mentee valide trouvé.'], 400);
+        }
+
+        // Notifier les mentees participants
         Notification::send($mentees, new SessionMentoratCreee($session));
         \Log::info('Notification envoyée aux mentees avec les IDs: ' . $mentees->pluck('id')->implode(', '));
 
-        return response()->json(['message' => 'Session de mentorat créée.'], 200);
+        return response()->json(['message' => 'Session de mentorat créée avec succès.'], 200);
     }
+
     //demande pour devenir mentor
     public function DevenirMentor(Request $request)
     {
@@ -94,5 +115,7 @@ class MentorController extends Controller
 
         return response()->json(['message' => 'Votre demande pour devenir un mentorat soumise avec succès.'], 200);
     }
+ 
+
 }
 

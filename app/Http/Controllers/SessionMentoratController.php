@@ -57,28 +57,19 @@ class SessionMentoratController extends Controller
         $sessionMentorat->delete();
         return response()->json(null, 204);
     }
-    // public function sendMentoratRequest(Request $request)
-    // {
-    //     // Fetch the session along with the mentor relationship
-    //     $session = SessionMentorat::with('mentor')->find($request->session_mentorat_id);
+       // Afficher les sessions de mentorat d'un mentort
+       public function afficherSessionsMentor($mentorId)
+       {
+           // Récupérer les sessions créées par le mentor avec l'ID fourni
+           $sessions = SessionMentorat::where('user_id', $mentorId)->get();
 
-    //     // Check if the session was found
-    //     if (!$session) {
-    //         return response()->json(['error' => 'Session de mentorat introuvable.'], 404);
-    //     }
+           // Vérifier si des sessions existent
+           if ($sessions->isEmpty()) {
+               return response()->json(['message' => 'Aucune session de mentorat trouvée pour ce mentor.'], 404);
+           }
 
-    //     // Prepare the session details for the email
-    //     $sessionDetails = [
-    //         'mentor' => $session->mentor->toArray(),
-    //         'date' => $request->date,
-    //     ];
-
-    //     // Send the email
-    //     Mail::to('mentorat@example.com')->send(new DemandeMentoratMail($sessionDetails));
-
-    //     // Return a success response
-    //     return response()->json(['message' => 'Demande de mentorat envoyée avec succès.']);
-    // }
+           // Retourner les sessions en réponse JSON
+           return response()->json(['sessions' => $sessions], 200);
+       }
 
 }
- 
