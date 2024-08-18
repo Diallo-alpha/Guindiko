@@ -40,6 +40,10 @@ Route::apiResource('domaines', DomaineController::class);
 Route::get('formations', [FormationController::class, 'index']);
 Route::get('formations/{id}', [FormationController::class, 'show']);
 Route::get('/domaines/{domaine_id}/formations', [FormationController::class, 'formationsByDomaine']);
+Route::get('mentors', [AdminController::class, 'afficherMentors'])->name('admin.afficherMentors');
+Route::get('mentees', [AdminController::class, 'afficherMentees'])->name('admin.afficherMentees');
+Route::get('sessions/{sessionId}/ressources', [AdminController::class, 'afficherRessourcesSession'])->name('admin.afficherRessourcesSession');
+
 
 //aficher domain public
 Route::get('/domaines', [DomaineController::class, 'index']);
@@ -78,6 +82,5 @@ Route::middleware(['auth:api', 'role:mentee'])->group(function () {
     Route::apiResource('commentaires', CommentaireController::class);
     Route::apiResource('reservations', ReservationController::class);
 });
-
 Route::get('/notifications', [NotificationReservationController::class, 'index'])->name('notifications.index');
 Route::post('/notifications/mark-as-read', [NotificationReservationController::class, 'markAsRead'])->name('notifications.markAsRead');

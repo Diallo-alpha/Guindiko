@@ -1,14 +1,16 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use App\Notifications\UserSuspended;
+use Str;
 use App\Models\User;
 use App\Models\DevnirMentor;
-use App\Notifications\MentorValidated;
 use Illuminate\Http\Request;
-use Str;
+use App\Models\SessionMentorat;
+use App\Http\Controllers\Controller;
+use App\Notifications\UserSuspended;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Notifications\MentorValidated;
 
 class AdminController extends Controller
 {
@@ -73,4 +75,42 @@ class AdminController extends Controller
 
         return response()->json(['message' => 'Demande rejetée.'], 200);
     }
+
+    //Aficher les mentors de la platform
+    public function afficherMentors()
+{
+    $mentors = User::role('mentor')->get();
+
+    return response()->json([
+        'success' => true,
+        'mentors' => $mentors
+    ], 200);
+}
+//afficher tous les mente
+public function afficherMentees()
+{
+    $mentees = User::role('mentee')->get();
+
+    return response()->json([
+        'success' => true,
+        'mentees' => $mentees
+    ], 200);
+}
+//afficher les ressouces pour une session
+public function afficherRessourcesSession($sessionId)
+{
+    $session = SessionMentorat::findOrFail($sessionId);
+
+    // Récupérer les ressources associées à cette session
+    $ressources = $session->ressources;
+
+    if ($ressources->isEmpty()) {
+        return response()->json(['message' => 'Aucune ressource trouvée pour cette session.'], 404);
+    }
+
+    return response()->json([
+        'success' => true,
+        'ressources' => $ressources
+    ], 200);
+}
 }
