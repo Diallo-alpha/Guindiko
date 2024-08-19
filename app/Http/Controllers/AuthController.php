@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
-{public function register(Request $request)
+{
+    public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -23,11 +24,11 @@ class AuthController extends Controller
             'domaine' => 'required|string',
             'formation_id' => 'required|exists:formations,id',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-    
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -40,16 +41,15 @@ class AuthController extends Controller
             'domaine' => $request->domaine,
             'formation_id' => $request->formation_id,
         ]);
-    
+
         // Assigner le rôle de mentee
         $user->assignRole('mentee');
-    
+
         // Générer un jeton JWT
         $token = JWTAuth::fromUser($user);
-    
+
         return response()->json(compact('user', 'token'));
     }
-    
 
     public function login(Request $request)
     {
@@ -81,5 +81,12 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
         ]);
+    }
+
+    // Ajout de la méthode unauthenticated
+    protected function unauthenticated($request, array $guards)
+    {
+        return response()->json(['message' => 'Unauthenticated.'], 401);
+
     }
 }

@@ -21,18 +21,19 @@ Route::get('/user', function (Request $request) {
 });
 
 // Routes d'authentification
-Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
-Route::post('logout', [AuthController::class, 'logout']);
-Route::post('refresh', [AuthController::class, 'refresh']);
+Route::post('register', [AuthController::class, 'register']);
 
-// Groupement des routes nécessitant l'authentification via l'API
-Route::middleware('auth:api')->group(function () {
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
-});
+//login
+// Route::post('/login', function () {
+
+// })->name('login');
+//logout
+Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
+Route::post('refresh', [AuthController::class, 'refresh'])->middleware('auth:api');
 Route::middleware('auth:api')->group(function () {
     Route::apiResource('reservations', ReservationController::class);
+    Route::post('mentorats/devenir', [MentorController::class, 'DevenirMentor'])->name('mentorats.devenir');
 });
 Route::apiResource('ressources', RessourceController::class);
 Route::apiResource('session-mentorats', SessionMentoratController::class);
@@ -75,7 +76,6 @@ Route::middleware(['auth:api', 'role:mentor'])->group(function () {
 });
 
 Route::middleware(['auth:api', 'role:mentee'])->group(function () {
-    Route::post('mentorats/devenir', [MentorController::class, 'DevenirMentor'])->name('mentorats.devenir');
     // Route::get('admin/demandes-mentorat', [AdminController::class, 'afficherDemandesMentorat'])->name('admin.demandesMentorat');
     Route::post('/mentees/request-mentorship', [MentorController::class, 'envoyerDemandeMentorat'])->name('mentees.requestMentorship');
     Route::post('mentorats/{mentor}/demande', [MenteeController::class, 'envoyerDemandeMentorat']);

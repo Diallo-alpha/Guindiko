@@ -90,15 +90,8 @@ class MentorController extends Controller
     //demande pour devenir mentor
     public function DevenirMentor(Request $request)
     {
-        // Créer une demande de mentorat
-        $request->validate([
-            'parcours_academique' => 'required|string',
-            'diplome' => 'required|string',
-            'langue' => 'required|string',
-            'cv' => 'required|string',
-            'experience' => 'required|string',
-            'domaine' => 'required|string',
-        ]);
+        \Log::info($request->all()); // Vérifiez ce qui est envoyé par la requête
+
         $demande = DevnirMentor::create([
             'user_id' => auth()->id(),
             'parcours_academique' => $request->parcours_academique,
@@ -110,12 +103,12 @@ class MentorController extends Controller
         ]);
 
         // Envoyer une notification à l'admin
-        $admins = User::role('admin')->get();  // Supposons que les admins ont le rôle "admin"
+        $admins = User::role('admin')->get();
         Notification::send($admins, new DevenirMentorRecue($demande));
 
-        return response()->json(['message' => 'Votre demande pour devenir un mentorat soumise avec succès.'], 200);
+        return response()->json(['message' => 'Votre demande pour devenir un mentor soumise avec succès.'], 200);
     }
- 
+
 
 }
 
