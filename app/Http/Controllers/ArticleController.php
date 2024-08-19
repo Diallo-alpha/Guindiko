@@ -35,6 +35,7 @@ class ArticleController extends Controller
         return response()->json($article, 201);
     }
 
+
     /**
      * Afficher un article spécifique.
      */

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     use HasFactory;
-    protected $fillable = ['formation_id', 'image','titre', 'description'];
+    protected $fillable = ['user_id','image','formation_id', 'image','titre', 'description'];
 
     // Relation avec la formation
     public function formation()
@@ -23,5 +23,5 @@ class Article extends Model
     {
         return $this->belongsTo(User::class);
     }
-    
+
 }

@@ -1,19 +1,20 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ForumController;
-use App\Http\Controllers\MenteeController;
-use App\Http\Controllers\MentorController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\FormationController;
-use App\Http\Controllers\RessourceController;
-use App\Http\Controllers\CommentaireController;
+use App\Http\Controllers\MenteeController;
+use App\Http\Controllers\MentorController;
 use App\Http\Controllers\NotificationReservationController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\SessionMentoratController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
 
 
 Route::get('/user', function (Request $request) {
@@ -49,9 +50,10 @@ Route::get('sessions/{sessionId}/ressources', [AdminController::class, 'afficher
 //aficher domain public
 Route::get('/domaines', [DomaineController::class, 'index']);
 Route::get('domaines/{id}', [DomaineController::class, 'show']);
-Route::apiResource('forums', ForumController::class);
 Route::get('/mentor/{mentorId}/sessions', [SessionMentoratController::class, 'afficherSessionsMentor']);
 Route::get('mentor/{mentorId}/demandes-acceptees', [MentorController::class, 'afficherDemandesAccepteesPourMentor'])->name('mentor.demandes.acceptees.mentor');
+Route::get('Articles', [ArticleController::class, 'index'])->name('articles.index');
+Route::get('Articles{id}', [ArticleController::class, 'show'])->name('articles.show');
 //devenir un mentor
 Route::middleware(['auth:api', 'role:admin'])->group(function () {
     //valider un mentor
@@ -75,6 +77,9 @@ Route::middleware(['auth:api', 'role:mentor'])->group(function () {
     Route::apiResource('session-mentorats', SessionMentoratController::class);
     Route::post('mentorats/{demandeMentorat}/refuser', [MentorController::class, 'refuserDemandeMentorat']);
     Route::get('mentor/demandes-recues', [MentorController::class, 'afficherDemandesRecues'])->name('mentor.demandes.recues');
+    Route::post('ajouter/article', [ArticleController::class, 'store'])->name('article.store');
+    Route::patch('modifier/article', [ArticleController::class, 'update'])->name('article.update');
+    Route::delete('supprimer/article', [ArticleController::class, 'destroy'])->name('article.destroy');
 
 });
 
