@@ -23,13 +23,13 @@
         "multipart/form-data"
     ],
     "paths": {
-        "/api/mentorats/5/refuser": {
-            "post": {
-                "summary": "Refuser une demande",
+        "/api/mentees": {
+            "get": {
+                "summary": "Afficher tous les mentee",
                 "description": "",
                 "responses": {
-                    "201": {
-                        "description": "Created successfully",
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -37,8 +37,8 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Bad Request",
+                    "404": {
+                        "description": "Not Found",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -46,8 +46,35 @@
                             }
                         }
                     },
-                    "401": {
-                        "description": "Unauthorized",
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "mentee"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/mentor/19/demandes-acceptees": {
+            "get": {
+                "summary": "Afficher les abonner d'un mentor ",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -55,8 +82,17 @@
                             }
                         }
                     },
-                    "403": {
-                        "description": "Forbidden",
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -77,9 +113,189 @@
                 ]
             }
         },
-        "/api/mentorats/session": {
+        "/api/mentor/demandes-recues": {
+            "get": {
+                "summary": "Affiher les demandes reçus pour un mentor ",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Mentorat"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/mentors": {
+            "get": {
+                "summary": "Afficher les mentors",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Mentorat"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/mentor/18/sessions": {
+            "get": {
+                "summary": "Afficher les session d'un menteor ",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Mentorat"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/admin/demandes-mentor": {
+            "get": {
+                "summary": "Afficher les demandes pour devenir mentor ",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Mentorat"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/mentorats/devenir": {
             "post": {
-                "summary": "créer une session ",
+                "summary": "Devenir mentor ",
                 "description": "",
                 "responses": {
                     "201": {
@@ -135,32 +351,94 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "formation_user_id": {
-                                        "type": "integer"
-                                    },
-                                    "date": {
+                                    "parcours_academique": {
                                         "type": "string"
                                     },
-                                    "duree": {
-                                        "type": "integer"
+                                    "diplome": {
+                                        "type": "string"
                                     },
-                                    "mentees": {
+                                    "langue": {
+                                        "type": "string"
+                                    },
+                                    "cv": {
+                                        "type": "string"
+                                    },
+                                    "experience": {
+                                        "type": "string"
+                                    },
+                                    "domaine": {
                                         "type": "string"
                                     }
                                 }
                             },
                             "example": {
-                                "formation_user_id": 2,
-                                "date": "2024-08-15 10:00:00",
-                                "duree": 50,
-                                "mentees": "23"
+                                "parcours_academique": "bac+3",
+                                "diplome": "mon diplôme",
+                                "langue": "français",
+                                "cv": "cv.pdf",
+                                "experience": "mon experience",
+                                "domaine": "domain j'exerce"
                             }
                         }
                     }
                 }
             }
         },
-        "/api/mentorats/5/accepter": {
+        "/api/mentorats/6/refuser": {
+            "post": {
+                "summary": "Refuser une demande",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Mentorat"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/mentorats/6/accepter": {
             "post": {
                 "summary": "Accepter une demande de mentorat",
                 "description": "",
@@ -214,7 +492,7 @@
                 ]
             }
         },
-        "/api/mentorats/22/demande ": {
+        "/api/mentorats/21/demande ": {
             "post": {
                 "summary": "Envoyer une demande de mentorat",
                 "description": "",
@@ -268,7 +546,7 @@
                 ]
             }
         },
-        "/api/admin/mentor/22/valider": {
+        "/api/admin/mentor/2/valider": {
             "post": {
                 "summary": "valider un mentor ",
                 "description": "",
@@ -322,7 +600,7 @@
                 ]
             }
         },
-        "/api/admin/utilisateur/23/suspendre": {
+        "/api/admin/utilisateur/21/suspendre": {
             "post": {
                 "summary": "Supprimer mentor",
                 "description": "",
@@ -586,9 +864,108 @@
                 ]
             }
         },
-        "/api/forums": {
+        "/api/mentor/25/articles": {
+            "get": {
+                "summary": "Afficher les articles d'un mentor ",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Articles"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/supprimer/1/article": {
+            "delete": {
+                "summary": "Supprimer un article",
+                "description": "",
+                "responses": {
+                    "204": {
+                        "description": "Deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Articles"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/ajouter/article": {
             "post": {
-                "summary": "creer un forums",
+                "summary": "creer un articles",
                 "description": "",
                 "responses": {
                     "201": {
@@ -629,7 +1006,7 @@
                     }
                 },
                 "tags": [
-                    "Forums"
+                    "Articles"
                 ],
                 "parameters": [
                     {
@@ -647,6 +1024,9 @@
                                     "formation_id": {
                                         "type": "integer"
                                     },
+                                    "image": {
+                                        "type": "string"
+                                    },
                                     "titre": {
                                         "type": "string"
                                     },
@@ -656,61 +1036,19 @@
                                 }
                             },
                             "example": {
-                                "formation_id": 1,
-                                "titre": "Nouveau titre crreer",
-                                "description": "Nouvelle description"
+                                "formation_id": 3,
+                                "image": "photo.jpeg",
+                                "titre": "test2",
+                                "description": "Nouvelle description bonbon"
                             }
                         }
                     }
                 }
-            },
-            "get": {
-                "summary": "Afficher les forums",
-                "description": "",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    }
-                },
-                "tags": [
-                    "Forums"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "User-Agent",
-                        "type": "string"
-                    }
-                ]
             }
         },
-        "/api/forums/1": {
-            "put": {
-                "summary": "Update forum",
+        "/api/modifier/article/1": {
+            "patch": {
+                "summary": "Update article",
                 "description": "",
                 "responses": {
                     "200": {
@@ -742,7 +1080,7 @@
                     }
                 },
                 "tags": [
-                    "Forums"
+                    "Articles"
                 ],
                 "parameters": [
                     {
@@ -760,6 +1098,9 @@
                                     "formation_id": {
                                         "type": "integer"
                                     },
+                                    "image": {
+                                        "type": "string"
+                                    },
                                     "titre": {
                                         "type": "string"
                                     },
@@ -769,16 +1110,19 @@
                                 }
                             },
                             "example": {
-                                "formation_id": 1,
-                                "titre": "Nouveau titre modifiessr",
-                                "description": "Nouvelle description"
+                                "formation_id": 3,
+                                "image": "photo.jpeg",
+                                "titre": "test mdifier",
+                                "description": "Nouvelle description bonbon"
                             }
                         }
                     }
                 }
-            },
+            }
+        },
+        "/api/Articles/1": {
             "get": {
-                "summary": "Afficher un forums ",
+                "summary": "Afficher un article",
                 "description": "",
                 "responses": {
                     "200": {
@@ -810,7 +1154,97 @@
                     }
                 },
                 "tags": [
-                    "Forums"
+                    "Articles"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/Articles": {
+            "get": {
+                "summary": "Afficher les articles",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Articles"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/domaines/13/formations": {
+            "get": {
+                "summary": "Afficher les formation d'un domaine",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Domain"
                 ],
                 "parameters": [
                     {
@@ -1166,6 +1600,49 @@
                         "type": "string"
                     }
                 ]
+            },
+            "get": {
+                "summary": "Afficher une formation",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Formation"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
             }
         },
         "/api/formations/3": {
@@ -1236,51 +1713,6 @@
                         }
                     }
                 }
-            }
-        },
-        "/api/formations/2": {
-            "get": {
-                "summary": "Afficher une formation",
-                "description": "",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    }
-                },
-                "tags": [
-                    "Formation"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "User-Agent",
-                        "type": "string"
-                    }
-                ]
             }
         },
         "/api/formations": {
@@ -1405,7 +1837,7 @@
                 ]
             }
         },
-        "/api/session-mentorats/4": {
+        "/api/session-mentorats/8": {
             "put": {
                 "summary": "Update",
                 "description": "",
@@ -1454,9 +1886,6 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "user_id": {
-                                        "type": "integer"
-                                    },
                                     "date": {
                                         "type": "string"
                                     },
@@ -1472,63 +1901,15 @@
                                 }
                             },
                             "example": {
-                                "user_id": 5,
                                 "date": "2000-05-18 01:22:45",
                                 "formation_user_id": 3,
-                                "statut": "terminée",
-                                "duree": 55
+                                "statut": "confirmée",
+                                "duree": 25
                             }
                         }
                     }
                 }
-            }
-        },
-        "/api/session-mentorats/11": {
-            "get": {
-                "summary": "Afficher une session",
-                "description": "",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
-                    }
-                },
-                "tags": [
-                    "SESSION MENTORA"
-                ],
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "User-Agent",
-                        "type": "string"
-                    }
-                ]
-            }
-        },
-        "/api/session-mentorats/1": {
+            },
             "delete": {
                 "summary": "Supprimer une session",
                 "description": "",
@@ -1562,6 +1943,51 @@
                     },
                     "404": {
                         "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "SESSION MENTORA"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/session-mentorats/11": {
+            "get": {
+                "summary": "Afficher une session",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -1640,9 +2066,6 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "user_id": {
-                                        "type": "integer"
-                                    },
                                     "date": {
                                         "type": "string"
                                     },
@@ -1658,9 +2081,8 @@
                                 }
                             },
                             "example": {
-                                "user_id": 5,
                                 "date": "2000-05-18 01:22:45",
-                                "formation_user_id": 2,
+                                "formation_user_id": 3,
                                 "statut": "terminée",
                                 "duree": 55
                             }
@@ -1710,6 +2132,188 @@
                         "type": "string"
                     }
                 ]
+            }
+        },
+        "/api/profile/supprimer": {
+            "post": {
+                "summary": "Supprimer information utilisateur ",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Authentification"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "cv": {
+                                        "type": "boolean"
+                                    },
+                                    "experience": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "cv": true,
+                                "experience": true
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/profile/modifier": {
+            "post": {
+                "summary": "Modifier profil",
+                "description": "",
+                "responses": {
+                    "201": {
+                        "description": "Created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Authentification"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string"
+                                    },
+                                    "parcours_academique": {
+                                        "type": "string"
+                                    },
+                                    "diplome": {
+                                        "type": "string"
+                                    },
+                                    "langue": {
+                                        "type": "string"
+                                    },
+                                    "cv": {
+                                        "type": "string"
+                                    },
+                                    "experience": {
+                                        "type": "string"
+                                    },
+                                    "domaine": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "name": "Moussa",
+                                "email": "cheikhsane656@gmail.com",
+                                "password": "1234567",
+                                "password_confirmation": "1234567",
+                                "parcours_academique": "Licences en Informatique",
+                                "diplome": "Licences",
+                                "langue": "français",
+                                "cv": "cheikh.pdf",
+                                "experience": "3 ans en développement web et mobile",
+                                "domaine": "Informatique"
+                            }
+                        }
+                    }
+                }
             }
         },
         "/api/refresh": {
@@ -1908,8 +2512,8 @@
                                 }
                             },
                             "example": {
-                                "email": "ndiayeamina775@gmail.com",
-                                "password": "password"
+                                "email": "cheikhsane656@gmail.com",
+                                "password": "1234567"
                             }
                         }
                     }
@@ -1980,19 +2584,84 @@
                                     "email": {
                                         "type": "string"
                                     },
+                                    "parcours_academique": {
+                                        "type": "string"
+                                    },
+                                    "langue": {
+                                        "type": "string"
+                                    },
+                                    "domaine": {
+                                        "type": "string"
+                                    },
+                                    "formation_id": {
+                                        "type": "integer"
+                                    },
+                                    "diplome": {
+                                        "type": "string"
+                                    },
                                     "password": {
                                         "type": "string"
                                     }
                                 }
                             },
                             "example": {
-                                "name": "amina",
-                                "email": "amina@example.com",
+                                "name": "fall",
+                                "email": "alioukroos08@gmail.com",
+                                "parcours_academique": "bac+3",
+                                "langue": "français",
+                                "domaine": "mathemaque",
+                                "formation_id": 1,
+                                "diplome": "bac+3",
                                 "password": "1234567"
                             }
                         }
                     }
                 }
+            }
+        },
+        "/api/sessions/14/ressources": {
+            "get": {
+                "summary": "Afficher les ressources d'une session",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Ressources "
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
             }
         },
         "/api/ressources/1": {
