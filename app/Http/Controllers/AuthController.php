@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use \Log;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -127,37 +128,47 @@ class AuthController extends Controller
     $user->domaine = $request->get('domaine', $user->domaine);
     $user->formation_id = $request->get('formation_id', $user->formation_id);
 
+    \Log::info('donnée utilisateur avant le mise a jour:', $user->toArray());
+
+    // Sauvegarder les modifications
     $user->save();
+
+    \Log::info('donnée utilisateur aprés mise à jours:', $user->fresh()->toArray());
 
     return response()->json(['message' => 'Profile updated successfully', 'user' => $user], 200);
 }
 
 //supprimer les donneés d'un profile
-public function clearProfileFields(Request $request)
+public function effacerChampsProfile(Request $request)
 {
-    // Define the fields that the user can clear
-    $fieldsToClear = [
-        'name',
-        'parcours_academique',
-        'diplome',
-        'langue',
+    // Définir les champs que l'utilisateur peut effacer
+    $nullableFields = [
         'cv',
         'experience',
         'domaine',
         'formation_id'
     ];
 
+    // Récupérer l'utilisateur authentifié
     $user = auth()->user();
 
-    foreach ($fieldsToClear as $field) {
-        // Clear the fields only if the user has requested it in the payload
+    // Log des champs avant la mise à jour
+    \Log::info('donner utilisateur avant la suppression:', $user->toArray());
+
+    foreach ($nullableFields as $field) {
+        // Effacer les champs uniquement si l'utilisateur l'a demandé dans la requête
         if ($request->has($field)) {
             $user->{$field} = null;
         }
     }
 
+    // Sauvegarder les modifications
     $user->save();
 
+    // Log des champs après la mise à jour
+    \Log::info('donnée utilisateur aprés suppression:', $user->fresh()->toArray());
+
+    // Retourner une réponse JSON
     return response()->json(['message' => 'Profile fields cleared successfully', 'user' => $user], 200);
 }
 

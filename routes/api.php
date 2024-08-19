@@ -35,7 +35,7 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('reservations', ReservationController::class);
     Route::post('mentorats/devenir', [MentorController::class, 'DevenirMentor'])->name('mentorats.devenir');
     Route::post('/profile/modifier', [AuthController::class, 'updateProfile'])->name('profile.update');
-    Route::post('/profile/supprimer', [AuthController::class, 'clearProfileFields'])->name('profile.clear');
+    Route::post('/profile/supprimer', [AuthController::class, 'effacerChampsProfile'])->name('profile.clear');
 
 });
 Route::apiResource('ressources', RessourceController::class);
