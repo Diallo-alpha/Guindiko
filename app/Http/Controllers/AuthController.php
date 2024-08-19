@@ -89,4 +89,76 @@ class AuthController extends Controller
         return response()->json(['message' => 'Unauthenticated.'], 401);
 
     }
+    //mettre a jour le profil de l'utilisateur
+    public function updateProfile(Request $request)
+{
+    // Validate the input data
+    $validator = Validator::make($request->all(), [
+        'name' => 'sometimes|string|max:255',
+        'email' => 'sometimes|string|email|max:255|unique:users,email,' . auth()->id(),
+        'password' => 'nullable|string|min:6|confirmed',
+        'parcours_academique' => 'nullable|string',
+        'diplome' => 'nullable|string',
+        'langue' => 'nullable|string',
+        'cv' => 'nullable|string',
+        'experience' => 'nullable|string',
+        'domaine' => 'nullable|string',
+        'formation_id' => 'nullable|exists:formations,id',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 422);
+    }
+
+    // Update user profile data
+    $user = auth()->user();
+    $user->name = $request->get('name', $user->name);
+    $user->email = $request->get('email', $user->email);
+
+    if ($request->has('password') && $request->password) {
+        $user->password = Hash::make($request->password);
+    }
+
+    $user->parcours_academique = $request->get('parcours_academique', $user->parcours_academique);
+    $user->diplome = $request->get('diplome', $user->diplome);
+    $user->langue = $request->get('langue', $user->langue);
+    $user->cv = $request->get('cv', $user->cv);
+    $user->experience = $request->get('experience', $user->experience);
+    $user->domaine = $request->get('domaine', $user->domaine);
+    $user->formation_id = $request->get('formation_id', $user->formation_id);
+
+    $user->save();
+
+    return response()->json(['message' => 'Profile updated successfully', 'user' => $user], 200);
+}
+
+//supprimer les donneés d'un profile
+public function clearProfileFields(Request $request)
+{
+    // Define the fields that the user can clear
+    $fieldsToClear = [
+        'name',
+        'parcours_academique',
+        'diplome',
+        'langue',
+        'cv',
+        'experience',
+        'domaine',
+        'formation_id'
+    ];
+
+    $user = auth()->user();
+
+    foreach ($fieldsToClear as $field) {
+        // Clear the fields only if the user has requested it in the payload
+        if ($request->has($field)) {
+            $user->{$field} = null;
+        }
+    }
+
+    $user->save();
+
+    return response()->json(['message' => 'Profile fields cleared successfully', 'user' => $user], 200);
+}
+
 }
