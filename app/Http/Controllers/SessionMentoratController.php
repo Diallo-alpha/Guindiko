@@ -26,11 +26,19 @@ class SessionMentoratController extends Controller
 
      public function store(StoreSessionMentoratRequest $request): JsonResponse
      {
+         // Vérifier si l'utilisateur est authentifié et s'il a le rôle de mentor
+         if (!auth()->check() || !auth()->user()->hasRole('mentor')) {
+             return response()->json(['message' => 'Seuls les mentors peuvent créer des sessions.'], 403);
+         }
+
+         // Valider les données de la requête
          $validatedData = $request->validated();
-         $session = SessionMentorat::create($validatedData);
+
+         // Ajouter l'ID de l'utilisateur authentifié aux données de la session
+         $session = SessionMentorat::create(array_merge($validatedData, ['user_id' => auth()->id()]));
+
          return response()->json($session, 201);
      }
-
 
     /**
      * Afficher une session de mentorat spécifique.
@@ -45,6 +53,12 @@ class SessionMentoratController extends Controller
      */
     public function update(UpdateSessionMentoratRequest $request, SessionMentorat $sessionMentorat): JsonResponse
     {
+        // Vérifier si l'utilisateur est authentifié et est le créateur de la session
+        if (auth()->id() !== $sessionMentorat->user_id) {
+            return response()->json(['message' => 'Vous n\'êtes pas autorisé à modifier cette session.'], 403);
+        }
+
+        // Si l'utilisateur est le créateur, autoriser la mise à jour
         $sessionMentorat->update($request->validated());
         return response()->json($sessionMentorat);
     }
