@@ -137,5 +137,17 @@ class MentorController extends Controller
         return response()->json(['demandes' => $demandes], 200);
     }
 
+    //afficher les abonner d'un mentor
+    public function afficherDemandesAccepteesPourMentor($mentorId)
+{
+    // Récupérer les demandes acceptées pour le mentor spécifié
+    $demandesAcceptees = DemandeMentorat::where('mentor_id', $mentorId)
+                                        ->where('statut', 'acceptée')
+                                        ->get();
+
+    return response()->json(['demandes_acceptees' => $demandesAcceptees], 200);
+}
+
+
 }
 

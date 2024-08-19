@@ -51,6 +51,7 @@ Route::get('/domaines', [DomaineController::class, 'index']);
 Route::get('domaines/{id}', [DomaineController::class, 'show']);
 Route::apiResource('forums', ForumController::class);
 Route::get('/mentor/{mentorId}/sessions', [SessionMentoratController::class, 'afficherSessionsMentor']);
+Route::get('mentor/{mentorId}/demandes-acceptees', [MentorController::class, 'afficherDemandesAccepteesPourMentor'])->name('mentor.demandes.acceptees.mentor');
 //devenir un mentor
 Route::middleware(['auth:api', 'role:admin'])->group(function () {
     //valider un mentor
