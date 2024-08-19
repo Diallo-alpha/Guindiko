@@ -24,10 +24,6 @@ Route::get('/user', function (Request $request) {
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
-//login
-// Route::post('/login', function () {
-
-// })->name('login');
 //logout
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
 Route::post('refresh', [AuthController::class, 'refresh'])->middleware('auth:api');

@@ -15,8 +15,5 @@ class Forum extends Model
     {
         return $this->belongsTo(Formation::class);
     }
-    public function commentaires()
-    {
-        return $this->hasMany(Commentaire::class);
-    }
+
 }

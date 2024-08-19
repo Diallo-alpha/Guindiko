@@ -26,8 +26,8 @@ class Commentaire extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function forum()
+    public function article()
     {
-        return $this->belongsTo(Forum::class);
+        return $this->belongsTo(Article::class);
     }
 }
