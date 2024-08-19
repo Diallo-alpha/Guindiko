@@ -47,11 +47,15 @@ class UpdateArticleRequest extends FormRequest
             'description.string' => 'La description doit être une chaîne de caractères.',
         ];
     }
+
+    /**
+     * Gérer les erreurs de validation.
+     */
     public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'success'   => false,
-            'errors'      => $validator->errors()
+            'success' => false,
+            'errors' => $validator->errors()
         ], 422));
     }
 }

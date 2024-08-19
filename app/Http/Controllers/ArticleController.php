@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreArticleRequest;
@@ -35,7 +36,6 @@ class ArticleController extends Controller
         return response()->json($article, 201);
     }
 
-
     /**
      * Afficher un article spécifique.
      */
@@ -55,7 +55,7 @@ class ArticleController extends Controller
 
         // Vérification que l'utilisateur connecté est le créateur de l'article
         if ($article->user_id !== auth()->id()) {
-            return response()->json(['message' => 'Action non autorisée vous.'], 403);
+            return response()->json(['message' => 'Action non autorisée. Vous ne pouvez modifier que les articles que vous avez créés.'], 403);
         }
 
         $validatedData = $request->validated();
@@ -63,23 +63,6 @@ class ArticleController extends Controller
 
         return response()->json($article, 200);
     }
-    /**
- * Afficher tous les articles créés par un mentor.
- */
-public function articlesParMentor($mentor_id)
-{
-    // Vérifier si l'utilisateur spécifié est un mentor
-    $mentor = User::findOrFail($mentor_id);
-
-    if (!$mentor->hasRole('mentor')) {
-        return response()->json(['message' => 'Cet utilisateur n\'est pas un mentor.'], 403);
-    }
-
-    // Récupérer tous les articles créés par ce mentor
-    $articles = Article::where('user_id', $mentor->id)->get();
-
-    return response()->json($articles, 200);
-}
 
     /**
      * Supprimer un article.
@@ -90,12 +73,29 @@ public function articlesParMentor($mentor_id)
 
         // Vérification que l'utilisateur connecté est le créateur de l'article
         if ($article->user_id !== auth()->id()) {
-            return response()->json(['message' => 'Action non autorisée supprimer ce que vous avez créer.'], 403);
+            return response()->json(['message' => 'Action non autorisée. Vous ne pouvez supprimer que les articles que vous avez créés.'], 403);
         }
 
         $article->delete();
 
         return response()->json(null, 204);
     }
-}
 
+    /**
+     * Afficher tous les articles créés par un mentor spécifique.
+     */
+    public function articlesParMentor($mentor_id)
+    {
+        // Vérifier si l'utilisateur spécifié est un mentor
+        $mentor = User::findOrFail($mentor_id);
+
+        if (!$mentor->hasRole('mentor')) {
+            return response()->json(['message' => 'Cet utilisateur n\'est pas un mentor.'], 403);
+        }
+
+        // Récupérer tous les articles créés par ce mentor
+        $articles = Article::where('user_id', $mentor->id)->get();
+
+        return response()->json($articles, 200);
+    }
+}

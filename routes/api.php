@@ -53,7 +53,7 @@ Route::get('domaines/{id}', [DomaineController::class, 'show']);
 Route::get('/mentor/{mentorId}/sessions', [SessionMentoratController::class, 'afficherSessionsMentor']);
 Route::get('mentor/{mentorId}/demandes-acceptees', [MentorController::class, 'afficherDemandesAccepteesPourMentor'])->name('mentor.demandes.acceptees.mentor');
 Route::get('Articles', [ArticleController::class, 'index'])->name('articles.index');
-Route::get('Articles{id}', [ArticleController::class, 'show'])->name('articles.show');
+Route::get('Articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
 //devenir un mentor
 Route::middleware(['auth:api', 'role:admin'])->group(function () {
     //valider un mentor
@@ -78,8 +78,8 @@ Route::middleware(['auth:api', 'role:mentor'])->group(function () {
     Route::post('mentorats/{demandeMentorat}/refuser', [MentorController::class, 'refuserDemandeMentorat']);
     Route::get('mentor/demandes-recues', [MentorController::class, 'afficherDemandesRecues'])->name('mentor.demandes.recues');
     Route::post('ajouter/article', [ArticleController::class, 'store'])->name('article.store');
-    Route::patch('modifier/article', [ArticleController::class, 'update'])->name('article.update');
-    Route::delete('supprimer/article', [ArticleController::class, 'destroy'])->name('article.destroy');
+    Route::patch('modifier/article/{id}', [ArticleController::class, 'update'])->name('article.update');
+    Route::delete('supprimer/{id}/article', [ArticleController::class, 'destroy'])->name('article.destroy');
 
 });
 
