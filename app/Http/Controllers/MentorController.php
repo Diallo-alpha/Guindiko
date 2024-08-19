@@ -90,6 +90,14 @@ class MentorController extends Controller
     //demande pour devenir mentor
     public function DevenirMentor(Request $request)
     {
+        $request->validate([
+            'parcours_academique' => 'required|string',
+            'diplome' => 'required|string',
+            'langue' => 'required|string',
+            'cv' => 'required|string',
+            'experience' => 'required|string',
+            'domaine' => 'required|string',
+        ]);
         \Log::info($request->all()); // Vérifiez ce qui est envoyé par la requête
 
         $demande = DevnirMentor::create([
