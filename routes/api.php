@@ -73,11 +73,11 @@ Route::middleware(['auth:api', 'role:mentor'])->group(function () {
     Route::apiResource('ressources', RessourceController::class);
     Route::apiResource('session-mentorats', SessionMentoratController::class);
     Route::post('mentorats/{demandeMentorat}/refuser', [MentorController::class, 'refuserDemandeMentorat']);
+    Route::get('mentor/demandes-recues', [MentorController::class, 'afficherDemandesRecues'])->name('mentor.demandes.recues');
+
 });
 
 Route::middleware(['auth:api', 'role:mentee'])->group(function () {
-    // Route::get('admin/demandes-mentorat', [AdminController::class, 'afficherDemandesMentorat'])->name('admin.demandesMentorat');
-    Route::post('/mentees/request-mentorship', [MentorController::class, 'envoyerDemandeMentorat'])->name('mentees.requestMentorship');
     Route::post('mentorats/{mentor}/demande', [MenteeController::class, 'envoyerDemandeMentorat']);
     Route::apiResource('commentaires', CommentaireController::class);
     Route::apiResource('reservations', ReservationController::class);

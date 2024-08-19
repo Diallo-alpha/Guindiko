@@ -18,7 +18,9 @@ class MentorController extends Controller
     // Accepter une demande de mentorat
     public function accepterDemandeMentorat(DemandeMentorat $demandeMentorat)
     {
-        if ($demandeMentorat->mentor->id === auth()->user()->id && auth()->user()->hasRole('mentor')) {
+        $user = auth()->user();
+
+        if ($demandeMentorat->mentor_id === $user->id && $user->hasRole('mentor')) {
             $demandeMentorat->update(['statut' => 'acceptée']);
 
             // Envoyer une notification au mentee
@@ -34,7 +36,9 @@ class MentorController extends Controller
 
     public function refuserDemandeMentorat(DemandeMentorat $demandeMentorat)
     {
-        if ($demandeMentorat->mentor->id === auth()->user()->id && auth()->user()->hasRole('mentor')) {
+        $user = auth()->user();
+
+        if ($demandeMentorat->mentor_id === $user->id && $user->hasRole('mentor')) {
             $demandeMentorat->update(['statut' => 'rejetée']);
 
             // Envoyer une notification au mentee
@@ -117,6 +121,21 @@ class MentorController extends Controller
         return response()->json(['message' => 'Votre demande pour devenir un mentor soumise avec succès.'], 200);
     }
 
+    //affihcer les demandes pour un mentor
+    public function afficherDemandesRecues()
+    {
+        $user = auth()->user();
+
+        // Vérifier si l'utilisateur connecté est bien un mentor
+        if (!$user->hasRole('mentor')) {
+            return response()->json(['message' => 'Seuls les mentors peuvent accéder à cette ressource.'], 403);
+        }
+
+        // Récupérer les demandes de mentorat reçues par le mentor
+        $demandes = DemandeMentorat::where('mentor_id', $user->id)->get();
+
+        return response()->json(['demandes' => $demandes], 200);
+    }
 
 }
 
