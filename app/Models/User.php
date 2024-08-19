@@ -65,4 +65,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne(DevnirMentor::class);
     }
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
 }

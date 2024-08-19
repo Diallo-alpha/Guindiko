@@ -13,6 +13,6 @@ class RessourceSeeder extends Seeder
      */
     public function run(): void
     {
-        Ressource::factory()->count(10)->create(); // Crée 10 ressources factices
+        Ressource::factory()->count(7)->create(); // Crée 10 ressources factices
     }
 }
