@@ -60,7 +60,22 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        return $this->respondWithToken($token);
+        // Récupérer l'utilisateur connecté
+        $user = auth()->user();
+        // Récupérer les rôles de l'utilisateur
+        $roles = $user->getRoleNames();
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'roles' => $roles, 
+            ]
+        ]);
     }
 
     public function logout()
