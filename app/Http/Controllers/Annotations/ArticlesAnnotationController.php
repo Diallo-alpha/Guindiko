@@ -15,8 +15,8 @@ namespace App\Http\Controllers\Annotations ;
  *     bearerFormat="JWT"),
 
  * @OA\Info(
- *     title="Your API Title",
- *     description="Your API Description",
+ *     title="Guidiko ",
+ *     description="Guidiko API documentation",
  *     version="1.0.0"),
 
  * @OA\Consumes({
