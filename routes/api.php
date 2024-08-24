@@ -78,6 +78,7 @@ Route::middleware(['auth:api', 'role:mentor'])->group(function () {
     Route::post('ajouter/article', [ArticleController::class, 'store'])->name('article.store');
     Route::patch('modifier/article/{id}', [ArticleController::class, 'update'])->name('article.update');
     Route::delete('supprimer/{id}/article', [ArticleController::class, 'destroy'])->name('article.destroy');
+    Route::get('mentor/{mentor_id}/articles', [ArticleController::class, 'articlesParMentor'])->name('mentor.articles');
 
 });
 

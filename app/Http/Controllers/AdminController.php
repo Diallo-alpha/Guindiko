@@ -79,7 +79,9 @@ class AdminController extends Controller
     //Aficher les mentors de la platform
     public function afficherMentors()
 {
-    $mentors = User::role('mentor')->get();
+    $mentors = User::whereHas('roles', function ($query) {
+        $query->where('name', 'mentor');
+    })->get();
 
     return response()->json([
         'success' => true,
@@ -89,7 +91,10 @@ class AdminController extends Controller
 //afficher tous les mente
 public function afficherMentees()
 {
-    $mentees = User::role('mentee')->get();
+    $mentees = User::whereHas('roles', function ($query) {
+        $query->where('name', 'mentee');
+    })->get();
+
 
     return response()->json([
         'success' => true,

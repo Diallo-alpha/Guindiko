@@ -13,7 +13,13 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Création de l'utilisateur admin
+       
+        // Créer les rôles
+        $adminRole = Role::create(['name' => 'admin']);
+        $mentorRole = Role::create(['name' => 'mentor']);
+        $menteeRole = Role::create(['name' => 'mentee']);
+
+        // Créer les utilisateurs
         $adminUser = User::create([
             'name' => 'Admin',
             'email' => 'adiaratououmyfall@gmail.com',
@@ -25,15 +31,10 @@ class UserSeeder extends Seeder
             'experience' => 'Expérience par défaut',
             'domaine' => 'Domaine par défaut',
             'formation_id' => 1,
+            'role_id' => $adminRole->id,
         ]);
-
-        // Récupérer le rôle 'admin'
-        $adminRole = Role::firstOrCreate(['name' => 'admin']);
-
-        // Assigner le rôle 'admin' à l'utilisateur
         $adminUser->assignRole($adminRole);
 
-        //création de l'utilisateur mentor
         $mentorUser = User::create([
             'name' => 'Cheikh Sane',
             'email' => 'cheikhsane656@gmail.com',
@@ -45,17 +46,10 @@ class UserSeeder extends Seeder
             'experience' => '3 ans en développement web et mobile',
             'domaine' => 'Informatique',
             'formation_id' => 1,
+            'role_id' => $mentorRole->id,
         ]);
-
-        // Récupérer le rôle'mentor'
-        $mentorRole = Role::firstOrCreate(['name' => 'mentor']);
-
-        // Assigner le rôle'mentor' à l'utilisateur
         $mentorUser->assignRole($mentorRole);
 
-        // Création de l
-
-        // Création de l'utilisateur mentee
         $menteeUser = User::create([
             'name' => 'Amina Ndiaye',
             'email' => 'ndiayeamina775@gmail.com',
@@ -67,13 +61,8 @@ class UserSeeder extends Seeder
             'experience' => '2 ans en développement web',
             'domaine' => 'Informatique',
             'formation_id' => 1,
+            'role_id' => $menteeRole->id,
         ]);
-
-        // Récupérer le rôle 'mentee'
-        $menteeRole = Role::firstOrCreate(['name' => 'mentee']);
-
-        // Assigner le rôle 'mentee' à l'utilisateur
         $menteeUser->assignRole($menteeRole);
     }
 }
-

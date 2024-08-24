@@ -86,9 +86,14 @@ class ArticleController extends Controller
      */
     public function articlesParMentor($mentor_id)
     {
-        // Vérifier si l'utilisateur spécifié est un mentor
+        // Récupérer le mentor
         $mentor = User::findOrFail($mentor_id);
 
+        // Déboguer les rôles
+        $roles = $mentor->roles()->pluck('name');
+        \Log::info('Rôles de l\'utilisateur : ' . $roles);
+
+        // Vérifier si l'utilisateur a le rôle de mentor
         if (!$mentor->hasRole('mentor')) {
             return response()->json(['message' => 'Cet utilisateur n\'est pas un mentor.'], 403);
         }
