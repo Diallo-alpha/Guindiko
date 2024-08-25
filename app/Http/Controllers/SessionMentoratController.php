@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\SessionMentorat;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreSessionMentoratRequest;
 use App\Http\Requests\UpdateSessionMentoratRequest;
-use App\Mail\DemandeMentoratMail;
-use Illuminate\Http\Request; // Correct import
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Mail;
-
+use App\Notifications\SessionMentoratCreee;
 class SessionMentoratController extends Controller
 {
     /**
@@ -16,29 +16,39 @@ class SessionMentoratController extends Controller
      */
     public function index(): JsonResponse
     {
-        $sessions = SessionMentorat::with(['users' , 'reservations', 'ressources'])->get();
+        $sessions = SessionMentorat::with(['users', 'reservations', 'ressources'])->get();
         return response()->json($sessions);
     }
 
     /**
      * Stocker une nouvelle session de mentorat.
      */
+    public function store(StoreSessionMentoratRequest $request): JsonResponse
+    {
+        // Vérifier si l'utilisateur est authentifié et s'il a le rôle de mentor
+        if (!auth()->check() || !auth()->user()->hasRole('mentor')) {
+            return response()->json(['message' => 'Seuls les mentors peuvent créer des sessions.'], 403);
+        }
 
-     public function store(StoreSessionMentoratRequest $request): JsonResponse
-     {
-         // Vérifier si l'utilisateur est authentifié et s'il a le rôle de mentor
-         if (!auth()->check() || !auth()->user()->hasRole('mentor')) {
-             return response()->json(['message' => 'Seuls les mentors peuvent créer des sessions.'], 403);
-         }
+        // Valider les données de la requête
+        $validatedData = $request->validated();
 
-         // Valider les données de la requête
-         $validatedData = $request->validated();
+        // Ajouter l'ID de l'utilisateur authentifié aux données de la session
+        $session = SessionMentorat::create(array_merge($validatedData, ['user_id' => auth()->id()]));
 
-         // Ajouter l'ID de l'utilisateur authentifié aux données de la session
-         $session = SessionMentorat::create(array_merge($validatedData, ['user_id' => auth()->id()]));
+        // Si des mentees sont spécifiés, envoyer des notifications par e-mail
+        if (!empty($validatedData['mentees'])) {
+            $mentees = explode(',', $validatedData['mentees']);
+            foreach ($mentees as $menteeId) {
+                $mentee = User::find($menteeId);
+                if ($mentee) {
+                    Mail::to($mentee->email)->send(new SessionMentoratCreee($session));
+                }
+            }
+        }
 
-         return response()->json($session, 201);
-     }
+        return response()->json($session, 201);
+    }
 
     /**
      * Afficher une session de mentorat spécifique.
@@ -71,19 +81,21 @@ class SessionMentoratController extends Controller
         $sessionMentorat->delete();
         return response()->json(null, 204);
     }
-       // Afficher les sessions de mentorat d'un mentort
-       public function afficherSessionsMentor($mentorId)
-       {
-           // Récupérer les sessions créées par le mentor avec l'ID fourni
-           $sessions = SessionMentorat::where('user_id', $mentorId)->get();
 
-           // Vérifier si des sessions existent
-           if ($sessions->isEmpty()) {
-               return response()->json(['message' => 'Aucune session de mentorat trouvée pour ce mentor.'], 404);
-           }
+    /**
+     * Afficher les sessions de mentorat d'un mentor
+     */
+    public function afficherSessionsMentor($mentorId)
+    {
+        // Récupérer les sessions créées par le mentor avec l'ID fourni
+        $sessions = SessionMentorat::where('user_id', $mentorId)->get();
 
-           // Retourner les sessions en réponse JSON
-           return response()->json(['sessions' => $sessions], 200);
-       }
+        // Vérifier si des sessions existent
+        if ($sessions->isEmpty()) {
+            return response()->json(['message' => 'Aucune session de mentorat trouvée pour ce mentor.'], 404);
+        }
 
+        // Retourner les sessions en réponse JSON
+        return response()->json(['sessions' => $sessions], 200);
+    }
 }

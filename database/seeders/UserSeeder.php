@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
         // Créer un nouvel utilisateur et lui attribuer le rôle de mentor
         $mentorUser = User::create([
             'name' => 'alpha',
-            'email' => 'alphaloppecity@gmail.com',
+            'email' => 'alpha.exemple@gmail.com',
             'password' => Hash::make('password'),
             'parcours_academique' => 'Master en Informatique',
             'diplome' => 'Master',
