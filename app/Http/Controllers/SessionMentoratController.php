@@ -5,7 +5,7 @@ use App\Models\User;
 use App\Models\SessionMentorat;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use App\Http\Requests\StoreSessionMentoratRequest;
 use App\Http\Requests\UpdateSessionMentoratRequest;
 use App\Notifications\SessionMentoratCreee;
@@ -36,15 +36,12 @@ class SessionMentoratController extends Controller
         // Ajouter l'ID de l'utilisateur authentifié aux données de la session
         $session = SessionMentorat::create(array_merge($validatedData, ['user_id' => auth()->id()]));
 
-        // Si des mentees sont spécifiés, envoyer des notifications par e-mail
+        // Si des mentees sont spécifiés, envoyer des notifications
         if (!empty($validatedData['mentees'])) {
-            $mentees = explode(',', $validatedData['mentees']);
-            foreach ($mentees as $menteeId) {
-                $mentee = User::find($menteeId);
-                if ($mentee) {
-                    Mail::to($mentee->email)->send(new SessionMentoratCreee($session));
-                }
-            }
+            $mentees = User::whereIn('id', explode(',', $validatedData['mentees']))->get();
+
+            // Envoyer une notification aux mentees
+            Notification::send($mentees, new SessionMentoratCreee($session));
         }
 
         return response()->json($session, 201);
