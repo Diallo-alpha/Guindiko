@@ -30,6 +30,7 @@ class AuthController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
+        // Créer l'utilisateur avec role_id = 4 par défaut
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -41,9 +42,10 @@ class AuthController extends Controller
             'experience' => $request->experience,
             'domaine' => $request->domaine,
             'formation_id' => $request->formation_id,
+            'role_id' => 6,
         ]);
 
-        // Assigner le rôle de mentee
+        // Assigner le rôle de mentee via le système de gestion des rôles
         $user->assignRole('mentee');
 
         // Générer un jeton JWT
@@ -73,7 +75,7 @@ class AuthController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
-                'roles' => $roles, 
+                'roles' => $roles,
             ]
         ]);
     }
