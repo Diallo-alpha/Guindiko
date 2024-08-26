@@ -26,6 +26,70 @@ namespace App\Http\Controllers\Annotations ;
  *
 
  * @OA\GET(
+ *     path="/api/mentor/statistiques/demandes",
+ *     summary="Afficher le nombre de demande reçu ",
+ *     description="",
+ *         security={
+ *    {       "BearerAuth": {}}
+ *         },
+ * @OA\Response(response="200", description="OK"),
+ * @OA\Response(response="404", description="Not Found"),
+ * @OA\Response(response="500", description="Internal Server Error"),
+ *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
+ * ),
+ *     tags={"Mentorat"},
+*),
+
+
+ * @OA\GET(
+ *     path="/api/mentor-articles/statistiques/articles",
+ *     summary="Afficher le nombre Article par un mentor ",
+ *     description="",
+ *         security={
+ *    {       "BearerAuth": {}}
+ *         },
+ * @OA\Response(response="200", description="OK"),
+ * @OA\Response(response="404", description="Not Found"),
+ * @OA\Response(response="500", description="Internal Server Error"),
+ *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
+ * ),
+ *     tags={"Mentorat"},
+*),
+
+
+ * @OA\GET(
+ *     path="/api/mentor-sessions/statistiques/sessions",
+ *     summary="Afficher le nombre de session creer par un mentor ",
+ *     description="",
+ *         security={
+ *    {       "BearerAuth": {}}
+ *         },
+ * @OA\Response(response="200", description="OK"),
+ * @OA\Response(response="404", description="Not Found"),
+ * @OA\Response(response="500", description="Internal Server Error"),
+ *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
+ * ),
+ *     tags={"Mentorat"},
+*),
+
+
+ * @OA\GET(
+ *     path="/api/mentor/27/demandes-acceptees",
+ *     summary="Afficher les demande accepter par un mentor ",
+ *     description="",
+ *         security={
+ *    {       "BearerAuth": {}}
+ *         },
+ * @OA\Response(response="200", description="OK"),
+ * @OA\Response(response="404", description="Not Found"),
+ * @OA\Response(response="500", description="Internal Server Error"),
+ *     @OA\Parameter(in="header", name="User-Agent", required=false, @OA\Schema(type="string")
+ * ),
+ *     tags={"Mentorat"},
+*),
+
+
+ * @OA\GET(
  *     path="/api/mentor/19/demandes-acceptees",
  *     summary="Afficher les abonner d'un mentor ",
  *     description="",
@@ -74,7 +138,7 @@ namespace App\Http\Controllers\Annotations ;
 
 
  * @OA\GET(
- *     path="/api/mentor/18/sessions",
+ *     path="/api/mentor/27/sessions",
  *     summary="Afficher les session d'un menteor ",
  *     description="",
  *         security={

@@ -110,7 +110,7 @@ namespace App\Http\Controllers\Annotations ;
  *                 type="object",
  *                 properties={
  *                     @OA\Property(property="date", type="string"),
- *                     @OA\Property(property="formation_user_id", type="integer"),
+ *                     @OA\Property(property="formation_id", type="integer"),
  *                     @OA\Property(property="statut", type="string"),
  *                     @OA\Property(property="duree", type="integer"),
  *                 },

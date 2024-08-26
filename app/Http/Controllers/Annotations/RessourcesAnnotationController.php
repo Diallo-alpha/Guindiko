@@ -26,7 +26,7 @@ namespace App\Http\Controllers\Annotations ;
  *
 
  * @OA\GET(
- *     path="/api/sessions/14/ressources",
+ *     path="/api/sessions/9/ressources",
  *     summary="Afficher les ressources d'une session",
  *     description="",
  *         security={
@@ -124,7 +124,7 @@ namespace App\Http\Controllers\Annotations ;
  *             @OA\Schema(
  *                 type="object",
  *                 properties={
- *                     @OA\Property(property="session_mentorat_id", type="string"),
+ *                     @OA\Property(property="session_mentorat_id", type="integer"),
  *                     @OA\Property(property="titre", type="string"),
  *                     @OA\Property(property="lien", type="string"),
  *                 },

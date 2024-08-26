@@ -15,8 +15,8 @@ namespace App\Http\Controllers\Annotations ;
  *     bearerFormat="JWT"),
 
  * @OA\Info(
- *     title="Guidiko ",
- *     description="Guidiko API documentation",
+ *     title="Your API Title",
+ *     description="Your API Description",
  *     version="1.0.0"),
 
  * @OA\Consumes({
@@ -26,7 +26,7 @@ namespace App\Http\Controllers\Annotations ;
  *
 
  * @OA\GET(
- *     path="/api/mentor/25/articles",
+ *     path="/api/mentor/27/articles ",
  *     summary="Afficher les articles d'un mentor ",
  *     description="",
  *         security={

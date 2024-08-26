@@ -195,7 +195,6 @@ namespace App\Http\Controllers\Annotations ;
  *                     @OA\Property(property="parcours_academique", type="string"),
  *                     @OA\Property(property="langue", type="string"),
  *                     @OA\Property(property="domaine", type="string"),
- *                     @OA\Property(property="formation_id", type="integer"),
  *                     @OA\Property(property="diplome", type="string"),
  *                     @OA\Property(property="password", type="string"),
  *                 },

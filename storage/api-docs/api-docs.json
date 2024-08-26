@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Your API Title",
-        "description": "Your API Description",
+        "title": "Guindiko API",
+        "description": "Description de L'API",
         "version": "1.0.0"
     },
     "security": [
@@ -58,6 +58,186 @@
                 },
                 "tags": [
                     "mentee"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/mentor/statistiques/demandes": {
+            "get": {
+                "summary": "Afficher le nombre de demande reçu ",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Mentorat"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/mentor-articles/statistiques/articles": {
+            "get": {
+                "summary": "Afficher le nombre Article par un mentor ",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Mentorat"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/mentor-sessions/statistiques/sessions": {
+            "get": {
+                "summary": "Afficher le nombre de session creer par un mentor ",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Mentorat"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "User-Agent",
+                        "type": "string"
+                    }
+                ]
+            }
+        },
+        "/api/mentor/27/demandes-acceptees": {
+            "get": {
+                "summary": "Afficher les demande accepter par un mentor ",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "Mentorat"
                 ],
                 "parameters": [
                     {
@@ -203,7 +383,7 @@
                 ]
             }
         },
-        "/api/mentor/18/sessions": {
+        "/api/mentor/27/sessions": {
             "get": {
                 "summary": "Afficher les session d'un menteor ",
                 "description": "",
@@ -864,7 +1044,7 @@
                 ]
             }
         },
-        "/api/mentor/25/articles": {
+        "/api/mentor/27/articles ": {
             "get": {
                 "summary": "Afficher les articles d'un mentor ",
                 "description": "",
@@ -2069,7 +2249,7 @@
                                     "date": {
                                         "type": "string"
                                     },
-                                    "formation_user_id": {
+                                    "formation_id": {
                                         "type": "integer"
                                     },
                                     "statut": {
@@ -2082,7 +2262,7 @@
                             },
                             "example": {
                                 "date": "2000-05-18 01:22:45",
-                                "formation_user_id": 3,
+                                "formation_id": 1,
                                 "statut": "terminée",
                                 "duree": 55
                             }
@@ -2513,7 +2693,7 @@
                             },
                             "example": {
                                 "email": "cheikhsane656@gmail.com",
-                                "password": "1234567"
+                                "password": "password"
                             }
                         }
                     }
@@ -2593,9 +2773,6 @@
                                     "domaine": {
                                         "type": "string"
                                     },
-                                    "formation_id": {
-                                        "type": "integer"
-                                    },
                                     "diplome": {
                                         "type": "string"
                                     },
@@ -2606,11 +2783,10 @@
                             },
                             "example": {
                                 "name": "fall",
-                                "email": "alioukroos08@gmail.com",
+                                "email": "alioudiallo08@gmail.com",
                                 "parcours_academique": "bac+3",
                                 "langue": "français",
                                 "domaine": "mathemaque",
-                                "formation_id": 1,
                                 "diplome": "bac+3",
                                 "password": "1234567"
                             }
@@ -2619,7 +2795,7 @@
                 }
             }
         },
-        "/api/sessions/14/ressources": {
+        "/api/sessions/9/ressources": {
             "get": {
                 "summary": "Afficher les ressources d'une session",
                 "description": "",
@@ -2892,7 +3068,7 @@
                                 "type": "object",
                                 "properties": {
                                     "session_mentorat_id": {
-                                        "type": "string"
+                                        "type": "integer"
                                     },
                                     "titre": {
                                         "type": "string"
@@ -2903,9 +3079,9 @@
                                 }
                             },
                             "example": {
-                                "session_mentorat_id": "2",
-                                "titre": "test amina qui ajoute",
-                                "lien": "https://amina.com"
+                                "session_mentorat_id": 9,
+                                "titre": "titre",
+                                "lien": "https://alpha.com"
                             }
                         }
                     }
