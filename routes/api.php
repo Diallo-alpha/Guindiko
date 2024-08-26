@@ -71,14 +71,18 @@ Route::middleware(['auth:api', 'role:admin'])->group(function () {
 Route::middleware(['auth:api', 'role:mentor'])->group(function () {
     Route::post('mentorats/{demandeMentorat}/accepter', [MentorController::class, 'accepterDemandeMentorat']);
     Route::post('mentorats/session', [MentorController::class, 'creerSessionMentorat']);
+    Route::get('mentor/{mentor_id}/articles', [ArticleController::class, 'articlesParMentor'])->name('mentor.articles');
+    Route::get('mentor/statistiques/demandes', [MentorController::class, 'afficherNombreDemandes'])->name('mentor.statistiques.demandes');
+    Route::get('mentor-sessions/statistiques/sessions', [MentorController::class, 'afficherNombreSessions'])->name('mentor.statistiques.sessions');
+    Route::get('mentor-articles/statistiques/articles', [MentorController::class, 'afficherNombreArticles'])->name('mentor.statistiques.articles');
+    Route::get('mentor/demandes-recues', [MentorController::class, 'afficherDemandesRecues'])->name('mentor.demandes.recues');
+
     Route::apiResource('ressources', RessourceController::class);
     Route::apiResource('session-mentorats', SessionMentoratController::class);
     Route::post('mentorats/{demandeMentorat}/refuser', [MentorController::class, 'refuserDemandeMentorat']);
-    Route::get('mentor/demandes-recues', [MentorController::class, 'afficherDemandesRecues'])->name('mentor.demandes.recues');
     Route::post('ajouter/article', [ArticleController::class, 'store'])->name('article.store');
     Route::patch('modifier/article/{id}', [ArticleController::class, 'update'])->name('article.update');
     Route::delete('supprimer/{id}/article', [ArticleController::class, 'destroy'])->name('article.destroy');
-    Route::get('mentor/{mentor_id}/articles', [ArticleController::class, 'articlesParMentor'])->name('mentor.articles');
 
 });
 

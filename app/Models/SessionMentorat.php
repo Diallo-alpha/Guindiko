@@ -50,6 +50,6 @@ class SessionMentorat extends Model
      */
     public function mentor()
     {
-        return $this->belongsTo(User::class, 'user_id'); // Assurez-vous que 'user_id' est le bon champ
+        return $this->belongsTo(User::class, 'user_id'); 
     }
 }

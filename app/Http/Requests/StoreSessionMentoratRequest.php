@@ -24,8 +24,8 @@ class StoreSessionMentoratRequest extends FormRequest
     {
         return [
             'date' => ['required', 'date'],
-            'formation_id' => ['required', 'exists:formations,id'], // Mise à jour ici
-            'statut' => ['required', 'in:en attente,confirmée,terminée,annulée'], // Correction ajoutée
+            'formation_id' => ['required', 'exists:formations,id'],
+            'statut' => ['required', 'in:en attente,confirmée,terminée,annulée'],
             'duree' => ['required', 'integer'],
 
         ];

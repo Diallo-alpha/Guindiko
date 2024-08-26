@@ -23,7 +23,6 @@ class AuthController extends Controller
             'cv' => 'nullable|string',
             'experience' => 'nullable|string',
             'domaine' => 'required|string',
-            'formation_id' => 'required|exists:formations,id',
         ]);
 
         if ($validator->fails()) {
@@ -41,7 +40,6 @@ class AuthController extends Controller
             'cv' => $request->cv,
             'experience' => $request->experience,
             'domaine' => $request->domaine,
-            'formation_id' => $request->formation_id,
             'role_id' => 6,
         ]);
 

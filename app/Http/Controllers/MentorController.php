@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\DevnirMentor;
+use App\Models\Article;
 use App\Models\DemandeMentorat;
+use App\Models\DevnirMentor;
 use App\Models\SessionMentorat;
-use App\Notifications\MentoratAccepte;
-use App\Notifications\SessionMentoratCreee;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\MentoratRefuse;
+use App\Models\User;
 use App\Notifications\DevenirMentorRecue;
+use App\Notifications\MentoratAccepte;
+use App\Notifications\MentoratRefuse;
+use App\Notifications\SessionMentoratCreee;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
+
 class MentorController extends Controller
 {
 
@@ -122,6 +125,19 @@ class MentorController extends Controller
     }
 
     //affihcer les demandes pour un mentor
+    //afficher les abonner d'un mentor
+    public function afficherDemandesAccepteesPourMentor($mentorId)
+{
+    // Récupérer les demandes acceptées pour le mentor spécifié
+    $demandesAcceptees = DemandeMentorat::where('mentor_id', $mentorId)
+                                        ->where('statut', 'acceptée')
+                                        ->get();
+
+    return response()->json(['demandes_acceptees' => $demandesAcceptees], 200);
+}
+
+
+    // Afficher les demandes de mentorat reçues par un mentor
     public function afficherDemandesRecues()
     {
         $user = auth()->user();
@@ -137,17 +153,55 @@ class MentorController extends Controller
         return response()->json(['demandes' => $demandes], 200);
     }
 
-    //afficher les abonner d'un mentor
-    public function afficherDemandesAccepteesPourMentor($mentorId)
-{
-    // Récupérer les demandes acceptées pour le mentor spécifié
-    $demandesAcceptees = DemandeMentorat::where('mentor_id', $mentorId)
-                                        ->where('statut', 'acceptée')
-                                        ->get();
+    // Afficher le nombre de demandes de mentorat reçues par le mentor
+    public function afficherNombreDemandes()
+    {
+        $user = Auth::user();
 
-    return response()->json(['demandes_acceptees' => $demandesAcceptees], 200);
-}
+        if (!$user->hasRole('mentor')) {
+            return response()->json(['message' => 'Seuls les mentors peuvent accéder à cette ressource.'], 403);
+        }
 
+        $nombreDemandes = DemandeMentorat::where('mentor_id', $user->id)->count();
 
+        return response()->json(['nombre_demandes' => $nombreDemandes], 200);
+    }
+
+    // Afficher le nombre de sessions de mentorat créées par le mentor
+    public function afficherNombreSessions()
+    {
+        $user = Auth::user();
+
+        \Log::info('ID de l\'utilisateur connecté: ' . $user->id);
+
+        if (!$user->hasRole('mentor')) {
+            \Log::warning('Utilisateur non autorisé: ' . $user->id);
+            return response()->json(['message' => 'Seuls les mentors peuvent accéder à cette ressource.'], 403);
+        }
+
+        $nombreSessions = SessionMentorat::where('user_id', $user->id)->count();
+        \Log::info('Nombre de sessions trouvées: ' . $nombreSessions);
+
+        // if ($nombreSessions == 0) {
+        //     return response()->json(['message' => ' session de mentorat trouvée pour ce mentor.'], 404);
+        // }
+
+        return response()->json(['nombre_sessions' => $nombreSessions], 200);
+    }
+
+    // Afficher le nombre d'articles créés par le mentor
+    public function afficherNombreArticles()
+    {
+        $user = Auth::user();
+
+        if (!$user->hasRole('mentor')) {
+            return response()->json(['message' => 'Seuls les mentors peuvent accéder à cette ressource.'], 403);
+        }
+
+        // Récupérer le nombre d'articles créés par le mentor
+        $nombreArticles = Article::where('user_id', $user->id)->count();
+
+        return response()->json(['nombre_articles' => $nombreArticles], 200);
+    }
 }
 
