@@ -14,6 +14,8 @@ use App\Notifications\SessionMentoratCreee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Notifications\DatabaseNotification;
+
 
 class MentorController extends Controller
 {
@@ -203,5 +205,16 @@ class MentorController extends Controller
 
         return response()->json(['nombre_articles' => $nombreArticles], 200);
     }
+    //afficher les notifications
+    public function getMentorNotifications($userId)
+    {
+        // Logique pour récupérer les notifications du mentor à partir de la base de données
+        $notifications = DatabaseNotification::where('notifiable_id', $userId)
+                                              ->where('notifiable_type', 'App\Models\User')
+                                              ->get();
+
+        return response()->json($notifications);
+    }
+
 }
 
