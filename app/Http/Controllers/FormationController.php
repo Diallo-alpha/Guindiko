@@ -49,10 +49,28 @@ class FormationController extends Controller
     /**
      * Mettre à jour la ressource spécifiée dans le stockage.
      */
-    public function update(UpdateFormationRequest $request, Formation $formation)
+    public function update(UpdateFormationRequest $request, $id)
     {
-        // Validation des données déjà effectuée dans UpdateFormationRequest
-        $formation->update($request->validated());
+        // Récupérer la formation
+        $formation = Formation::find($id);
+
+        if (!$formation) {
+            return response()->json(['message' => 'Formation introuvable.'], 404);
+        }
+
+        // Log des données avant la mise à jour
+        \Log::info('Données de mise à jour: ', $request->validated());
+
+        // Mise à jour de la formation
+        $success = $formation->update($request->validated());
+
+        if (!$success) {
+            \Log::error('Échec de la mise à jour de la formation.', ['id' => $id]);
+            return response()->json(['message' => 'Erreur lors de la mise à jour de la formation.'], 500);
+        }
+
+        // Log des données mises à jour
+        \Log::info('Formation mise à jour avec succès.', ['data' => $formation]);
 
         return response()->json([
             'message' => 'Formation mise à jour avec succès.',
@@ -60,17 +78,33 @@ class FormationController extends Controller
         ], Response::HTTP_OK);
     }
 
+
     /**
      * Supprimer la ressource spécifiée du stockage.
      */
-    public function destroy(Formation $formation)
+    public function destroy($id)
     {
+        \Log::info('ID de la formation à supprimer : ' . $id);
+
+        $formation = Formation::find($id);
+        if (!$formation) {
+            \Log::warning('Formation introuvable pour l\'ID : ' . $id);
+            return response()->json(['message' => 'Formation introuvable.'], 404);
+        }
+
+        \Log::info('Formation trouvée : ' . $formation);
+
         $formation->delete();
+
+        // Vérifier la suppression
+        $deletedFormation = Formation::find($id);
+        \Log::info('Vérification après suppression, formation trouvée : ' . $deletedFormation);
 
         return response()->json([
             'message' => 'Formation supprimée avec succès.'
         ], Response::HTTP_NO_CONTENT);
     }
+
       /**
      * Afficher les formations d'un domaine spécifique.
      *
