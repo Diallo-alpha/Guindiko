@@ -100,13 +100,14 @@ class MentorController extends Controller
     public function DevenirMentor(Request $request)
     {
         $request->validate([
-            'parcours_academique' => 'required|string',
-            'diplome' => 'required|string',
-            'langue' => 'required|string',
-            'cv' => 'required|string',
-            'experience' => 'required|string',
-            'domaine' => 'required|string',
+            'parcours_academique' => 'nullable|string', // Le champ n'est pas requis
+            'diplome' => 'nullable|string',             // Le champ n'est pas requis
+            'langue' => 'nullable|string',              // Le champ n'est pas requis
+            'cv' => 'nullable|string',                  // Le champ n'est pas requis
+            'experience' => 'nullable|string',          // Le champ n'est pas requis
+            'domaine' => 'nullable|string',             // Le champ n'est pas requis
         ]);
+
         \Log::info($request->all()); // Vérifiez ce qui est envoyé par la requête
 
         $demande = DevnirMentor::create([
@@ -123,8 +124,9 @@ class MentorController extends Controller
         $admins = User::role('admin')->get();
         Notification::send($admins, new DevenirMentorRecue($demande));
 
-        return response()->json(['message' => 'Votre demande pour devenir un mentor soumise avec succès.'], 200);
+        return response()->json(['message' => 'Votre demande pour devenir un mentor a été soumise avec succès.'], 200);
     }
+
 
     //affihcer les demandes pour un mentor
     //afficher les abonner d'un mentor
