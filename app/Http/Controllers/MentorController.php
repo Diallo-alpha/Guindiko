@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Spatie\Permission\Models\Role;
 use App\Models\Article;
 use App\Models\DemandeMentorat;
 use App\Models\DevnirMentor;
@@ -100,32 +100,39 @@ class MentorController extends Controller
     public function DevenirMentor(Request $request)
     {
         $request->validate([
-            'parcours_academique' => 'nullable|string', // Le champ n'est pas requis
-            'diplome' => 'nullable|string',             // Le champ n'est pas requis
-            'langue' => 'nullable|string',              // Le champ n'est pas requis
-            'cv' => 'nullable|string',                  // Le champ n'est pas requis
-            'experience' => 'nullable|string',          // Le champ n'est pas requis
-            'domaine' => 'nullable|string',             // Le champ n'est pas requis
+            'parcours_academique' => 'nullable|string',
+            'diplome' => 'nullable|string',
+            'langue' => 'nullable|string',
+            'cv' => 'nullable|string',
+            'experience' => 'nullable|string',
+            'domaine' => 'nullable|string',
         ]);
 
-        \Log::info($request->all()); // Vérifiez ce qui est envoyé par la requête
+        try {
+            $demande = DevnirMentor::create([
+                'user_id' => auth()->id(),
+                'parcours_academique' => $request->parcours_academique,
+                'diplome' => $request->diplome,
+                'langue' => $request->langue,
+                'cv' => $request->cv,
+                'experience' => $request->experience,
+                'domaine' => $request->domaine,
+            ]);
 
-        $demande = DevnirMentor::create([
-            'user_id' => auth()->id(),
-            'parcours_academique' => $request->parcours_academique,
-            'diplome' => $request->diplome,
-            'langue' => $request->langue,
-            'cv' => $request->cv,
-            'experience' => $request->experience,
-            'domaine' => $request->domaine,
-        ]);
+            // Envoyer une notification à l'admin
+            $admins = User::whereHas('roles', function ($query) {
+                $query->where('name', 'admin');
+            })->get();
 
-        // Envoyer une notification à l'admin
-        $admins = User::role('admin')->get();
-        Notification::send($admins, new DevenirMentorRecue($demande));
+            Notification::send($admins, new DevenirMentorRecue($demande));
 
-        return response()->json(['message' => 'Votre demande pour devenir un mentor a été soumise avec succès.'], 200);
+            return response()->json(['message' => 'Votre demande pour devenir un mentor a été soumise avec succès.'], 200);
+        } catch (\Exception $e) {
+            \Log::error('Erreur lors de l\'envoi de la demande de mentorat : '.$e->getMessage());
+            return response()->json(['message' => 'Une erreur est survenue lors de l\'envoi de votre demande.'], 500);
+        }
     }
+
 
 
     //affihcer les demandes pour un mentor
