@@ -30,7 +30,6 @@ Route::post('refresh', [AuthController::class, 'refresh'])->middleware('auth:api
 Route::middleware('auth:api')->group(function () {
     Route::get('/mentore/{id}', [MentorController::class, 'afficherMentorParId']);
     Route::apiResource('reservations', ReservationController::class);
-    Route::post('mentorats/devenir', [MentorController::class, 'DevenirMentor'])->name('mentorats.devenir');
     Route::post('/profile/modifier', [AuthController::class, 'updateProfile'])->name('profile.update');
     Route::post('/profile/supprimer', [AuthController::class, 'effacerChampsProfile'])->name('profile.clear');
       //afficher un mentor
@@ -95,6 +94,8 @@ Route::middleware(['auth:api', 'role:mentee'])->group(function () {
     Route::post('mentorats/{mentor}/demande', [MenteeController::class, 'envoyerDemandeMentorat']);
     Route::apiResource('commentaires', CommentaireController::class);
     Route::apiResource('reservations', ReservationController::class);
+    Route::post('mentorats/devenir', [MentorController::class, 'DevenirMentor'])->name('mentorats.devenir');
+
 });
 Route::get('/notifications', [NotificationReservationController::class, 'index'])->name('notifications.index');
 Route::post('/notifications/mark-as-read', [NotificationReservationController::class, 'markAsRead'])->name('notifications.markAsRead');
