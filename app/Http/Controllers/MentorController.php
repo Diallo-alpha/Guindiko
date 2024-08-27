@@ -216,5 +216,22 @@ class MentorController extends Controller
         return response()->json($notifications);
     }
 
+    //afficher un mentor par son id
+    public function afficherMentorParId($id)
+{
+    // Rechercher le mentor par son ID
+    $mentor = User::where('id', $id)->whereHas('roles', function($query) {
+        $query->where('name', 'mentor');
+    })->first();
+
+    // Vérifier si le mentor existe
+    if (!$mentor) {
+        return response()->json(['message' => 'Mentor non trouvé.'], 404);
+    }
+
+    // Retourner les informations du mentor
+    return response()->json(['mentor' => $mentor], 200);
+}
+
 }
 

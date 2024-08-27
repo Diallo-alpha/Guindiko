@@ -28,10 +28,12 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
 Route::post('refresh', [AuthController::class, 'refresh'])->middleware('auth:api');
 Route::middleware('auth:api')->group(function () {
+    Route::get('/mentore/{id}', [MentorController::class, 'afficherMentorParId']);
     Route::apiResource('reservations', ReservationController::class);
     Route::post('mentorats/devenir', [MentorController::class, 'DevenirMentor'])->name('mentorats.devenir');
     Route::post('/profile/modifier', [AuthController::class, 'updateProfile'])->name('profile.update');
     Route::post('/profile/supprimer', [AuthController::class, 'effacerChampsProfile'])->name('profile.clear');
+      //afficher un mentor
 
 });
 Route::apiResource('ressources', RessourceController::class);
@@ -50,6 +52,7 @@ Route::get('/domaines', [DomaineController::class, 'index']);
 Route::get('domaines/{id}', [DomaineController::class, 'show']);
 Route::get('/mentor/{mentorId}/sessions', [SessionMentoratController::class, 'afficherSessionsMentor']);
 Route::get('mentor/{mentorId}/demandes-acceptees', [MentorController::class, 'afficherDemandesAccepteesPourMentor'])->name('mentor.demandes.acceptees.mentor');
+Route::get('mentor/{mentor_id}/articles', [ArticleController::class, 'articlesParMentor'])->name('mentor.articles');
 Route::get('Articles', [ArticleController::class, 'index'])->name('articles.index');
 Route::get('Articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
 //devenir un mentor
@@ -67,11 +70,11 @@ Route::middleware(['auth:api', 'role:admin'])->group(function () {
     Route::put('/domaines/{id}', [DomaineController::class, 'update']);
     //afficher les demande
     Route::get('admin/demandes-mentor', [AdminController::class, 'afficherDemandesMentorat'])->name('admin.demandes-mentorat');
+
 });
 Route::middleware(['auth:api', 'role:mentor'])->group(function () {
     Route::post('mentorats/{demandeMentorat}/accepter', [MentorController::class, 'accepterDemandeMentorat']);
     Route::post('mentorats/session', [MentorController::class, 'creerSessionMentorat']);
-    Route::get('mentor/{mentor_id}/articles', [ArticleController::class, 'articlesParMentor'])->name('mentor.articles');
     Route::get('mentor/statistiques/demandes', [MentorController::class, 'afficherNombreDemandes'])->name('mentor.statistiques.demandes');
     Route::get('mentor-sessions/statistiques/sessions', [MentorController::class, 'afficherNombreSessions'])->name('mentor.statistiques.sessions');
     Route::get('mentor-articles/statistiques/articles', [MentorController::class, 'afficherNombreArticles'])->name('mentor.statistiques.articles');
