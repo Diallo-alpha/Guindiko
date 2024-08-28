@@ -28,7 +28,6 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api');
 Route::post('refresh', [AuthController::class, 'refresh'])->middleware('auth:api');
 Route::middleware('auth:api')->group(function () {
-    Route::get('/mentore/{id}', [MentorController::class, 'afficherMentorParId']);
     Route::apiResource('reservations', ReservationController::class);
     Route::post('/profile/modifier', [AuthController::class, 'updateProfile'])->name('profile.update');
     Route::post('/profile/supprimer', [AuthController::class, 'effacerChampsProfile'])->name('profile.clear');
@@ -44,6 +43,7 @@ Route::get('/domaines/{domaine_id}/formations', [FormationController::class, 'fo
 Route::get('mentors', [AdminController::class, 'afficherMentors'])->name('admin.afficherMentors');
 Route::get('mentees', [AdminController::class, 'afficherMentees'])->name('admin.afficherMentees');
 Route::get('sessions/{sessionId}/ressources', [AdminController::class, 'afficherRessourcesSession'])->name('admin.afficherRessourcesSession');
+Route::get('/mentore/{id}', [MentorController::class, 'afficherMentorParId']);
 
 
 //aficher domain public
