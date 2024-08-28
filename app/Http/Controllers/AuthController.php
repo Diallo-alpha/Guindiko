@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use \Log;
+use \Storage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +12,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+ public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -20,7 +21,8 @@ class AuthController extends Controller
             'parcours_academique' => 'required|string',
             'diplome' => 'required|string',
             'langue' => 'required|string',
-            'cv' => 'nullable|string',
+            'cv' => 'nullable|mimes:pdf|max:12048',
+            'photo' => 'nullable|mimes:jpeg,png|max:12048',
             'experience' => 'nullable|string',
             'domaine' => 'required|string',
         ]);
@@ -30,18 +32,32 @@ class AuthController extends Controller
         }
 
         // Créer l'utilisateur avec role_id = 4 par défaut
-        $user = User::create([
+        $user = new User([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'parcours_academique' => $request->parcours_academique,
             'diplome' => $request->diplome,
             'langue' => $request->langue,
-            'cv' => $request->cv,
             'experience' => $request->experience,
             'domaine' => $request->domaine,
             'role_id' => 6,
         ]);
+
+        // Gestion de l'upload du CV
+        if ($request->hasFile('cv')) {
+            $cvPath = $request->file('cv')->store('cvs', 'public');
+            $user->cv = $cvPath;
+        }
+
+        // Gestion de l'upload de l'image
+        if ($request->hasFile('photo')) {
+            $imagePath = $request->file('photo')->store('images', 'public');
+            $user->photo = $imagePath;
+        }
+
+        // Sauvegarde de l'utilisateur
+        $user->save();
 
         // Assigner le rôle de mentee via le système de gestion des rôles
         $user->assignRole('mentee');
@@ -106,85 +122,89 @@ class AuthController extends Controller
 
     }
     //mettre a jour le profil de l'utilisateur
-    public function updateProfile(Request $request)
-{
-    // Validate the input data
-    $validator = Validator::make($request->all(), [
-        'name' => 'sometimes|string|max:255',
-        'email' => 'sometimes|string|email|max:255|unique:users,email,' . auth()->id(),
-        'password' => 'nullable|string|min:6|confirmed',
-        'parcours_academique' => 'nullable|string',
-        'diplome' => 'nullable|string',
-        'langue' => 'nullable|string',
-        'cv' => 'nullable|string',
-        'experience' => 'nullable|string',
-        'domaine' => 'nullable|string',
-        'formation_id' => 'nullable|exists:formations,id',
-    ]);
+ public function updateProfile(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'sometimes|string|max:255',
+            'password' => 'nullable|string|min:6|confirmed',
+            'parcours_academique' => 'nullable|string',
+            'diplome' => 'nullable|string',
+            'langue' => 'nullable|string',
+            'cv' => 'nullable|mimes:pdf|max:12048',
+            'photo' => 'nullable|mimes:jpeg,png|max:12048',
+            'experience' => 'nullable|string',
+            'domaine' => 'nullable|string',
+        ]);
 
-    if ($validator->fails()) {
-        return response()->json($validator->errors(), 422);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $user = auth()->user();
+
+        $user->name = $request->get('name', $user->name);
+
+        if ($request->has('password') && $request->password) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->parcours_academique = $request->get('parcours_academique', $user->parcours_academique);
+        $user->diplome = $request->get('diplome', $user->diplome);
+        $user->langue = $request->get('langue', $user->langue);
+        $user->experience = $request->get('experience', $user->experience);
+        $user->domaine = $request->get('domaine', $user->domaine);
+
+        // Gestion de l'upload du CV
+        if ($request->hasFile('cv')) {
+            $cvPath = $request->file('cv')->store('cvs', 'public');
+            $user->cv = $cvPath;
+        }
+
+        // Gestion de l'upload de l'image
+        if ($request->hasFile('photo')) {
+            $imagePath = $request->file('photo')->store('images', 'public');
+            $user->photo = $imagePath;
+        }
+
+        \Log::info('donnée utilisateur avant le mise a jour:', $user->toArray());
+
+        $user->save();
+
+        \Log::info('donnée utilisateur aprés mise à jours:', $user->fresh()->toArray());
+
+        return response()->json(['message' => 'Profile updated successfully', 'user' => $user], 200);
     }
-
-    // Update user profile data
-    $user = auth()->user();
-    $user->name = $request->get('name', $user->name);
-    $user->email = $request->get('email', $user->email);
-
-    if ($request->has('password') && $request->password) {
-        $user->password = Hash::make($request->password);
-    }
-
-    $user->parcours_academique = $request->get('parcours_academique', $user->parcours_academique);
-    $user->diplome = $request->get('diplome', $user->diplome);
-    $user->langue = $request->get('langue', $user->langue);
-    $user->cv = $request->get('cv', $user->cv);
-    $user->experience = $request->get('experience', $user->experience);
-    $user->domaine = $request->get('domaine', $user->domaine);
-    $user->formation_id = $request->get('formation_id', $user->formation_id);
-
-    \Log::info('donnée utilisateur avant le mise a jour:', $user->toArray());
-
-    // Sauvegarder les modifications
-    $user->save();
-
-    \Log::info('donnée utilisateur aprés mise à jours:', $user->fresh()->toArray());
-
-    return response()->json(['message' => 'Profile updated successfully', 'user' => $user], 200);
-}
 
 //supprimer les donneés d'un profile
 public function effacerChampsProfile(Request $request)
 {
-    // Définir les champs que l'utilisateur peut effacer
     $nullableFields = [
         'cv',
         'experience',
         'domaine',
-        'formation_id'
+        'photo',
     ];
 
-    // Récupérer l'utilisateur authentifié
     $user = auth()->user();
 
-    // Log des champs avant la mise à jour
-    \Log::info('donner utilisateur avant la suppression:', $user->toArray());
+    \Log::info('donnée utilisateur avant la suppression:', $user->toArray());
 
     foreach ($nullableFields as $field) {
-        // Effacer les champs uniquement si l'utilisateur l'a demandé dans la requête
         if ($request->has($field)) {
+            // Supprimer le fichier du stockage si nécessaire
+            if (in_array($field, ['cv', 'image']) && $user->{$field}) {
+                Storage::disk('public')->delete($user->{$field});
+            }
             $user->{$field} = null;
         }
     }
 
-    // Sauvegarder les modifications
     $user->save();
 
-    // Log des champs après la mise à jour
     \Log::info('donnée utilisateur aprés suppression:', $user->fresh()->toArray());
 
-    // Retourner une réponse JSON
     return response()->json(['message' => 'Profile fields cleared successfully', 'user' => $user], 200);
 }
+
 
 }

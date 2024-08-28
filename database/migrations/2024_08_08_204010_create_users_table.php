@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('parcours_academique')->default('N/A');
             $table->string('diplome')->nullable();
             $table->string('langue')->default("français"); //
-            $table->string('cv')->nullable();
+            $table->string('cv')->nullable(); 
             $table->string('experience')->nullable();
             $table->string('domaine')->default('NA');
             $table->foreignId('formation_id')->default(1)->constrained('formations')->onDelete('cascade');
